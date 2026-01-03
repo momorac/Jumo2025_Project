@@ -3,7 +3,8 @@ using UnityEngine;
 public class Placeable : MonoBehaviour
 {
     [SerializeField] private Renderer[] renderers;
-    public Vector2Int cellSize = new Vector2Int(1, 1);
+
+    public Vector2Int CellSize { get; set; }
 
     private static readonly int BaseColorID = Shader.PropertyToID("_BaseColor");
 

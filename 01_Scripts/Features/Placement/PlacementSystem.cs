@@ -8,14 +8,13 @@ public class PlacementSystem : MonoBehaviour
     public GridSystem grid;
 
     [Header("Prefabs")]
-    public Placeable placePrefab;   // Actual object to place
+    [SerializeField] private Placeable placePrefab;
 
     [Header("Raycast")]
-    public LayerMask groundMask; // Set your ground to this layer
-    public float rayMaxDistance = 200f;
+    [SerializeField] private LayerMask groundMask;
+    [SerializeField] private float rayMaxDistance = 200f;
 
 
-    //----------------
     private Placeable previewCell;
     private Vector2Int currentCell = new Vector2Int(-1, -1);
     private bool isPlaceable = true;
@@ -108,7 +107,7 @@ public class PlacementSystem : MonoBehaviour
     {
         if (grid == null || placePrefab == null) return false;
 
-        Vector2Int size = placePrefab.cellSize;
+        Vector2Int size = placePrefab.CellSize;
 
         for (int width = 0; width < size.x; width++)
         {
@@ -128,7 +127,7 @@ public class PlacementSystem : MonoBehaviour
     {
         if (grid == null) return;
 
-        Vector2Int size = placePrefab.cellSize;
+        Vector2Int size = placePrefab.CellSize;
 
         for (int width = 0; width < size.x; width++)
         {

@@ -3,15 +3,15 @@ using UnityEngine;
 public class GridSystem : MonoBehaviour
 {
     [Header("Grid Settings")]
-    public int width = 30;
-    public int height = 30;
-    public float cellSize = 1f;
-    public Vector3 origin = Vector3.zero;
+    public int width;
+    public int height;
+    public float cellSize;
+    public Vector3 origin;
 
     [Header("Debug / Visuals")]
-    public bool drawGizmos = true;
-    public Color gridColor = new Color(0.6f, 0.6f, 0.6f, 0.8f);
-    public Color boundsColor = new Color(0.2f, 0.8f, 0.2f, 0.8f);
+    public bool drawGizmos;
+    public Color gridColor;
+    public Color boundsColor;
 
     private bool[,] occupied;
 
