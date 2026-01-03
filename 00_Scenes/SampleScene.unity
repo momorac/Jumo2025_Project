@@ -150,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlacementSystem
   mainCamera: {fileID: 330585545}
   grid: {fileID: 700475652}
-  placePrefab: {fileID: -9051618894191336627, guid: aed8f0b5246ae25488a7dd8c6f7dc819, type: 3}
+  placePrefab: {fileID: -9051618894191336627, guid: 66c1ad3a7e1a67b4c88717f77c115337, type: 3}
   groundMask:
     serializedVersion: 2
     m_Bits: 64
@@ -443,10 +443,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 700475651}
+  - component: {fileID: 700475652}
   - component: {fileID: 700475650}
   - component: {fileID: 700475649}
   - component: {fileID: 700475648}
-  - component: {fileID: 700475652}
   m_Layer: 6
   m_Name: Grid
   m_TagString: Untagged

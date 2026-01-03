@@ -1,17 +1,22 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Placeable : MonoBehaviour
 {
     [SerializeField] private Renderer[] renderers;
 
-    public Vector2Int CellSize { get; set; }
+    [SerializeField] private Vector2Int cellSize;
+    public Vector2Int CellSize => cellSize;
 
     private static readonly int BaseColorID = Shader.PropertyToID("_BaseColor");
 
     public void SetPreviewColor(bool isAvailable, bool hasPlaced = false)
     {
         Color color = isAvailable ? Color.green : Color.red;
-        if (hasPlaced) color = Color.white;
+        if (hasPlaced)
+        {
+            color = Color.white;
+        }
 
         foreach (var renderer in renderers)
         {

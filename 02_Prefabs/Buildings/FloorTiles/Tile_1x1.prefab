@@ -160,4 +160,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Placeable
   renderers:
   - {fileID: 5900102296944746868}
-  cellSize: {x: 1, y: 1}
+  <CellSize>k__BackingField: {x: 1, y: 1}

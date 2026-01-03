@@ -35,7 +35,10 @@ public class PlacementSystem : MonoBehaviour
     private void Update()
     {
         UpdatePreview();
-        if (isPlaceable) HandlePlacement();
+        if (isPlaceable)
+        {
+            HandlePlacement();
+        }
     }
 
     private void UpdatePreview()
@@ -48,7 +51,8 @@ public class PlacementSystem : MonoBehaviour
             Vector3 worldPos = hit.point;
             Vector2Int _cell = grid.WorldToGrid(worldPos);
 
-            if (_cell == currentCell) return;
+            if (_cell == currentCell)
+                return;
 
             if (grid.IsInBounds(_cell))
             {
@@ -72,14 +76,18 @@ public class PlacementSystem : MonoBehaviour
             {
                 currentCell = new Vector2Int(-1, -1);
                 if (previewCell != null)
+                {
                     previewCell.gameObject.SetActive(false);
+                }
             }
         }
         else
         {
             currentCell = new Vector2Int(-1, -1);
             if (previewCell != null)
+            {
                 previewCell.gameObject.SetActive(false);
+            }
         }
     }
 
