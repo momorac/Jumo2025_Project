@@ -58,6 +58,20 @@ public class GridSystem : MonoBehaviour
         return new Vector3(cx, origin.y, cz);
     }
 
+    public void LogCurrentGridState()
+    {
+        string gridState = "Grid Occupancy:\n";
+        for (int z = height - 1; z >= 0; z--)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                gridState += occupied[x, z] ? "[X]" : "[ ]";
+            }
+            gridState += "\n";
+        }
+        Debug.Log(gridState);
+    }
+
     private void OnDrawGizmos()
     {
         if (!drawGizmos) return;

@@ -1,8 +1,16 @@
-using Unity.VisualScripting;
 using UnityEngine;
+
+public enum PlaceableType
+{
+    Tile,
+    Facility,
+    Decoration
+}
 
 public class Placeable : MonoBehaviour
 {
+    [SerializeField] private PlaceableType type;
+    public PlaceableType Type => type;
     [SerializeField] private Renderer[] renderers;
 
     [SerializeField] private Vector2Int cellSize;
