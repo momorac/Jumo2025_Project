@@ -25,6 +25,11 @@ public class PhaseController
         currentPhase.Enter();
     }
 
+    public void Tick(float deltaTime)
+    {
+        currentPhase.Tick(deltaTime);
+    }
+
 
 
     // public PhaseController(PhaseId startingPhase)
