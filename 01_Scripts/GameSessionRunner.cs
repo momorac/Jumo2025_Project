@@ -6,9 +6,14 @@ public class GameSessionRunner : MonoBehaviour
     [SerializeField] private float dayLengthSeconds = 60f;
     [SerializeField] private PhaseId startingPhase = PhaseId.Preparation;
 
+    // Core simulation instances
     private SimClock simClock;
     private SimLoop simLoop;
     private PhaseController phaseController;
+
+    // Service instances
+    private Wallet wallet;
+    private EconomyService economy;
 
     private void Awake()
     {
@@ -28,10 +33,10 @@ public class GameSessionRunner : MonoBehaviour
         // Initialize controller with provided phases and starting phase
         phaseController = new PhaseController(phases, startingPhase);
 
-        // // Register core simulation systems
-
-        // simLoop.AddSystem(new SeatingSystem());
-        // simLoop.AddSystem(new CustomerSystem());
+        // Economy as on-demand service (not auto-ticked)
+        var save = SaveService.Load();
+        wallet = new Wallet(initialMoney: save.WalletBalance);
+        economy = new EconomyService(wallet);
     }
 
     private void Update()
@@ -51,5 +56,10 @@ public class GameSessionRunner : MonoBehaviour
     public void ChangePhase(PhaseId next)
     {
         phaseController.Change(next);
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveService.Save(new MetaGameData { WalletBalance = wallet.Money });
     }
 }

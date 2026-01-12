@@ -27,6 +27,12 @@ public static class SaveService
 #endif
                 return data ?? new MetaGameData();
             }
+            else
+            {
+                // 새로운 저장 파일 생성
+                var newData = new MetaGameData();
+                Save(newData);
+            }
         }
         catch (System.Exception e)
         {
