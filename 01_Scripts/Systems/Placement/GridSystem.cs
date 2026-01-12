@@ -42,6 +42,31 @@ public class GridSystem : MonoBehaviour
         occupied[cell.x, cell.y] = value;
     }
 
+    // Occupy or free a rectangle region starting at root (lower-left), with given size (width,height)
+    public void SetOccupiedRect(Vector2Int root, Vector2Int size, bool value)
+    {
+        for (int dx = 0; dx < size.x; dx++)
+        {
+            for (int dz = 0; dz < size.y; dz++)
+            {
+                var cell = new Vector2Int(root.x + dx, root.y + dz);
+                if (IsInBounds(cell)) SetOccupied(cell, value);
+            }
+        }
+    }
+
+    // Clear all occupancy flags
+    public void ClearAllOccupancy()
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int z = 0; z < height; z++)
+            {
+                occupied[x, z] = false;
+            }
+        }
+    }
+
     // Convert a world position to grid cell indices
     public Vector2Int WorldToGrid(Vector3 worldPos)
     {

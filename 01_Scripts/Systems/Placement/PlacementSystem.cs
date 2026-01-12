@@ -187,18 +187,8 @@ public class PlacementSystem : MonoBehaviour
 
     private void SetCellsOccupied(Vector2Int rootCell, bool value)
     {
-        if (grid == null) return;
-
-        Vector2Int size = placePrefab.CellSize;
-
-        for (int width = 0; width < size.x; width++)
-        {
-            for (int height = 0; height < size.y; height++)
-            {
-                Vector2Int cell = new Vector2Int(rootCell.x + width, rootCell.y + height);
-                grid.SetOccupied(cell, value);
-            }
-        }
+        if (grid == null || placePrefab == null) return;
+        grid.SetOccupiedRect(rootCell, placePrefab.CellSize, value);
     }
 
     private void LoadPlacements()
@@ -227,15 +217,7 @@ public class PlacementSystem : MonoBehaviour
                 Instantiate(prefabToUse.transform, pos, Quaternion.identity, parent);
 
                 // Occupy cells based on prefab size
-                var size = prefabToUse.CellSize;
-                for (int w = 0; w < size.x; w++)
-                {
-                    for (int h = 0; h < size.y; h++)
-                    {
-                        var c = new Vector2Int(cell.x + w, cell.y + h);
-                        if (grid.IsInBounds(c)) grid.SetOccupied(c, true);
-                    }
-                }
+                grid.SetOccupiedRect(cell, prefabToUse.CellSize, true);
 
                 placed.Add(new PlacementRecord { prefab = prefabToUse.name, x = cell.x, y = cell.y });
             }
@@ -270,6 +252,12 @@ public class PlacementSystem : MonoBehaviour
             {
                 DestroyImmediate(root.GetChild(j).gameObject);
             }
+        }
+
+        // Clear grid occupancy too
+        if (grid != null)
+        {
+            grid.ClearAllOccupancy();
         }
 
         PlacementSaveService.Save(new PlacementSaveData());
