@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class PhaseController
 {
@@ -20,6 +21,8 @@ public class PhaseController
 
     public void Change(PhaseId next)
     {
+        Debug.Log($"[PhaseController] Changing phase from {currentPhase?.ToString()} to {next.ToString()}");
+
         currentPhase?.Exit();
         currentPhase = phases[next];
         currentPhase.Enter();

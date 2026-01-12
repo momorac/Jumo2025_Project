@@ -29,6 +29,7 @@ public class GameSessionRunner : MonoBehaviour
         phaseController = new PhaseController(phases, startingPhase);
 
         // // Register core simulation systems
+
         // simLoop.AddSystem(new SeatingSystem());
         // simLoop.AddSystem(new CustomerSystem());
     }
