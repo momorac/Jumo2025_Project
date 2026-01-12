@@ -13,6 +13,10 @@ public class Placeable : MonoBehaviour
     public PlaceableType Type => type;
     [SerializeField] private Renderer[] renderers;
 
+    // Stable numeric identifier (set in Inspector or via editor tooling)
+    [SerializeField] private int stableId;
+    public int StableId => stableId;
+
     [SerializeField] private Vector2Int cellSize;
     public Vector2Int CellSize => cellSize;
 

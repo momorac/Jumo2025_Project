@@ -3,7 +3,8 @@ using System.Collections.Generic;
 [System.Serializable]
 public class PlacementRecord
 {
-    public string prefab; // prefab identifier (name)
+    // Stable numeric/hash identifier for the prefab
+    public int id;
     public int x;
     public int y;
 }

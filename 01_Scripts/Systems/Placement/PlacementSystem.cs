@@ -34,6 +34,7 @@ public class PlacementSystem : MonoBehaviour
     // Save/Load state
     private readonly List<PlacementRecord> placed = new List<PlacementRecord>();
     private readonly Dictionary<string, Placeable> prefabIndex = new Dictionary<string, Placeable>();
+    private readonly Dictionary<int, Placeable> prefabIndexById = new Dictionary<int, Placeable>();
     private readonly Dictionary<PlaceableType, Transform> rootIndex = new Dictionary<PlaceableType, Transform>();
     private bool isLoading;
 
@@ -49,8 +50,12 @@ public class PlacementSystem : MonoBehaviour
 
         foreach (var p in placeablePrefabs)
         {
-            if (p != null && !prefabIndex.ContainsKey(p.name))
+            if (p == null) continue;
+            if (!prefabIndex.ContainsKey(p.name))
                 prefabIndex[p.name] = p;
+            var id = p.StableId != 0 ? p.StableId : ComputeStableId(p.name);
+            if (!prefabIndexById.ContainsKey(id))
+                prefabIndexById[id] = p;
         }
 
         // Map building type -> parent root
@@ -155,7 +160,7 @@ public class PlacementSystem : MonoBehaviour
             // Save record and persist
             var rec = new PlacementRecord
             {
-                prefab = placePrefab != null ? placePrefab.name : string.Empty,
+                id = placePrefab != null ? (placePrefab.StableId != 0 ? placePrefab.StableId : ComputeStableId(placePrefab.name)) : 0,
                 x = currentCell.x,
                 y = currentCell.y
             };
@@ -168,21 +173,7 @@ public class PlacementSystem : MonoBehaviour
     private bool CheckCellAvailability(Vector2Int rootCell)
     {
         if (grid == null || placePrefab == null) return false;
-
-        Vector2Int size = placePrefab.CellSize;
-
-        for (int width = 0; width < size.x; width++)
-        {
-            for (int height = 0; height < size.y; height++)
-            {
-                Vector2Int cell = new Vector2Int(rootCell.x + width, rootCell.y + height);
-                if (!grid.IsInBounds(cell) || grid.IsOccupied(cell))
-                {
-                    return false;
-                }
-            }
-        }
-        return true;
+        return grid.CanOccupyRect(rootCell, placePrefab.CellSize);
     }
 
     private void SetCellsOccupied(Vector2Int rootCell, bool value)
@@ -205,10 +196,15 @@ public class PlacementSystem : MonoBehaviour
                 if (!grid.IsInBounds(cell)) continue;
 
                 Placeable prefabToUse = null;
-                if (!string.IsNullOrEmpty(rec.prefab) && prefabIndex.TryGetValue(rec.prefab, out var found))
-                    prefabToUse = found;
+                // Prefer ID-based lookup
+                if (rec.id != 0 && prefabIndexById.TryGetValue(rec.id, out var foundById))
+                {
+                    prefabToUse = foundById;
+                }
                 else if (placePrefab != null)
+                {
                     prefabToUse = placePrefab; // fallback
+                }
 
                 if (prefabToUse == null) continue;
 
@@ -219,7 +215,7 @@ public class PlacementSystem : MonoBehaviour
                 // Occupy cells based on prefab size
                 grid.SetOccupiedRect(cell, prefabToUse.CellSize, true);
 
-                placed.Add(new PlacementRecord { prefab = prefabToUse.name, x = cell.x, y = cell.y });
+                placed.Add(new PlacementRecord { id = ComputeStableId(prefabToUse.name), x = cell.x, y = cell.y });
             }
         }
         finally
@@ -260,10 +256,29 @@ public class PlacementSystem : MonoBehaviour
             grid.ClearAllOccupancy();
         }
 
+        placed.Clear();
+
         PlacementSaveService.Save(new PlacementSaveData());
 
         Debug.Log("[PlacementSystem] Cleared all placements and saved state.");
     }
 
+    // Deterministic 32-bit FNV-1a hash for stable prefab ID
+    private static int ComputeStableId(string s)
+    {
+        if (string.IsNullOrEmpty(s)) return 0;
+        unchecked
+        {
+            const uint fnvOffset = 2166136261;
+            const uint fnvPrime = 16777619;
+            uint hash = fnvOffset;
+            for (int i = 0; i < s.Length; i++)
+            {
+                hash ^= s[i];
+                hash *= fnvPrime;
+            }
+            return (int)hash;
+        }
+    }
 }
 

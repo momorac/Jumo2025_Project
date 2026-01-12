@@ -55,6 +55,23 @@ public class GridSystem : MonoBehaviour
         }
     }
 
+    // Check if a rectangle can be occupied: in-bounds and all cells are free
+    public bool CanOccupyRect(Vector2Int root, Vector2Int size)
+    {
+        for (int dx = 0; dx < size.x; dx++)
+        {
+            for (int dz = 0; dz < size.y; dz++)
+            {
+                var cell = new Vector2Int(root.x + dx, root.y + dz);
+                if (!IsInBounds(cell) || IsOccupied(cell))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     // Clear all occupancy flags
     public void ClearAllOccupancy()
     {
