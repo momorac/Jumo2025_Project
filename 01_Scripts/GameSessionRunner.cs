@@ -39,6 +39,12 @@ public class GameSessionRunner : MonoBehaviour
         // Per-frame: let phase do UI/logic, and advance simulation if enabled
         phaseController.Tick(Time.deltaTime);
         simLoop.Update(Time.deltaTime);
+
+
+        if (phaseController.CurrentPhaseID == PhaseId.Open && simClock.IsDayOver())
+        {
+            ChangePhase(PhaseId.Closing);
+        }
     }
 
     // Optional external control (e.g., from UI)
