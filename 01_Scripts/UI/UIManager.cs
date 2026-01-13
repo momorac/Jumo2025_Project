@@ -7,10 +7,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Transform windowLayer;
     [SerializeField] private Transform popupLayer;
 
-
     [Header("Window Prefabs")]
     [SerializeField] private HUDView hudPrefab;
-
 
     private WindowType currentOpenWindow;
 
