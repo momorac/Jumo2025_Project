@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 public class UIManager : MonoBehaviour
 {
@@ -12,14 +13,19 @@ public class UIManager : MonoBehaviour
     [SerializeField] private HUDView hudView;
     [SerializeField] private PlacementView placementPrefab;
 
-    private WindowType currentOpenWindow;
+    [HideInInspector] public GameSessionRunner gameSessionRunner;
 
+    // Cached presenters and views
+    private (HUDView, HUDPresenter) hudPresenters;
+    private WindowType currentOpenWindow;
 
     private readonly Dictionary<WindowType, WindowViewBase> viewCache = new();
     private readonly Dictionary<WindowType, IPresenter> presenters = new();
 
-    private (HUDView, HUDPresenter) hudPresenters;
-
+    void Awake()
+    {
+        gameSessionRunner = FindFirstObjectByType<GameSessionRunner>();
+    }
 
     void Start()
     {
@@ -34,13 +40,14 @@ public class UIManager : MonoBehaviour
             CloseWindow(currentOpenWindow);
         }
 
-        // Open requested window
         var view = GetOrCreateView(window);
         view.Show();
 
         if (!presenters.ContainsKey(window))
         {
-            presenters[window] = CreatePresenter(window, view);
+            var p = CreatePresenter(window, view);
+            presenters[window] = p;
+            p.Initialize(); // 생성 직후 초기화
         }
 
         currentOpenWindow = window;
@@ -69,11 +76,14 @@ public class UIManager : MonoBehaviour
     {
         hudPresenters.Item1 = hudView;
         hudPresenters.Item2 = new HUDPresenter(hudView, this);
+        hudPresenters.Item2.Initialize(); // 생성 직후 초기화
         hudView.Show();
     }
 
     public void HideHUD()
     {
+        // 필요 시 Dispose 호출로 이벤트 해제
+        // hudPresenters.Item2?.Dispose();
         hudView.Hide();
     }
 
@@ -98,7 +108,10 @@ public class UIManager : MonoBehaviour
     {
         return type switch
         {
-            WindowType.Placement => new PlacementPresenter((PlacementView)view, this),
+            WindowType.Placement => new PlacementPresenter(
+                (PlacementView)view,
+                this,
+                gameSessionRunner.PlacementSystem),
             _ => throw new System.ArgumentOutOfRangeException(nameof(type), type, null)
         };
     }
