@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 
+public sealed class UIServices
+{
+    private readonly Dictionary<Type, object> map = new();
+    public void Add<T>(T instance) where T : class => map[typeof(T)] = instance;
+    public T Get<T>() where T : class => map.TryGetValue(typeof(T), out var o) ? (T)o : null;
+}
+
 public class UIManager : MonoBehaviour
 {
     [Header("Layers")]
@@ -22,14 +29,37 @@ public class UIManager : MonoBehaviour
     private readonly Dictionary<WindowType, WindowViewBase> viewCache = new();
     private readonly Dictionary<WindowType, IPresenter> presenters = new();
 
+    // 등록형 팩토리
+    private readonly Dictionary<WindowType, Func<WindowViewBase>> viewFactories = new();
+    private readonly Dictionary<WindowType, Func<WindowViewBase, IPresenter>> presenterFactories = new();
+
+    private UIServices services;
+
     void Awake()
     {
         gameSessionRunner = FindFirstObjectByType<GameSessionRunner>();
+
+        // 서비스 등록
+        services = new UIServices();
+        services.Add(this);
+        services.Add(gameSessionRunner);
+        services.Add(gameSessionRunner?.PlacementSystem);
+
+        RegisterUI(); // 뷰/프리젠터 생성 람다 등록
     }
 
     void Start()
     {
         ShowHUD();
+    }
+
+    private void RegisterUI()
+    {
+        // View 생성 람다 등록
+        viewFactories[WindowType.Placement] = () => Instantiate(placementPrefab, windowLayer);
+
+        // Presenter 생성 람다 등록 (필요 서비스만 꺼내 주입)
+        presenterFactories[WindowType.Placement] = (view) => new PlacementPresenter((PlacementView)view, this, services.Get<PlacementSystem>());
     }
 
     public void OpenWindow(WindowType window)
@@ -82,8 +112,7 @@ public class UIManager : MonoBehaviour
 
     public void HideHUD()
     {
-        // 필요 시 Dispose 호출로 이벤트 해제
-        // hudPresenters.Item2?.Dispose();
+        // hudPresenters.Item2?.Dispose(); // 필요 시 이벤트 해제
         hudView.Hide();
     }
 
@@ -92,28 +121,21 @@ public class UIManager : MonoBehaviour
         if (viewCache.TryGetValue(type, out var existing))
             return existing;
 
-        WindowViewBase created = type switch
-        {
-            WindowType.Placement => Instantiate(placementPrefab, windowLayer),
-            _ => throw new System.NotImplementedException(),
-        };
+        if (!viewFactories.TryGetValue(type, out var factory) || factory == null)
+            throw new NotSupportedException($"View factory not registered for {type}");
 
+        var created = factory.Invoke();
         created.Hide(); // 생성 직후 숨김
         viewCache[type] = created;
-
         return created;
     }
 
     private IPresenter CreatePresenter(WindowType type, WindowViewBase view)
     {
-        return type switch
-        {
-            WindowType.Placement => new PlacementPresenter(
-                (PlacementView)view,
-                this,
-                gameSessionRunner.PlacementSystem),
-            _ => throw new System.ArgumentOutOfRangeException(nameof(type), type, null)
-        };
+        if (!presenterFactories.TryGetValue(type, out var factory) || factory == null)
+            throw new NotSupportedException($"Presenter factory not registered for {type}");
+
+        return factory.Invoke(view);
     }
 }
 
