@@ -13,16 +13,17 @@ public class HUDPresenter : IPresenter
 
     public void Initialize()
     {
-        view.PlacementClicked += OnPlacementClicked;
+        view.PlaceClicked += OnPlaceClicked;
 
     }
-    private void OnPlacementClicked()
+    private void OnPlaceClicked()
     {
         // 구현
+        ui.OpenWindow(WindowType.Placement);
     }
 
     public void Dispose()
     {
-        throw new System.NotImplementedException();
+        view.PlaceClicked -= OnPlaceClicked;
     }
 }

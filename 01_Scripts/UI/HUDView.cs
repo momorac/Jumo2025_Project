@@ -2,14 +2,14 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HUDView : WindowViewBase, IView
+public class HUDView : WindowViewBase
 {
-    [SerializeField] private Button placementButton;
-    public event Action PlacementClicked;
+    [SerializeField] private Button button_place;
+    public event Action PlaceClicked;
 
     private void Awake()
     {
-        placementButton.onClick.AddListener(() => PlacementClicked?.Invoke());
+        button_place.onClick.AddListener(() => PlaceClicked?.Invoke());
     }
 
     public override void Show()

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class UIManager : MonoBehaviour
 {
@@ -8,17 +9,21 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Transform popupLayer;
 
     [Header("Window Prefabs")]
-    [SerializeField] private HUDView hudPrefab;
+    [SerializeField] private HUDView hudView;
+    [SerializeField] private PlacementView placementPrefab;
 
     private WindowType currentOpenWindow;
+
 
     private readonly Dictionary<WindowType, WindowViewBase> viewCache = new();
     private readonly Dictionary<WindowType, IPresenter> presenters = new();
 
+    private (HUDView, HUDPresenter) hudPresenters;
+
 
     void Start()
     {
-        OpenWindow(WindowType.HUD);
+        ShowHUD();
     }
 
     public void OpenWindow(WindowType window)
@@ -43,7 +48,33 @@ public class UIManager : MonoBehaviour
 
     public void CloseWindow(WindowType window)
     {
-        // Implementation for closing the specified window
+        if (presenters.TryGetValue(window, out var _presenter))
+        {
+            _presenter.Dispose();
+            presenters.Remove(window);
+        }
+
+        if (viewCache.TryGetValue(window, out var view))
+        {
+            view.Hide();
+        }
+
+        if (currentOpenWindow == window)
+        {
+            currentOpenWindow = WindowType.None;
+        }
+    }
+
+    public void ShowHUD()
+    {
+        hudPresenters.Item1 = hudView;
+        hudPresenters.Item2 = new HUDPresenter(hudView, this);
+        hudView.Show();
+    }
+
+    public void HideHUD()
+    {
+        hudView.Hide();
     }
 
     private WindowViewBase GetOrCreateView(WindowType type)
@@ -53,7 +84,7 @@ public class UIManager : MonoBehaviour
 
         WindowViewBase created = type switch
         {
-            WindowType.HUD => Instantiate(hudPrefab, windowLayer),
+            WindowType.Placement => Instantiate(placementPrefab, windowLayer),
             _ => throw new System.NotImplementedException(),
         };
 
@@ -67,7 +98,7 @@ public class UIManager : MonoBehaviour
     {
         return type switch
         {
-            WindowType.HUD => new HUDPresenter((HUDView)view, this),
+            WindowType.Placement => new PlacementPresenter((PlacementView)view, this),
             _ => throw new System.ArgumentOutOfRangeException(nameof(type), type, null)
         };
     }
@@ -76,7 +107,7 @@ public class UIManager : MonoBehaviour
 public enum WindowType
 {
     None,
-    HUD,
+    Placement,
     PauseMenu,
     Settings,
 }
