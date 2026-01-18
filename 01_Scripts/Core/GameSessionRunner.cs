@@ -64,6 +64,6 @@ public class GameSessionRunner : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        SaveService.Save(new MetaGameData { EconomyBalance = economy.GetMoney() });
+        SaveService.Save(new GameMetaData { EconomyBalance = economy.GetMoney() });
     }
 }

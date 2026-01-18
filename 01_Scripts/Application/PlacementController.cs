@@ -4,7 +4,6 @@ public class PlacementController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private PlacementRegistry registry;       // SO 에셋 드래그 할당
-    [SerializeField] private FacilityMetaData facilityMeta;   // SO 에셋 드래그 할당
     [SerializeField] private PlacementSystem placementSystem;
 
 

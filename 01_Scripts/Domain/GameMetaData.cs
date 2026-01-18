@@ -1,11 +1,25 @@
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 [System.Serializable]
-public class MetaGameData
+public class GameMetaData
 {
     public int EconomyBalance;
+    public PlacementMetaData PlacementMetaData;
     public FacilityMetaData FacilityMetaData;
+}
+
+[System.Serializable]
+public class PlacementMetaData
+{
+    public Vector2 GridSize;
+    public List<PlacementRecord> Placements = new List<PlacementRecord>();
+
+    public void InitializeGrid(Vector2 size)
+    {
+        GridSize = size;
+    }
 }
 
 [System.Serializable]

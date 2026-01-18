@@ -5,7 +5,7 @@ public static class SaveService
 {
     private static string Path => System.IO.Path.Combine(Application.persistentDataPath, "save.json");
 
-    public static void Save(MetaGameData data)
+    public static void Save(GameMetaData data)
     {
         var json = JsonUtility.ToJson(data);
         File.WriteAllText(Path, json);
@@ -14,23 +14,23 @@ public static class SaveService
 #endif
     }
 
-    public static MetaGameData Load()
+    public static GameMetaData Load()
     {
         try
         {
             if (File.Exists(Path))
             {
                 var json = File.ReadAllText(Path);
-                var data = JsonUtility.FromJson<MetaGameData>(json);
+                var data = JsonUtility.FromJson<GameMetaData>(json);
 #if UNITY_EDITOR
                 Debug.Log($"[SaveService] Loaded from {Path}: {json}");
 #endif
-                return data ?? new MetaGameData();
+                return data ?? new GameMetaData();
             }
             else
             {
                 // 새로운 저장 파일 생성
-                var newData = new MetaGameData();
+                var newData = new GameMetaData();
                 Save(newData);
             }
         }
@@ -40,6 +40,6 @@ public static class SaveService
             Debug.LogWarning($"[SaveService] Load failed: {e.Message}");
 #endif
         }
-        return new MetaGameData();
+        return new GameMetaData();
     }
 }
