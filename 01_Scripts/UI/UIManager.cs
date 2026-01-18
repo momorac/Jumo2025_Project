@@ -59,7 +59,7 @@ public class UIManager : MonoBehaviour
         viewFactories[WindowType.Placement] = () => Instantiate(placementPrefab, windowLayer);
 
         // Presenter 생성 람다 등록 (필요 서비스만 꺼내 주입)
-        presenterFactories[WindowType.Placement] = (view) => new PlacementPresenter((PlacementView)view, this, services.Get<PlacementSystem>());
+        presenterFactories[WindowType.Placement] = (view) => new PlacementPresenter((PlacementView)view, this);
     }
 
     public void OpenWindow(WindowType window)

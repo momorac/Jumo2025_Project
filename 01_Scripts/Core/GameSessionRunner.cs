@@ -6,9 +6,11 @@ public class GameSessionRunner : MonoBehaviour
     [SerializeField] private float dayLengthSeconds = 60f;
     [SerializeField] private PhaseId startingPhase = PhaseId.Preparation;
 
-    [Header("Services")]
+    [Header("Application Systems")]
     [SerializeField] private PlacementSystem placementSystem;
     public PlacementSystem PlacementSystem => placementSystem;
+    [SerializeField] private FacilityPlacementController facilityPlacementController;
+    public FacilityPlacementController FacilityPlacementController => facilityPlacementController;
 
     // Core simulation instances
     private SimClock simClock;

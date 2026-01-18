@@ -247,6 +247,52 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &243171766
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 243171767}
+  - component: {fileID: 243171768}
+  m_Layer: 0
+  m_Name: FacilityPlacementController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &243171767
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243171766}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 685369652}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &243171768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243171766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 053c8a8a3f517d14abbf68a507d9f768, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FacilityPlacementController
+  registry: {fileID: 11400000, guid: 9605c72ffca8c9240b655177349349c0, type: 2}
+  placementSystem: {fileID: 115677040}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,6 +639,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameSessionRunner
   dayLengthSeconds: 60
   startingPhase: 0
+  placementSystem: {fileID: 115677040}
+  facilityPlacementController: {fileID: 243171768}
 --- !u!4 &404403629
 Transform:
   m_ObjectHideFlags: 0
@@ -766,6 +814,7 @@ Transform:
   m_Children:
   - {fileID: 404403629}
   - {fileID: 115677041}
+  - {fileID: 243171767}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &700475647
@@ -1478,6 +1527,7 @@ MonoBehaviour:
   popupLayer: {fileID: 173087365}
   hudView: {fileID: 1061348579}
   placementPrefab: {fileID: 4046681013189275911, guid: 8fbeb43bf2ba1014884595d7576c69fd, type: 3}
+  gameSessionRunner: {fileID: 0}
 --- !u!1 &1745120188
 GameObject:
   m_ObjectHideFlags: 0

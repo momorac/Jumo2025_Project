@@ -22,9 +22,4 @@ public class HUDView : WindowViewBase
         gameObject.SetActive(false);
     }
 
-    // HUD에 표시할 값이 있으면 최소로 Render만 추가
-    public void Render(int money, int day)
-    {
-        // Text TMP 등 갱신
-    }
 }

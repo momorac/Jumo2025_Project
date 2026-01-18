@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306fb85c4450fdc4ca14e0bbdbb4ac01, type: 3}
   m_Name: FacilityRegistry
   m_EditorClassIdentifier: Assembly-CSharp::FacilityRegistry
-  entries: []
+  entries:
+  - type: 1
+    prefab: {fileID: 0}
