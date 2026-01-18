@@ -35,6 +35,9 @@ public class UIManager : MonoBehaviour
 
     private UIServices services;
 
+    // 세션 의존성 보관
+    private IPlacementController placementController;
+
     void Awake()
     {
         gameSessionRunner = FindFirstObjectByType<GameSessionRunner>();
@@ -43,7 +46,6 @@ public class UIManager : MonoBehaviour
         services = new UIServices();
         services.Add(this);
         services.Add(gameSessionRunner);
-        services.Add(gameSessionRunner?.PlacementSystem);
 
         RegisterUI(); // 뷰/프리젠터 생성 람다 등록
     }
@@ -55,16 +57,20 @@ public class UIManager : MonoBehaviour
 
     private void RegisterUI()
     {
-        // View 생성 람다 등록
+        // Placement 뷰/프리젠터 생성 람다 등록
         viewFactories[WindowType.Placement] = () => Instantiate(placementPrefab, windowLayer);
+        presenterFactories[WindowType.Placement] = (view) => new PlacementPresenter((PlacementView)view, this, placementController);
+    }
 
-        // Presenter 생성 람다 등록 (필요 서비스만 꺼내 주입)
-        presenterFactories[WindowType.Placement] = (view) => new PlacementPresenter((PlacementView)view, this);
+    // GameSessionRunner가 시작 시 호출
+    public void InjectSessionControllers(IPlacementController placementController)
+    {
+        this.placementController = placementController;
     }
 
     public void OpenWindow(WindowType window)
     {
-        // Close current window if any
+        // 열려있는 window 있으면 닫기
         if (currentOpenWindow != WindowType.None && currentOpenWindow != window)
         {
             CloseWindow(currentOpenWindow);

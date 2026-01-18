@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Numerics;
+using UnityEngine;
 
 [System.Serializable]
 public class GameMetaData
@@ -8,17 +8,28 @@ public class GameMetaData
     public int EconomyBalance;
     public PlacementMetaData PlacementMetaData;
     public FacilityMetaData FacilityMetaData;
+
+    public GameMetaData()
+    {
+        EconomyBalance = 0;
+        PlacementMetaData = null;
+        FacilityMetaData = new FacilityMetaData();
+
+        FacilityMetaData.Unlock(FacilityType.JumoHouse);
+        FacilityMetaData.Unlock(FacilityType.Hearth);
+    }
 }
 
 [System.Serializable]
 public class PlacementMetaData
 {
-    public Vector2 GridSize;
-    public List<PlacementRecord> Placements = new List<PlacementRecord>();
+    public Vector2Int GridSize;
+    public PlacementRecord[,] Placements;
 
-    public void InitializeGrid(Vector2 size)
+    public PlacementMetaData(Vector2Int size, PlacementRecord[,] placements)
     {
         GridSize = size;
+        Placements = placements;
     }
 }
 

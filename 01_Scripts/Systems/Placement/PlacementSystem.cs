@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 [Serializable]
 public class BuildingRoot
@@ -12,8 +13,8 @@ public class BuildingRoot
 public class PlacementSystem : MonoBehaviour
 {
     [Header("References")]
-    public Camera mainCamera;
     public GridSystem grid;
+    [SerializeField] private Camera mainCamera;
 
     [Header("Prefabs")]
     [SerializeField] private Placeable placePrefab;
@@ -32,31 +33,18 @@ public class PlacementSystem : MonoBehaviour
     private bool isPlaceable = true;
 
     // Save/Load state
-    private readonly List<PlacementRecord> placed = new List<PlacementRecord>();
-    // private readonly Dictionary<string, Placeable> prefabIndex = new Dictionary<string, Placeable>();
-    // private readonly Dictionary<int, Placeable> prefabIndexById = new Dictionary<int, Placeable>();
     private readonly Dictionary<PlacementType, Transform> rootIndex = new Dictionary<PlacementType, Transform>();
     private bool isLoading;
+
+    // event
+    public event Action<PlacementRecord[,]> PlacementUpdated;
+    private bool isPlacing = false;
 
 
     private void Start()
     {
         if (mainCamera == null)
             mainCamera = Camera.main;
-
-        // // Build prefab index by name for load-time lookup
-        // if (placePrefab != null && !placeablePrefabs.Contains(placePrefab))
-        //     placeablePrefabs.Add(placePrefab);
-
-        // foreach (var p in placeablePrefabs)
-        // {
-        //     if (p == null) continue;
-        //     if (!prefabIndex.ContainsKey(p.name))
-        //         prefabIndex[p.name] = p;
-        //     var id = p.StableId != 0 ? p.StableId : ComputeStableId(p.name);
-        //     if (!prefabIndexById.ContainsKey(id))
-        //         prefabIndexById[id] = p;
-        // }
 
         // Map building type -> parent root
         rootIndex.Clear();
@@ -68,11 +56,7 @@ public class PlacementSystem : MonoBehaviour
             }
         }
 
-        if (placePrefab != null)
-        {
-            previewCell = Instantiate(placePrefab);
-            previewCell.gameObject.SetActive(false);
-        }
+
 
         // Load saved placements at startup
         // LoadPlacements();
@@ -80,6 +64,10 @@ public class PlacementSystem : MonoBehaviour
 
     private void Update()
     {
+        if (!isPlacing)
+            return;
+
+
         UpdatePreview();
         if (isPlaceable)
         {
@@ -110,10 +98,8 @@ public class PlacementSystem : MonoBehaviour
                 {
                     previewCell.gameObject.SetActive(true);
                     previewCell.transform.position = pointer;
-                    // Optional: align to ground normal
-                    // previewInstance.up = hit.normal;
 
-                    // Change color based on multi-cell availability
+                    // 배치 가능하면 초록색, 불가능하면 빨간색
                     isPlaceable = CheckCellAvailability(currentCell);
                     previewCell.SetPreviewColor(isPlaceable);
                 }
@@ -156,19 +142,9 @@ public class PlacementSystem : MonoBehaviour
             previewCell.SetPreviewColor(true, true);
 
             grid.LogCurrentGridState();
-
-            // Save record and persist
-            var rec = new PlacementRecord
-            {
-                id = placePrefab != null ? (placePrefab.StableId != 0 ? placePrefab.StableId : ComputeStableId(placePrefab.name)) : 0,
-                x = currentCell.x,
-                y = currentCell.y
-            };
-            placed.Add(rec);
-            SavePlacements();
+            OnPlacementUpdated();
         }
     }
-
 
     private bool CheckCellAvailability(Vector2Int rootCell)
     {
@@ -180,6 +156,24 @@ public class PlacementSystem : MonoBehaviour
     {
         if (grid == null || placePrefab == null) return;
         grid.SetOccupiedRect(rootCell, placePrefab.CellSize, value);
+    }
+
+    private void OnPlacementUpdated()
+    {
+        PlacementUpdated?.Invoke(grid.GetGridRecords());
+    }
+
+
+    public void StartPlacing(GameObject prefab)
+    {
+        placePrefab = prefab.GetComponent<Placeable>();
+
+        if (placePrefab != null)
+        {
+            previewCell = Instantiate(placePrefab);
+        }
+
+        isPlacing = true;
     }
 
     // private void LoadPlacements()
@@ -224,13 +218,6 @@ public class PlacementSystem : MonoBehaviour
     //     }
     // }
 
-    private void SavePlacements()
-    {
-        if (isLoading) return;
-        var data = new PlacementSaveData { records = new List<PlacementRecord>(placed) };
-        PlacementSaveService.Save(data);
-    }
-
     [ContextMenu("DEBUG: Clear Placements")]
     public void ClearPlacementsEditor()
     {
@@ -256,29 +243,8 @@ public class PlacementSystem : MonoBehaviour
             grid.ClearAllOccupancy();
         }
 
-        placed.Clear();
-
-        PlacementSaveService.Save(new PlacementSaveData());
-
         Debug.Log("[PlacementSystem] Cleared all placements and saved state.");
     }
 
-    // Deterministic 32-bit FNV-1a hash for stable prefab ID
-    private static int ComputeStableId(string s)
-    {
-        if (string.IsNullOrEmpty(s)) return 0;
-        unchecked
-        {
-            const uint fnvOffset = 2166136261;
-            const uint fnvPrime = 16777619;
-            uint hash = fnvOffset;
-            for (int i = 0; i < s.Length; i++)
-            {
-                hash ^= s[i];
-                hash *= fnvPrime;
-            }
-            return (int)hash;
-        }
-    }
 }
 

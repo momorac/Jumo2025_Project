@@ -2,25 +2,20 @@ public class PlacementPresenter : IPresenter
 {
     private readonly PlacementView view;
     private readonly UIManager ui;
-
     private readonly WindowType windowType = WindowType.Placement;
 
-    public PlacementPresenter(PlacementView view, UIManager ui)
+    private readonly IPlacementController placementController;
+
+    public PlacementPresenter(PlacementView view, UIManager ui, IPlacementController placementController)
     {
         this.view = view;
         this.ui = ui;
-        // Initialize는 외부에서 호출
+        this.placementController = placementController;
     }
 
     public void Initialize()
     {
         view.CloseClicked += OnCloseClicked;
-
-
-
-
-
-
     }
 
     private void OnCloseClicked()
@@ -31,6 +26,5 @@ public class PlacementPresenter : IPresenter
     public void Dispose()
     {
         view.CloseClicked -= OnCloseClicked;
-        // placementSystem 구독 해제 등
     }
 }

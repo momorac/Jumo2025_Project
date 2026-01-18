@@ -29,7 +29,7 @@ public static class SaveService
             }
             else
             {
-                // 새로운 저장 파일 생성
+                // 기존에 저장된 파일 없으면 새로운 저장 파일 생성
                 var newData = new GameMetaData();
                 Save(newData);
             }

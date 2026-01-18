@@ -3,21 +3,24 @@ using UnityEngine;
 public class GridSystem : MonoBehaviour
 {
     [Header("Grid Settings")]
-    public int width;
-    public int height;
-    public float cellSize;
-    public Vector3 origin;
+    [SerializeField] private Vector2Int size;
+    [SerializeField] private float cellSize;
+    [SerializeField] private Vector3 origin;
+    public Vector2Int Size => size;
+
+    private int width => size.x;
+    private int height => size.y;
 
     [Header("Debug / Visuals")]
-    public bool drawGizmos;
-    public Color gridColor;
-    public Color boundsColor;
+    [SerializeField] private bool drawGizmos;
+    [SerializeField] private Color gridColor;
+    [SerializeField] private Color boundsColor;
 
-    private bool[,] occupied;
+    private PlacementRecord[,] grid;
 
     private void Awake()
     {
-        occupied = new bool[width, height];
+        grid = new PlacementRecord[width, height];
     }
 
     public bool IsInBounds(int x, int z)
@@ -33,13 +36,14 @@ public class GridSystem : MonoBehaviour
     public bool IsOccupied(Vector2Int cell)
     {
         if (!IsInBounds(cell)) return true; // Treat out-of-bounds as occupied
-        return occupied[cell.x, cell.y];
+        return grid[cell.x, cell.y].occupied;
     }
 
-    public void SetOccupied(Vector2Int cell, bool value)
+    public void SetOccupied(Vector2Int root, Vector2Int cell, bool value)
     {
         if (!IsInBounds(cell)) return;
-        occupied[cell.x, cell.y] = value;
+        grid[cell.x, cell.y].occupied = value;
+        grid[cell.x, cell.y].root = root;
     }
 
     // Occupy or free a rectangle region starting at root (lower-left), with given size (width,height)
@@ -50,7 +54,10 @@ public class GridSystem : MonoBehaviour
             for (int dz = 0; dz < size.y; dz++)
             {
                 var cell = new Vector2Int(root.x + dx, root.y + dz);
-                if (IsInBounds(cell)) SetOccupied(cell, value);
+                if (IsInBounds(cell))
+                {
+                    SetOccupied(root, cell, value);
+                }
             }
         }
     }
@@ -79,7 +86,8 @@ public class GridSystem : MonoBehaviour
         {
             for (int z = 0; z < height; z++)
             {
-                occupied[x, z] = false;
+                grid[x, z].occupied = false;
+                grid[x, z].root = new Vector2Int(-1, -1);
             }
         }
     }
@@ -107,11 +115,16 @@ public class GridSystem : MonoBehaviour
         {
             for (int x = 0; x < width; x++)
             {
-                gridState += occupied[x, z] ? "[X]" : "[ ]";
+                gridState += grid[x, z].occupied ? "[X]" : "[ ]";
             }
             gridState += "\n";
         }
         Debug.Log(gridState);
+    }
+
+    public PlacementRecord[,] GetGridRecords()
+    {
+        return grid;
     }
 
     private void OnDrawGizmos()
