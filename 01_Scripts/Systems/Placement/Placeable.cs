@@ -1,16 +1,9 @@
 using UnityEngine;
 
-public enum PlaceableType
-{
-    Tile,
-    Facility,
-    Decoration
-}
-
 public class Placeable : MonoBehaviour
 {
-    [SerializeField] private PlaceableType type;
-    public PlaceableType Type => type;
+    [SerializeField] private PlacementType type;
+    public PlacementType Type => type;
     [SerializeField] private Renderer[] renderers;
 
     // Stable numeric identifier (set in Inspector or via editor tooling)

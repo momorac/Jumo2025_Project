@@ -9,8 +9,8 @@ public class GameSessionRunner : MonoBehaviour
     [Header("Application Systems")]
     [SerializeField] private PlacementSystem placementSystem;
     public PlacementSystem PlacementSystem => placementSystem;
-    [SerializeField] private FacilityPlacementController facilityPlacementController;
-    public FacilityPlacementController FacilityPlacementController => facilityPlacementController;
+    [SerializeField] private PlacementController facilityPlacementController;
+    public PlacementController FacilityPlacementController => facilityPlacementController;
 
     // Core simulation instances
     private SimClock simClock;

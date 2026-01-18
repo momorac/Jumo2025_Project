@@ -15,7 +15,9 @@ public class PlacementPresenter : IPresenter
     public void Initialize()
     {
         view.CloseClicked += OnCloseClicked;
-        // placementSystem 사용 로직이 있다면 여기서 구독/초기화
+
+
+
 
 
 

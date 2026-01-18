@@ -5,7 +5,7 @@ using System.Collections.Generic;
 [Serializable]
 public class BuildingRoot
 {
-    public PlaceableType type;
+    public PlacementType type;
     public Transform root;
 }
 
@@ -17,7 +17,7 @@ public class PlacementSystem : MonoBehaviour
 
     [Header("Prefabs")]
     [SerializeField] private Placeable placePrefab;
-    [SerializeField] private List<Placeable> placeablePrefabs = new List<Placeable>();
+    // [SerializeField] private List<Placeable> placeablePrefabs = new List<Placeable>();
 
     [Header("Parents by Type")]
     [SerializeField] private List<BuildingRoot> buildingRoots = new List<BuildingRoot>();
@@ -33,9 +33,9 @@ public class PlacementSystem : MonoBehaviour
 
     // Save/Load state
     private readonly List<PlacementRecord> placed = new List<PlacementRecord>();
-    private readonly Dictionary<string, Placeable> prefabIndex = new Dictionary<string, Placeable>();
-    private readonly Dictionary<int, Placeable> prefabIndexById = new Dictionary<int, Placeable>();
-    private readonly Dictionary<PlaceableType, Transform> rootIndex = new Dictionary<PlaceableType, Transform>();
+    // private readonly Dictionary<string, Placeable> prefabIndex = new Dictionary<string, Placeable>();
+    // private readonly Dictionary<int, Placeable> prefabIndexById = new Dictionary<int, Placeable>();
+    private readonly Dictionary<PlacementType, Transform> rootIndex = new Dictionary<PlacementType, Transform>();
     private bool isLoading;
 
 
@@ -44,19 +44,19 @@ public class PlacementSystem : MonoBehaviour
         if (mainCamera == null)
             mainCamera = Camera.main;
 
-        // Build prefab index by name for load-time lookup
-        if (placePrefab != null && !placeablePrefabs.Contains(placePrefab))
-            placeablePrefabs.Add(placePrefab);
+        // // Build prefab index by name for load-time lookup
+        // if (placePrefab != null && !placeablePrefabs.Contains(placePrefab))
+        //     placeablePrefabs.Add(placePrefab);
 
-        foreach (var p in placeablePrefabs)
-        {
-            if (p == null) continue;
-            if (!prefabIndex.ContainsKey(p.name))
-                prefabIndex[p.name] = p;
-            var id = p.StableId != 0 ? p.StableId : ComputeStableId(p.name);
-            if (!prefabIndexById.ContainsKey(id))
-                prefabIndexById[id] = p;
-        }
+        // foreach (var p in placeablePrefabs)
+        // {
+        //     if (p == null) continue;
+        //     if (!prefabIndex.ContainsKey(p.name))
+        //         prefabIndex[p.name] = p;
+        //     var id = p.StableId != 0 ? p.StableId : ComputeStableId(p.name);
+        //     if (!prefabIndexById.ContainsKey(id))
+        //         prefabIndexById[id] = p;
+        // }
 
         // Map building type -> parent root
         rootIndex.Clear();
@@ -75,7 +75,7 @@ public class PlacementSystem : MonoBehaviour
         }
 
         // Load saved placements at startup
-        LoadPlacements();
+        // LoadPlacements();
     }
 
     private void Update()
@@ -182,47 +182,47 @@ public class PlacementSystem : MonoBehaviour
         grid.SetOccupiedRect(rootCell, placePrefab.CellSize, value);
     }
 
-    private void LoadPlacements()
-    {
-        isLoading = true;
-        try
-        {
-            var data = PlacementSaveService.Load();
-            if (data == null || data.records == null) return;
+    // private void LoadPlacements()
+    // {
+    //     isLoading = true;
+    //     try
+    //     {
+    //         var data = PlacementSaveService.Load();
+    //         if (data == null || data.records == null) return;
 
-            foreach (var rec in data.records)
-            {
-                var cell = new Vector2Int(rec.x, rec.y);
-                if (!grid.IsInBounds(cell)) continue;
+    //         foreach (var rec in data.records)
+    //         {
+    //             var cell = new Vector2Int(rec.x, rec.y);
+    //             if (!grid.IsInBounds(cell)) continue;
 
-                Placeable prefabToUse = null;
-                // Prefer ID-based lookup
-                if (rec.id != 0 && prefabIndexById.TryGetValue(rec.id, out var foundById))
-                {
-                    prefabToUse = foundById;
-                }
-                else if (placePrefab != null)
-                {
-                    prefabToUse = placePrefab; // fallback
-                }
+    //             Placeable prefabToUse = null;
+    //             // Prefer ID-based lookup
+    //             if (rec.id != 0 && prefabIndexById.TryGetValue(rec.id, out var foundById))
+    //             {
+    //                 prefabToUse = foundById;
+    //             }
+    //             else if (placePrefab != null)
+    //             {
+    //                 prefabToUse = placePrefab; // fallback
+    //             }
 
-                if (prefabToUse == null) continue;
+    //             if (prefabToUse == null) continue;
 
-                Vector3 pos = grid.GridToWorldPivot(cell);
-                rootIndex.TryGetValue(prefabToUse.Type, out var parent);
-                Instantiate(prefabToUse.transform, pos, Quaternion.identity, parent);
+    //             Vector3 pos = grid.GridToWorldPivot(cell);
+    //             rootIndex.TryGetValue(prefabToUse.Type, out var parent);
+    //             Instantiate(prefabToUse.transform, pos, Quaternion.identity, parent);
 
-                // Occupy cells based on prefab size
-                grid.SetOccupiedRect(cell, prefabToUse.CellSize, true);
+    //             // Occupy cells based on prefab size
+    //             grid.SetOccupiedRect(cell, prefabToUse.CellSize, true);
 
-                placed.Add(new PlacementRecord { id = ComputeStableId(prefabToUse.name), x = cell.x, y = cell.y });
-            }
-        }
-        finally
-        {
-            isLoading = false;
-        }
-    }
+    //             placed.Add(new PlacementRecord { id = ComputeStableId(prefabToUse.name), x = cell.x, y = cell.y });
+    //         }
+    //     }
+    //     finally
+    //     {
+    //         isLoading = false;
+    //     }
+    // }
 
     private void SavePlacements()
     {

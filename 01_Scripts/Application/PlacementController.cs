@@ -1,14 +1,14 @@
 using UnityEngine;
 
-public class FacilityPlacementController : MonoBehaviour
+public class PlacementController : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private FacilityRegistry registry;       // SO 에셋 드래그 할당
+    [SerializeField] private PlacementRegistry registry;       // SO 에셋 드래그 할당
     [SerializeField] private FacilityMetaData facilityMeta;   // SO 에셋 드래그 할당
     [SerializeField] private PlacementSystem placementSystem;
 
 
-    public void Initialize(FacilityRegistry reg, FacilityMetaData meta)
+    public void Initialize(PlacementRegistry reg, FacilityMetaData meta)
     {
         registry = reg;
         facilityMeta = meta;
