@@ -27,11 +27,7 @@ public class PlacementController : MonoBehaviour, IPlacementController
 
     public bool CanPlace(FacilityType type)
     {
-        var availableFacilities = App.GameData.FacilityMetaData.GetUnlockedTypes();
-        if (registry == null || availableFacilities == null) return false;
-
-        var prefab = registry.GetPrefab(type);
-        return prefab != null && availableFacilities.Contains(type);
+        return true;
     }
 
     public GameObject Place(FacilityType type, Vector3 pos, Quaternion rot)
@@ -55,6 +51,16 @@ public class PlacementController : MonoBehaviour, IPlacementController
 
         // Debug.LogWarning($"Placement failed at {pos} for {type}");
         return null;
+    }
+
+    public GameObject GetGameObjectPrefab(FacilityType type)
+    {
+        return registry.GetGameObjectPrefab(type);
+    }
+
+    public GameObject GetUiIconPrefab(FacilityType type)
+    {
+        return registry.GetUiIconPrefab(type);
     }
 
     public Vector2Int GetGridSize()

@@ -25,13 +25,14 @@ public static class SaveService
 #if UNITY_EDITOR
                 Debug.Log($"[SaveService] Loaded from {Path}: {json}");
 #endif
-                return data ?? new GameMetaData();
+                return data;
             }
             else
             {
                 // 기존에 저장된 파일 없으면 새로운 저장 파일 생성
                 var newData = new GameMetaData();
                 Save(newData);
+                return newData;
             }
         }
         catch (System.Exception e)

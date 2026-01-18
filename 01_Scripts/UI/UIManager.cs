@@ -83,7 +83,7 @@ public class UIManager : MonoBehaviour
         {
             var p = CreatePresenter(window, view);
             presenters[window] = p;
-            p.Initialize(); // 생성 직후 초기화
+            presenters[window].Initialize();
         }
 
         currentOpenWindow = window;

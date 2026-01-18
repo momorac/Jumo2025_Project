@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class PlacementPresenter : IPresenter
 {
     private readonly PlacementView view;
@@ -15,7 +17,40 @@ public class PlacementPresenter : IPresenter
 
     public void Initialize()
     {
+        Debug.Log("PlacementPresenter Initialize");
         view.CloseClicked += OnCloseClicked;
+        AddAvailableFacility();
+    }
+
+    public void Dispose()
+    {
+        Debug.Log("PlacementPresenter Dispose");
+        view.ClearFacilityCells();
+        view.CloseClicked -= OnCloseClicked;
+    }
+
+    private void AddAvailableFacility()
+    {
+        var availableFacilities = App.GameData.FacilityMetaData.GetUnlockedTypes();
+        if (availableFacilities == null) return;
+
+        foreach (var type in availableFacilities)
+        {
+            if (placementController.CanPlace(type))
+            {
+                var prefab = (placementController as PlacementController).GetUiIconPrefab(type);
+
+                if (prefab == null)
+                {
+                    Debug.LogWarning($"No UI prefab found for facility type: {type}");
+                    continue;
+                }
+                else
+                {
+                    view.AddFacilityCell(type, prefab);
+                }
+            }
+        }
     }
 
     private void OnCloseClicked()
@@ -23,8 +58,4 @@ public class PlacementPresenter : IPresenter
         ui.CloseWindow(windowType);
     }
 
-    public void Dispose()
-    {
-        view.CloseClicked -= OnCloseClicked;
-    }
 }

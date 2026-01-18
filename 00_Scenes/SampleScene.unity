@@ -905,7 +905,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 939d1d5466e9a6149a980601851607b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridSystem
-  size: {x: 0, y: 0}
+  size: {x: 10, y: 10}
   cellSize: 1
   origin: {x: -5, y: 0, z: -5}
   drawGizmos: 1
