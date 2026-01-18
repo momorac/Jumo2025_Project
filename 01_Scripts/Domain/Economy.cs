@@ -1,13 +1,13 @@
 using System;
 
-public class Wallet
+public class Economy
 {
     public int Money { get; private set; }
 
-    public Wallet(int initialMoney = 0)
+    public Economy(int balance)
     {
-        if (initialMoney < 0) throw new ArgumentOutOfRangeException(nameof(initialMoney));
-        Money = initialMoney;
+        if (balance < 0) throw new ArgumentOutOfRangeException(nameof(balance));
+        Money = balance;
     }
 
     public void Add(int amount)

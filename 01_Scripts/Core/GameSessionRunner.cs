@@ -16,7 +16,6 @@ public class GameSessionRunner : MonoBehaviour
     private PhaseController phaseController;
 
     // Service instances
-    private Wallet wallet;
     private EconomyService economy;
 
     private void Awake()
@@ -39,8 +38,7 @@ public class GameSessionRunner : MonoBehaviour
 
         // Economy as on-demand service (not auto-ticked)
         var save = SaveService.Load();
-        wallet = new Wallet(initialMoney: save.WalletBalance);
-        economy = new EconomyService(wallet);
+        economy = new EconomyService(save.EconomyBalance);
     }
 
     private void Update()
@@ -64,6 +62,6 @@ public class GameSessionRunner : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        SaveService.Save(new MetaGameData { WalletBalance = wallet.Money });
+        SaveService.Save(new MetaGameData { EconomyBalance = economy.GetMoney() });
     }
 }

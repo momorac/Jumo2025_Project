@@ -2,29 +2,29 @@ using System;
 
 public class EconomyService
 {
-    private readonly Wallet wallet;
+    private readonly Economy economy;
 
     public event Action<int> OnMoneyChanged;
 
-    public EconomyService(Wallet wallet)
+    public EconomyService(int balance)
     {
-        this.wallet = wallet;
+        economy = new Economy(balance);
     }
 
     public void AddIncome(int amount)
     {
-        var before = wallet.Money;
-        wallet.Add(amount);
-        if (wallet.Money != before) OnMoneyChanged?.Invoke(wallet.Money);
+        var before = economy.Money;
+        economy.Add(amount);
+        if (economy.Money != before) OnMoneyChanged?.Invoke(economy.Money);
     }
 
     public bool TrySpend(int amount)
     {
-        var before = wallet.Money;
-        var ok = wallet.TrySpend(amount);
-        if (ok && wallet.Money != before) OnMoneyChanged?.Invoke(wallet.Money);
+        var before = economy.Money;
+        var ok = economy.TrySpend(amount);
+        if (ok && economy.Money != before) OnMoneyChanged?.Invoke(economy.Money);
         return ok;
     }
 
-    public int GetMoney() => wallet.Money;
+    public int GetMoney() => economy.Money;
 }
