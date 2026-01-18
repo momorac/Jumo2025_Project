@@ -13,7 +13,7 @@ public class BuildingRoot
 public class PlacementSystem : MonoBehaviour
 {
     [Header("References")]
-    public GridSystem grid;
+    [SerializeField] private GridSystem grid;
     [SerializeField] private Camera mainCamera;
 
     [Header("Prefabs")]
@@ -161,6 +161,11 @@ public class PlacementSystem : MonoBehaviour
     private void OnPlacementUpdated()
     {
         PlacementUpdated?.Invoke(grid.GetGridRecords());
+    }
+
+    public Vector2Int GetGridSize()
+    {
+        return grid.GetGridSize();
     }
 
 

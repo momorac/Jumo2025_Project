@@ -12,9 +12,9 @@ public class GridSystem : MonoBehaviour
     private int height => size.y;
 
     [Header("Debug / Visuals")]
-    [SerializeField] private bool drawGizmos;
-    [SerializeField] private Color gridColor;
-    [SerializeField] private Color boundsColor;
+    public bool drawGizmos;
+    public Color gridColor;
+    public Color boundsColor;
 
     private PlacementRecord[,] grid;
 
@@ -120,6 +120,11 @@ public class GridSystem : MonoBehaviour
             gridState += "\n";
         }
         Debug.Log(gridState);
+    }
+
+    public Vector2Int GetGridSize()
+    {
+        return size;
     }
 
     public PlacementRecord[,] GetGridRecords()

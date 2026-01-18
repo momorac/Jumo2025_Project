@@ -1,72 +1,70 @@
+using System;
 using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(PlacementSystem))]
 public class PlacementController : MonoBehaviour, IPlacementController
 {
     [Header("References")]
     [SerializeField] private PlacementRegistry registry;    // SO 에셋 드래그 할당
 
     private PlacementSystem placementSystem;
+    private Action<PlacementRecord[,]> placementUpdatedHandler;
 
-    public void Initialize(PlacementSystem _placementSystem)
+    public void Initialize(Action<PlacementRecord[,]> onPlacementUpdated)
     {
-        placementSystem = _placementSystem;
+        if (placementSystem == null)
+            placementSystem = GetComponent<PlacementSystem>();
+
+        // 중복 구독 방지
+        if (placementUpdatedHandler != null)
+            placementSystem.PlacementUpdated -= placementUpdatedHandler;
+
+        placementUpdatedHandler = onPlacementUpdated;
+        if (placementUpdatedHandler != null)
+            placementSystem.PlacementUpdated += placementUpdatedHandler;
     }
 
     public bool CanPlace(FacilityType type)
     {
         var availableFacilities = App.GameData.FacilityMetaData.GetUnlockedTypes();
-
         if (registry == null || availableFacilities == null) return false;
+
         var prefab = registry.GetPrefab(type);
-        return availableFacilities.Contains(type) && prefab != null;
+        return prefab != null && availableFacilities.Contains(type);
     }
 
     public GameObject Place(FacilityType type, Vector3 pos, Quaternion rot)
     {
-        if (!CanPlace(type))
-        {
-            Debug.LogWarning($"Cannot place facility: {type}");
-            return null;
-        }
+        // if (!CanPlace(type))
+        // {
+        //     Debug.LogWarning($"Cannot place facility: {type}");
+        //     return null;
+        // }
 
-        var prefab = registry.GetPrefab(type);
-        var go = Instantiate(prefab, pos, rot);
+        // var prefab = registry.GetPrefab(type);
 
-        var service = go.GetComponent<IFacilityService>();
-        service?.Initialize();
-        service?.OnPlaced();
+        // // 권장: PlacementSystem이 그리드 검증/스냅/레코드 갱신/Instantiate/이벤트를 담당
+        // if (placementSystem.TryPlace(prefab, type, pos, rot, out var go))
+        // {
+        //     var service = go.GetComponent<IFacilityService>();
+        //     service?.Initialize();
+        //     service?.OnPlaced();
+        //     return go;
+        // }
 
-        return go;
+        // Debug.LogWarning($"Placement failed at {pos} for {type}");
+        return null;
     }
 
-    // public GameObject Place(FacilityType type, Vector3 pos, Quaternion rot)
-    // {
-    //     if (facilityMeta != null && !facilityMeta.IsUnlocked(type))
-    //     {
-    //         Debug.LogWarning($"Locked facility: {type}");
-    //         return null;
-    //     }
+    public Vector2Int GetGridSize()
+    {
+        return placementSystem.GetGridSize();
+    }
 
-    //     if (registry == null)
-    //     {
-    //         Debug.LogError("FacilityRegistry is not assigned.");
-    //         return null;
-    //     }
-
-    //     var prefab = registry.GetPrefab(type);
-    //     if (prefab == null)
-    //     {
-    //         Debug.LogError($"Prefab not found for {type}.");
-    //         return null;
-    //     }
-
-    //     var go = Instantiate(prefab, pos, rot);
-
-    //     var service = go.GetComponent<IFacilityService>();
-    //     service?.Initialize();
-    //     service?.OnPlaced();
-
-    //     return go;
-    // }
+    private void OnDestroy()
+    {
+        if (placementSystem != null && placementUpdatedHandler != null)
+            placementSystem.PlacementUpdated -= placementUpdatedHandler;
+    }
 }

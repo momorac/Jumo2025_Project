@@ -8,7 +8,6 @@ public class GameSessionRunner : MonoBehaviour
 
     [Header("Application Systems")]
     [SerializeField] private UIManager uiManager;
-    [SerializeField] private PlacementSystem placementSystem;
     [SerializeField] private PlacementController placementController;
 
     // 코어 시뮬레이션 인스턴스
@@ -41,8 +40,7 @@ public class GameSessionRunner : MonoBehaviour
         economy = new EconomyService(App.GameData.EconomyBalance);
 
         // placement 관련 이벤트 구독
-        placementController.Initialize(placementSystem);
-        placementSystem.PlacementUpdated += OnPlacementUpdated;
+        placementController.Initialize(OnPlacementUpdated);
     }
 
     private void Start()
@@ -80,7 +78,7 @@ public class GameSessionRunner : MonoBehaviour
     private void OnPlacementUpdated(PlacementRecord[,] records)
     {
         if (App.GameData == null) return;
-        App.SetPlacementData(new PlacementMetaData(placementSystem.grid.Size, records));
+        App.SetPlacementData(new PlacementMetaData(placementController.GetGridSize(), records));
         Debug.Log("[GameSessionRunner] Placement data updated in GameMetaData.");
     }
 
