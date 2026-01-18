@@ -36,7 +36,7 @@ public class PlacementMetaData
 [System.Serializable]
 public class FacilityMetaData
 {
-    private List<FacilityType> unlockedFacilities = new List<FacilityType>();
+    public List<FacilityType> unlockedFacilities = new List<FacilityType>();
 
     public bool IsUnlocked(FacilityType type)
     {
