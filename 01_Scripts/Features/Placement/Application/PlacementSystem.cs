@@ -143,7 +143,7 @@ public class PlacementSystem : MonoBehaviour
             Vector3 pointer = grid.GridToWorldPivot(currentCell);
             if (placePrefab != null)
             {
-                rootIndex.TryGetValue(placePrefab.Type.PlacementType, out var parent);
+                rootIndex.TryGetValue(placePrefab.Type.PlaceableType, out var parent);
                 Transform placed = Instantiate(placePrefab.transform, pointer, Quaternion.identity, parent);
             }
 
@@ -165,7 +165,7 @@ public class PlacementSystem : MonoBehaviour
     private void SetCellsOccupied(Int2 rootCell, bool value)
     {
         if (grid == null || placePrefab == null) return;
-        grid.SetOccupiedRect(rootCell, placePrefab.CellSize, value);
+        grid.SetOccupiedRect(rootCell, placePrefab.CellSize, value, placePrefab.Type);
     }
 
     private void OnPlacementUpdated()

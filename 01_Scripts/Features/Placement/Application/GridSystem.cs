@@ -46,15 +46,16 @@ public class GridSystem : MonoBehaviour
         return grid[cell.x, cell.z].occupied;
     }
 
-    public void SetOccupied(Int2 root, Int2 cell, bool value)
+    public void SetOccupied(Int2 root, Int2 cell, bool value, Placeable placedType)
     {
         if (!IsInBounds(cell)) return;
         grid[cell.x, cell.z].occupied = value;
         grid[cell.x, cell.z].root = root;
+        grid[cell.x, cell.z].placedType = placedType;
     }
 
     // Occupy or free a rectangle region starting at root (lower-left), with given size (width,height)
-    public void SetOccupiedRect(Int2 root, Int2 size, bool value)
+    public void SetOccupiedRect(Int2 root, Int2 size, bool value, Placeable placedType)
     {
         for (int dx = 0; dx < size.x; dx++)
         {
@@ -63,7 +64,7 @@ public class GridSystem : MonoBehaviour
                 var cell = new Int2(root.x + dx, root.z + dz);
                 if (IsInBounds(cell))
                 {
-                    SetOccupied(root, cell, value);
+                    SetOccupied(root, cell, value, placedType);
                 }
             }
         }

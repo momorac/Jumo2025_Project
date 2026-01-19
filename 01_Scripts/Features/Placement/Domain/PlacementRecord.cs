@@ -7,14 +7,14 @@ using UnityEngine;
 public class PlacementRecord
 {
     public bool occupied;
-    public GameObject prefab;
+    public Placeable placedType;
     public Int2 root;
     public Transform transform;
 
     public PlacementRecord()
     {
         this.occupied = false;
-        this.prefab = null;
+        this.placedType = null;
         this.root = new Int2(-1, -1);
         this.transform = null;
     }
