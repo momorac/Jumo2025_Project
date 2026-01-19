@@ -141,7 +141,7 @@ public class GridSystem : MonoBehaviour
 
     public PlacementRecord[,] GetGridRecords()
     {
-        return grid;
+        return grid.Clone() as PlacementRecord[,];
     }
 
     private void OnDrawGizmos()

@@ -35,9 +35,6 @@ public class PlacementSystem : MonoBehaviour
     // Save/Load state
     private readonly Dictionary<PlaceableType, Transform> rootIndex = new Dictionary<PlaceableType, Transform>();
     private bool isLoading;
-
-    // event
-    public event Action<PlacementRecord[,]> PlacementUpdated;
     private bool isPlacing = false;
 
 
@@ -160,14 +157,15 @@ public class PlacementSystem : MonoBehaviour
 
     private void OnPlacementUpdated()
     {
-        PlacementUpdated?.Invoke(grid.GetGridRecords());
+        if (App.GameData == null) return;
+        App.SetPlacementData(new PlacementData(grid.GetGridSize(), grid.GetGridRecords()));
+        Debug.Log("[GameSessionRunner] Placement data updated in GameMetaData.");
     }
 
     public Vector2Int GetGridSize()
     {
         return grid.GetGridSize();
     }
-
 
     public void StartPlacing(Placeable placeable, GameObject prefab)
     {

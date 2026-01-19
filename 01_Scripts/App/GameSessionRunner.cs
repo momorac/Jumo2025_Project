@@ -39,8 +39,7 @@ public class GameSessionRunner : MonoBehaviour
         App.SetGameData(SaveService.Load());
         economy = new EconomyService(App.GameData.EconomyBalance);
 
-        // placement 관련 이벤트 구독
-        placementController.Initialize(OnPlacementUpdated);
+        placementController.Initialize();
     }
 
     private void Start()
@@ -74,13 +73,6 @@ public class GameSessionRunner : MonoBehaviour
         SaveService.Save(App.GameData);
     }
 
-    // PlacementSystem 이벤트 핸들러
-    private void OnPlacementUpdated(PlacementRecord[,] records)
-    {
-        if (App.GameData == null) return;
-        App.SetPlacementData(new PlacementData(placementController.GetGridSize(), records));
-        Debug.Log("[GameSessionRunner] Placement data updated in GameMetaData.");
-    }
 
     private void OnApplicationQuit()
     {

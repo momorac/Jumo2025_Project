@@ -10,20 +10,11 @@ public class PlacementController : MonoBehaviour, IPlacementController
     [SerializeField] private PlacementRegistry registry;    // SO 에셋 드래그 할당
 
     private PlacementSystem placementSystem;
-    private Action<PlacementRecord[,]> placementUpdatedHandler;
 
-    public void Initialize(Action<PlacementRecord[,]> onPlacementUpdated)
+    public void Initialize()
     {
         if (placementSystem == null)
             placementSystem = GetComponent<PlacementSystem>();
-
-        // 중복 구독 방지
-        if (placementUpdatedHandler != null)
-            placementSystem.PlacementUpdated -= placementUpdatedHandler;
-
-        placementUpdatedHandler = onPlacementUpdated;
-        if (placementUpdatedHandler != null)
-            placementSystem.PlacementUpdated += placementUpdatedHandler;
     }
 
     public bool CanPlace(Placeable type)
@@ -153,11 +144,5 @@ public class PlacementController : MonoBehaviour, IPlacementController
             Debug.LogWarning($"UI Icon prefab missing for placeable {decorationType}");
         }
         return icon;
-    }
-
-    private void OnDestroy()
-    {
-        if (placementSystem != null && placementUpdatedHandler != null)
-            placementSystem.PlacementUpdated -= placementUpdatedHandler;
     }
 }
