@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 776256900232011852}
   - component: {fileID: 3713585594503170871}
   m_Layer: 0
-  m_Name: Hearth
+  m_Name: HearthObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
