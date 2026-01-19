@@ -22,7 +22,7 @@ public class PlaceableCellView : MonoBehaviour, IView
     public void Bind(Placeable type, Sprite icon)
     {
         this.type = type;
-        // text_name.text = type.GetDisplayName();
+        text_name.text = type.GetDisplayName();
         image_icon.sprite = icon;
     }
 

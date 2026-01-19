@@ -36,8 +36,8 @@ public class PlacementPresenter : IPresenter
         var facilities = placementController.GetAvailableFacilities();
         foreach (var facility in facilities)
         {
-            GameObject prefab = placementController.GetUiIconPrefab(facility);
-            view.AddPlaceableCell(new Facility(facility), prefab);
+            Sprite icon = placementController.GetUiIcon(facility);
+            view.AddPlaceableCell(new Facility(facility), icon);
         }
     }
 

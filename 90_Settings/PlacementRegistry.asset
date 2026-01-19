@@ -16,5 +16,6 @@ MonoBehaviour:
   - type: 1
     component:
       gameObjectPrefab: {fileID: 6731427639401032758, guid: 9763473db875b804b9c44f47a4d7d3d0, type: 3}
-      UiIconPrefab: {fileID: 7931787171496315985, guid: 7472ccc69a520394aa94aa46d914fcac, type: 3}
+      UiIconImage: {fileID: 21300000, guid: 44a054df1702e39458b7072b08d0f212, type: 3}
+  tileEntries: []
   decorationEntries: []

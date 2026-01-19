@@ -33,9 +33,10 @@ public enum DecorationType
 
 // Base class for all placement types
 [Serializable]
-public class Placeable
+public abstract class Placeable
 {
     public PlaceableType PlacementType;
+    public abstract string GetDisplayName();
 }
 
 [Serializable]
@@ -47,6 +48,11 @@ public class Facility : Placeable
     {
         PlacementType = PlaceableType.Facility;
         FacilityType = facilityType;
+    }
+
+    public override string GetDisplayName()
+    {
+        return FacilityType.ToString();
     }
 }
 
@@ -60,6 +66,11 @@ public class Tile : Placeable
         PlacementType = PlaceableType.Tile;
         TileType = tileType;
     }
+
+    public override string GetDisplayName()
+    {
+        return TileType.ToString();
+    }
 }
 
 [Serializable]
@@ -71,6 +82,11 @@ public class Decoration : Placeable
     {
         PlacementType = PlaceableType.Decoration;
         DecorationType = decorationType;
+    }
+
+    public override string GetDisplayName()
+    {
+        return DecorationType.ToString();
     }
 }
 

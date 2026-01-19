@@ -723,6 +723,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c485d4f40b2c104097c09ccffdfa3d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlacementView
+  placeableCellPrefab: {fileID: 7931787171496315985, guid: 7472ccc69a520394aa94aa46d914fcac, type: 3}
   button_close: {fileID: 2242917328072158786}
   content_parent: {fileID: 4769397437788113793}
 --- !u!1 &8619560754620894403
