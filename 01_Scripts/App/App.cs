@@ -21,7 +21,6 @@ public static class App
         GameDataChanged?.Invoke(GameData);
     }
 
-
     // 안전 사용 헬퍼
     public static bool HasGameData => GameData != null;
 }
