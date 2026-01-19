@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlacementCellPresenter : IPresenter
+public class PlaceableCellPresenter : IPresenter
 {
     public void Dispose()
     {
