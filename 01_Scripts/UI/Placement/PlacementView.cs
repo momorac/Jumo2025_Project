@@ -17,7 +17,7 @@ public class PlacementView : WindowViewBase
     public void AddPlaceableCell(Placeable placeable, GameObject prefab)
     {
         var itemObj = Instantiate(prefab, content_parent);
-        var itemView = itemObj.GetComponent<PlacementCellView>();
+        var itemView = itemObj.GetComponent<PlaceableCellView>();
         itemView.Bind(placeable);
     }
 

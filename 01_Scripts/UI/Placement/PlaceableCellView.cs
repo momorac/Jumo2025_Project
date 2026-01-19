@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlacementCellView : MonoBehaviour, IView
+public class PlaceableCellView : MonoBehaviour, IView
 {
 
 
