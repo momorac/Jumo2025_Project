@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlacementComponent
 {
     public GameObject gameObjectPrefab;
-    public GameObject UiIconPrefab;
+    public Sprite UiIconImage;
 }
 
 [CreateAssetMenu(menuName = "Settings/Facility Registry", fileName = "PlacementRegistry")]
@@ -101,27 +101,27 @@ public class PlacementRegistry : ScriptableObject
         return null;
     }
 
-    public GameObject GetUiIconPrefab(FacilityType facilityType)
+    public Sprite GetUiIcon(FacilityType facilityType)
     {
         if (facilityIndex != null && facilityIndex.TryGetValue(facilityType, out var component))
         {
-            return component.UiIconPrefab;
+            return component.UiIconImage;
         }
         return null;
     }
-    public GameObject GetUiIconPrefab(TileType tileType)
+    public Sprite GetUiIcon(TileType tileType)
     {
         if (tileIndex != null && tileIndex.TryGetValue(tileType, out var component))
         {
-            return component.UiIconPrefab;
+            return component.UiIconImage;
         }
         return null;
     }
-    public GameObject GetUiIconPrefab(DecorationType decorationType)
+    public Sprite GetUiIcon(DecorationType decorationType)
     {
         if (decorationIndex != null && decorationIndex.TryGetValue(decorationType, out var component))
         {
-            return component.UiIconPrefab;
+            return component.UiIconImage;
         }
         return null;
     }

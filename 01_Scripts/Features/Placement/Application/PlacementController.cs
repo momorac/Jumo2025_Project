@@ -103,32 +103,32 @@ public class PlacementController : MonoBehaviour, IPlacementController
         return prefab;
     }
 
-    public GameObject GetUiIconPrefab(FacilityType facilityType)
+    public Sprite GetUiIcon(FacilityType facilityType)
     {
-        GameObject prefab = registry.GetUiIconPrefab(facilityType);
-        if (prefab == null)
+        Sprite icon = registry.GetUiIcon(facilityType);
+        if (icon == null)
         {
             Debug.LogWarning($"UI Icon prefab missing for placeable {facilityType}");
         }
-        return prefab;
+        return icon;
     }
-    public GameObject GetUiIconPrefab(TileType tileType)
+    public Sprite GetUiIcon(TileType tileType)
     {
-        GameObject prefab = registry.GetUiIconPrefab(tileType);
-        if (prefab == null)
+        Sprite icon = registry.GetUiIcon(tileType);
+        if (icon == null)
         {
             Debug.LogWarning($"UI Icon prefab missing for placeable {tileType}");
         }
-        return prefab;
+        return icon;
     }
-    public GameObject GetUiIconPrefab(DecorationType decorationType)
+    public Sprite GetUiIcon(DecorationType decorationType)
     {
-        GameObject prefab = registry.GetUiIconPrefab(decorationType);
-        if (prefab == null)
+        Sprite icon = registry.GetUiIcon(decorationType);
+        if (icon == null)
         {
             Debug.LogWarning($"UI Icon prefab missing for placeable {decorationType}");
         }
-        return prefab;
+        return icon;
     }
 
     private void OnDestroy()

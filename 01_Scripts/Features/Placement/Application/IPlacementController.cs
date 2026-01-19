@@ -16,7 +16,7 @@ public interface IPlacementController
     public GameObject GetGameObjectPrefab(TileType tileType);
     public GameObject GetGameObjectPrefab(DecorationType decorationType);
 
-    public GameObject GetUiIconPrefab(FacilityType facilityType);
-    public GameObject GetUiIconPrefab(TileType tileType);
-    public GameObject GetUiIconPrefab(DecorationType decorationType);
+    public Sprite GetUiIcon(FacilityType facilityType);
+    public Sprite GetUiIcon(TileType tileType);
+    public Sprite GetUiIcon(DecorationType decorationType);
 }

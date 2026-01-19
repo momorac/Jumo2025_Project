@@ -4,6 +4,10 @@ using System;
 
 public class PlacementView : WindowViewBase
 {
+    [Header("References")]
+    [SerializeField] private GameObject placeableCellPrefab;
+
+    [Header("UI Elements")]
     [SerializeField] private Button button_close;
     [SerializeField] private Transform content_parent;
 
@@ -14,11 +18,11 @@ public class PlacementView : WindowViewBase
         button_close.onClick.AddListener(() => CloseClicked?.Invoke());
     }
 
-    public void AddPlaceableCell(Placeable placeable, GameObject prefab)
+    public void AddPlaceableCell(Placeable placeable, Sprite icon)
     {
-        var itemObj = Instantiate(prefab, content_parent);
+        var itemObj = Instantiate(placeableCellPrefab, content_parent);
         var itemView = itemObj.GetComponent<PlaceableCellView>();
-        itemView.Bind(placeable);
+        itemView.Bind(placeable, icon);
     }
 
     public void ClearCells()

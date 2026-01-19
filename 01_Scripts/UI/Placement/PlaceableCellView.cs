@@ -1,8 +1,13 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlaceableCellView : MonoBehaviour, IView
 {
+    [SerializeField] private TextMeshProUGUI text_name;
+    [SerializeField] private Image image_icon;
 
+    private Placeable type;
 
     public void Show()
     {
@@ -14,9 +19,11 @@ public class PlaceableCellView : MonoBehaviour, IView
         gameObject.SetActive(false);
     }
 
-    public void Bind(Placeable type)
+    public void Bind(Placeable type, Sprite icon)
     {
-        // Bind data to UI elements here
+        this.type = type;
+        // text_name.text = type.GetDisplayName();
+        image_icon.sprite = icon;
     }
 
 }
