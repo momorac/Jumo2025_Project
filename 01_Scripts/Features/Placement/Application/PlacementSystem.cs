@@ -38,7 +38,7 @@ public class PlacementSystem : MonoBehaviour
     private bool isPlacing = false;
 
 
-    private void Start()
+    void Start()
     {
         if (mainCamera == null)
             mainCamera = Camera.main;
@@ -56,7 +56,7 @@ public class PlacementSystem : MonoBehaviour
         SavePlacementData();
     }
 
-    private void Update()
+    void Update()
     {
         if (!isPlacing)
             return;
@@ -67,6 +67,22 @@ public class PlacementSystem : MonoBehaviour
             HandlePlacement();
         }
     }
+
+    #region Public Methods
+    public void StartPlacing(Placeable placeable, GameObject prefab)
+    {
+        placePrefab = prefab.GetComponent<PlaceableObject>();
+        placePrefab.Bind(placeable);
+
+        if (placePrefab != null)
+        {
+            previewCell = Instantiate(placePrefab);
+        }
+
+        isPlacing = true;
+    }
+
+    #endregion
 
     private void UpdatePreview()
     {
@@ -136,20 +152,8 @@ public class PlacementSystem : MonoBehaviour
 
             grid.LogCurrentGridState();
             OnPlacementUpdated();
+            OnPlacementFinished();
         }
-    }
-
-    public void StartPlacing(Placeable placeable, GameObject prefab)
-    {
-        placePrefab = prefab.GetComponent<PlaceableObject>();
-        placePrefab.Bind(placeable);
-
-        if (placePrefab != null)
-        {
-            previewCell = Instantiate(placePrefab);
-        }
-
-        isPlacing = true;
     }
 
     private bool CheckCellAvailability(Int2 rootCell)
@@ -171,9 +175,14 @@ public class PlacementSystem : MonoBehaviour
         Debug.Log("[GameSessionRunner] Placement data updated in GameMetaData.");
     }
 
-    public Int2 GetGridSize()
+    private void OnPlacementFinished()
     {
-        return grid.GetGridSize();
+        isPlacing = false;
+        if (previewCell != null)
+        {
+            Destroy(previewCell.gameObject);
+            previewCell = null;
+        }
     }
 
     private void SavePlacementData()
@@ -236,7 +245,7 @@ public class PlacementSystem : MonoBehaviour
         CleanPlacementData();
     }
 
-    public void ClearPlacements()
+    private void ClearPlacements()
     {
         for (int i = buildingRoots.Count - 1; i >= 0; i--)
         {

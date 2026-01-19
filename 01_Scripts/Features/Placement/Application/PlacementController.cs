@@ -51,12 +51,6 @@ public class PlacementController : MonoBehaviour, IPlacementController
         placementSystem.StartPlacing(placeable, prefab);
     }
 
-
-    public Int2 GetGridSize()
-    {
-        return placementSystem.GetGridSize();
-    }
-
     public IReadOnlyCollection<FacilityType> GetAvailableFacilities()
     {
         return App.GameData.PlaceableData.GetUnlockedFacilities();
