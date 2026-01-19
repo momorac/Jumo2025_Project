@@ -1,5 +1,6 @@
 using System.IO;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public static class SaveService
 {
@@ -7,7 +8,7 @@ public static class SaveService
 
     public static void Save(GameMetaData data)
     {
-        var json = JsonUtility.ToJson(data);
+        var json = JsonConvert.SerializeObject(data);
         File.WriteAllText(Path, json);
 #if UNITY_EDITOR
         Debug.Log($"[SaveService] Saved to {Path}: {json}");
@@ -21,7 +22,7 @@ public static class SaveService
             if (File.Exists(Path))
             {
                 var json = File.ReadAllText(Path);
-                var data = JsonUtility.FromJson<GameMetaData>(json);
+                var data = JsonConvert.DeserializeObject<GameMetaData>(json);
 #if UNITY_EDITOR
                 Debug.Log($"[SaveService] Loaded from {Path}: {json}");
 #endif
