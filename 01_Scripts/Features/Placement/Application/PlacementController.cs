@@ -57,7 +57,7 @@ public class PlacementController : MonoBehaviour, IPlacementController
     public void StartPlacing(Placeable placeable)
     {
         GameObject prefab = GetGameObjectPrefab(placeable);
-        placementSystem.StartPlacing(prefab);
+        placementSystem.StartPlacing(placeable, prefab);
     }
 
 

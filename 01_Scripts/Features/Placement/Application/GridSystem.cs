@@ -21,6 +21,13 @@ public class GridSystem : MonoBehaviour
     private void Awake()
     {
         grid = new PlacementRecord[width, height];
+        for (int x = 0; x < width; x++)
+        {
+            for (int z = 0; z < height; z++)
+            {
+                grid[x, z] = new PlacementRecord();
+            }
+        }
     }
 
     private void Start()

@@ -11,6 +11,11 @@ public class PlaceableObject : MonoBehaviour
 
     private static readonly int BaseColorID = Shader.PropertyToID("_BaseColor");
 
+    public void Bind(Placeable placeable)
+    {
+        this.type = placeable;
+    }
+
     public void SetPreviewColor(bool isAvailable, bool hasPlaced = false)
     {
         Color color = isAvailable ? Color.green : Color.red;

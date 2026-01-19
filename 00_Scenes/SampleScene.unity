@@ -185,9 +185,9 @@ MonoBehaviour:
   placePrefab: {fileID: -9051618894191336627, guid: 166b1baef84b5894886f7dea398d129b, type: 3}
   buildingRoots:
   - type: 0
-    root: {fileID: 1503452031}
-  - type: 1
     root: {fileID: 113877772}
+  - type: 1
+    root: {fileID: 1503452031}
   groundMask:
     serializedVersion: 2
     m_Bits: 64

@@ -169,9 +169,10 @@ public class PlacementSystem : MonoBehaviour
     }
 
 
-    public void StartPlacing(GameObject prefab)
+    public void StartPlacing(Placeable placeable, GameObject prefab)
     {
         placePrefab = prefab.GetComponent<PlaceableObject>();
+        placePrefab.Bind(placeable);
 
         if (placePrefab != null)
         {
