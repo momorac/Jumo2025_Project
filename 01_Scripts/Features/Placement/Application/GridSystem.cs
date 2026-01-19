@@ -30,11 +30,6 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        App.SetPlacementData(new PlacementData(size, grid));
-    }
-
     public bool IsInBounds(int x, int z)
     {
         return x >= 0 && z >= 0 && x < width && z < height;

@@ -52,6 +52,8 @@ public class PlacementSystem : MonoBehaviour
                 rootIndex[br.type] = br.root;
             }
         }
+
+        SavePlacementData();
     }
 
     private void Update()
@@ -165,13 +167,23 @@ public class PlacementSystem : MonoBehaviour
     private void OnPlacementUpdated()
     {
         if (App.GameData == null) return;
-        App.SetPlacementData(new PlacementData(grid.GetGridSize(), grid.GetGridRecords()));
+        SavePlacementData();
         Debug.Log("[GameSessionRunner] Placement data updated in GameMetaData.");
     }
 
     public Int2 GetGridSize()
     {
         return grid.GetGridSize();
+    }
+
+    private void SavePlacementData()
+    {
+        App.SetPlacementData(new PlacementData(grid.GetGridSize(), grid.GetGridRecords()));
+    }
+
+    private void CleanPlacementData()
+    {
+        App.SetPlacementData(new PlacementData(grid.GetGridSize(), new PlacementRecord[grid.GetGridSize().x, grid.GetGridSize().z]));
     }
 
 
@@ -221,6 +233,7 @@ public class PlacementSystem : MonoBehaviour
     public void ClearPlacementsEditor()
     {
         ClearPlacements();
+        CleanPlacementData();
     }
 
     public void ClearPlacements()
