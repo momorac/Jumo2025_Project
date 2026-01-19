@@ -54,13 +54,17 @@ public class PlacementController : MonoBehaviour, IPlacementController
         return null;
     }
 
+    public void StartPlacing(Placeable placeable)
+    {
+        GameObject prefab = GetGameObjectPrefab(placeable);
+        placementSystem.StartPlacing(prefab);
+    }
 
 
     public Vector2Int GetGridSize()
     {
         return placementSystem.GetGridSize();
     }
-
 
     public IReadOnlyCollection<FacilityType> GetAvailableFacilities()
     {
@@ -75,6 +79,26 @@ public class PlacementController : MonoBehaviour, IPlacementController
         return App.GameData.PlaceableData.GetUnlockedDecorations();
     }
 
+    public GameObject GetGameObjectPrefab(Placeable type)
+    {
+        if (type is Facility facilityType)
+        {
+            return GetGameObjectPrefab(facilityType.Type);
+        }
+        else if (type is Tile tileType)
+        {
+            return GetGameObjectPrefab(tileType.Type);
+        }
+        else if (type is Decoration decorationType)
+        {
+            return GetGameObjectPrefab(decorationType.Type);
+        }
+        else
+        {
+            Debug.LogWarning($"Unknown placeable type: {type}");
+            return null;
+        }
+    }
     public GameObject GetGameObjectPrefab(FacilityType facilityType)
     {
         GameObject prefab = registry.GetGameObjectPrefab(facilityType);

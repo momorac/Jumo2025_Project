@@ -42,51 +42,51 @@ public abstract class Placeable
 [Serializable]
 public class Facility : Placeable
 {
-    public FacilityType FacilityType;
+    public FacilityType Type;
 
     public Facility(FacilityType facilityType)
     {
         PlacementType = PlaceableType.Facility;
-        FacilityType = facilityType;
+        Type = facilityType;
     }
 
     public override string GetDisplayName()
     {
-        return FacilityType.ToString();
+        return Type.ToString();
     }
 }
 
 [Serializable]
 public class Tile : Placeable
 {
-    public TileType TileType;
+    public TileType Type;
 
     public Tile(TileType tileType)
     {
         PlacementType = PlaceableType.Tile;
-        TileType = tileType;
+        Type = tileType;
     }
 
     public override string GetDisplayName()
     {
-        return TileType.ToString();
+        return Type.ToString();
     }
 }
 
 [Serializable]
 public class Decoration : Placeable
 {
-    public DecorationType DecorationType;
+    public DecorationType Type;
 
     public Decoration(DecorationType decorationType)
     {
         PlacementType = PlaceableType.Decoration;
-        DecorationType = decorationType;
+        Type = decorationType;
     }
 
     public override string GetDisplayName()
     {
-        return DecorationType.ToString();
+        return Type.ToString();
     }
 }
 

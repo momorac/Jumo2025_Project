@@ -5,6 +5,7 @@ public interface IPlacementController
 {
     bool CanPlace(Placeable type);
     GameObject Place(Placeable type, Vector3 pos, Quaternion rot);
+    void StartPlacing(Placeable placeable);
 
     public Vector2Int GetGridSize();
 
@@ -12,6 +13,7 @@ public interface IPlacementController
     public IReadOnlyCollection<TileType> GetAvailableTiles();
     public IReadOnlyCollection<DecorationType> GetAvailableDecorations();
 
+    public GameObject GetGameObjectPrefab(Placeable type);
     public GameObject GetGameObjectPrefab(FacilityType facilityType);
     public GameObject GetGameObjectPrefab(TileType tileType);
     public GameObject GetGameObjectPrefab(DecorationType decorationType);

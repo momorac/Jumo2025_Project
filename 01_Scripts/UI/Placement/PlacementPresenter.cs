@@ -8,13 +8,13 @@ public class PlacementPresenter : IPresenter
     private readonly UIManager ui;
     private readonly WindowType windowType = WindowType.Placement;
 
-    private readonly IPlacementController placementController;
+    private readonly IPlacementController controller;
 
-    public PlacementPresenter(PlacementView view, UIManager ui, IPlacementController placementController)
+    public PlacementPresenter(PlacementView view, UIManager ui, IPlacementController controller)
     {
         this.view = view;
         this.ui = ui;
-        this.placementController = placementController;
+        this.controller = controller;
     }
 
     public void Initialize()
@@ -33,12 +33,18 @@ public class PlacementPresenter : IPresenter
 
     private void AddAvailableFacility()
     {
-        var facilities = placementController.GetAvailableFacilities();
+        var facilities = controller.GetAvailableFacilities();
         foreach (var facility in facilities)
         {
-            Sprite icon = placementController.GetUiIcon(facility);
-            view.AddPlaceableCell(new Facility(facility), icon);
+            Sprite icon = controller.GetUiIcon(facility);
+            view.AddPlaceableCell(new Facility(facility), icon, StartPlacing);
         }
+    }
+
+    private void StartPlacing(Placeable placeable)
+    {
+        ui.CloseWindow(windowType);
+        controller.StartPlacing(placeable);
     }
 
 

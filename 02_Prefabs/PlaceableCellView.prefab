@@ -394,3 +394,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlacementCellView
   text_name: {fileID: 5422600203760568296}
   image_icon: {fileID: 403714847172551774}
+  button_select: {fileID: 7045477155143065865}
