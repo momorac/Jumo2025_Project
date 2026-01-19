@@ -6,8 +6,8 @@ public class PlaceableObject : MonoBehaviour
     public Placeable Type => type;
     [SerializeField] private Renderer[] renderers;
 
-    [SerializeField] private Vector2Int cellSize;
-    public Vector2Int CellSize => cellSize;
+    [SerializeField] private Int2 cellSize;
+    public Int2 CellSize => cellSize;
 
     private static readonly int BaseColorID = Shader.PropertyToID("_BaseColor");
 

@@ -7,7 +7,7 @@ public interface IPlacementController
     GameObject Place(Placeable type, Vector3 pos, Quaternion rot);
     void StartPlacing(Placeable placeable);
 
-    public Vector2Int GetGridSize();
+    public Int2 GetGridSize();
 
     public IReadOnlyCollection<FacilityType> GetAvailableFacilities();
     public IReadOnlyCollection<TileType> GetAvailableTiles();

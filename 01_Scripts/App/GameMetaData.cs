@@ -20,16 +20,28 @@ public class GameMetaData
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class PlacementData
 {
-    public Vector2Int GridSize;
+    public Int2 GridSize;
     public PlacementRecord[,] Placements;
 
-    public PlacementData(Vector2Int size, PlacementRecord[,] placements)
+    public PlacementData(Int2 size, PlacementRecord[,] placements)
     {
         GridSize = size;
         Placements = placements;
+    }
+}
+
+[System.Serializable]
+public struct Int2
+{
+    public int x;
+    public int z;
+    public Int2(int x, int z)
+    {
+        this.x = x;
+        this.z = z;
     }
 }
 

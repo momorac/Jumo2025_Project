@@ -29,7 +29,7 @@ public class PlacementSystem : MonoBehaviour
 
 
     private PlaceableObject previewCell;
-    private Vector2Int currentCell = new Vector2Int(-1, -1);
+    private Int2 currentCell = new Int2(-1, -1);
     private bool isPlaceable = true;
 
     // Save/Load state
@@ -52,18 +52,12 @@ public class PlacementSystem : MonoBehaviour
                 rootIndex[br.type] = br.root;
             }
         }
-
-
-
-        // Load saved placements at startup
-        // LoadPlacements();
     }
 
     private void Update()
     {
         if (!isPlacing)
             return;
-
 
         UpdatePreview();
         if (isPlaceable)
@@ -80,9 +74,9 @@ public class PlacementSystem : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, rayMaxDistance, groundMask))
         {
             Vector3 worldPos = hit.point;
-            Vector2Int _cell = grid.WorldToGrid(worldPos);
+            Int2 _cell = grid.WorldToGrid(worldPos);
 
-            if (_cell == currentCell)
+            if (_cell.Equals(currentCell))
                 return;
 
             if (grid.IsInBounds(_cell))
@@ -103,7 +97,7 @@ public class PlacementSystem : MonoBehaviour
             }
             else
             {
-                currentCell = new Vector2Int(-1, -1);
+                currentCell = new Int2(-1, -1);
                 if (previewCell != null)
                 {
                     previewCell.gameObject.SetActive(false);
@@ -112,7 +106,7 @@ public class PlacementSystem : MonoBehaviour
         }
         else
         {
-            currentCell = new Vector2Int(-1, -1);
+            currentCell = new Int2(-1, -1);
             if (previewCell != null)
             {
                 previewCell.gameObject.SetActive(false);
@@ -122,7 +116,7 @@ public class PlacementSystem : MonoBehaviour
 
     private void HandlePlacement()
     {
-        if (currentCell.x < 0 || currentCell.y < 0) return;
+        if (currentCell.x < 0 || currentCell.z < 0) return;
 
         // Left click to place
         if (Input.GetMouseButtonDown(0))
@@ -143,30 +137,6 @@ public class PlacementSystem : MonoBehaviour
         }
     }
 
-    private bool CheckCellAvailability(Vector2Int rootCell)
-    {
-        if (grid == null || placePrefab == null) return false;
-        return grid.CanOccupyRect(rootCell, placePrefab.CellSize);
-    }
-
-    private void SetCellsOccupied(Vector2Int rootCell, bool value)
-    {
-        if (grid == null || placePrefab == null) return;
-        grid.SetOccupiedRect(rootCell, placePrefab.CellSize, value);
-    }
-
-    private void OnPlacementUpdated()
-    {
-        if (App.GameData == null) return;
-        App.SetPlacementData(new PlacementData(grid.GetGridSize(), grid.GetGridRecords()));
-        Debug.Log("[GameSessionRunner] Placement data updated in GameMetaData.");
-    }
-
-    public Vector2Int GetGridSize()
-    {
-        return grid.GetGridSize();
-    }
-
     public void StartPlacing(Placeable placeable, GameObject prefab)
     {
         placePrefab = prefab.GetComponent<PlaceableObject>();
@@ -179,6 +149,31 @@ public class PlacementSystem : MonoBehaviour
 
         isPlacing = true;
     }
+
+    private bool CheckCellAvailability(Int2 rootCell)
+    {
+        if (grid == null || placePrefab == null) return false;
+        return grid.CanOccupyRect(rootCell, placePrefab.CellSize);
+    }
+
+    private void SetCellsOccupied(Int2 rootCell, bool value)
+    {
+        if (grid == null || placePrefab == null) return;
+        grid.SetOccupiedRect(rootCell, placePrefab.CellSize, value);
+    }
+
+    private void OnPlacementUpdated()
+    {
+        if (App.GameData == null) return;
+        App.SetPlacementData(new PlacementData(grid.GetGridSize(), grid.GetGridRecords()));
+        Debug.Log("[GameSessionRunner] Placement data updated in GameMetaData.");
+    }
+
+    public Int2 GetGridSize()
+    {
+        return grid.GetGridSize();
+    }
+
 
     // private void LoadPlacements()
     // {

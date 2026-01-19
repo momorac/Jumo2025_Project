@@ -52,7 +52,7 @@ public class PlacementController : MonoBehaviour, IPlacementController
     }
 
 
-    public Vector2Int GetGridSize()
+    public Int2 GetGridSize()
     {
         return placementSystem.GetGridSize();
     }

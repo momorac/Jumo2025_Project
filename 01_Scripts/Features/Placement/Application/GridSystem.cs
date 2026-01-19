@@ -3,13 +3,13 @@ using UnityEngine;
 public class GridSystem : MonoBehaviour
 {
     [Header("Grid Settings")]
-    [SerializeField] private Vector2Int size;
+    [SerializeField] private Int2 size;
     [SerializeField] private float cellSize;
     [SerializeField] private Vector3 origin;
-    public Vector2Int Size => size;
+    public Int2 Size => size;
 
     private int width => size.x;
-    private int height => size.y;
+    private int height => size.z;
 
     [Header("Debug / Visuals")]
     public bool drawGizmos;
@@ -40,32 +40,32 @@ public class GridSystem : MonoBehaviour
         return x >= 0 && z >= 0 && x < width && z < height;
     }
 
-    public bool IsInBounds(Vector2Int cell)
+    public bool IsInBounds(Int2 cell)
     {
-        return IsInBounds(cell.x, cell.y);
+        return IsInBounds(cell.x, cell.z);
     }
 
-    public bool IsOccupied(Vector2Int cell)
+    public bool IsOccupied(Int2 cell)
     {
         if (!IsInBounds(cell)) return true; // Treat out-of-bounds as occupied
-        return grid[cell.x, cell.y].occupied;
+        return grid[cell.x, cell.z].occupied;
     }
 
-    public void SetOccupied(Vector2Int root, Vector2Int cell, bool value)
+    public void SetOccupied(Int2 root, Int2 cell, bool value)
     {
         if (!IsInBounds(cell)) return;
-        grid[cell.x, cell.y].occupied = value;
-        grid[cell.x, cell.y].root = root;
+        grid[cell.x, cell.z].occupied = value;
+        grid[cell.x, cell.z].root = root;
     }
 
     // Occupy or free a rectangle region starting at root (lower-left), with given size (width,height)
-    public void SetOccupiedRect(Vector2Int root, Vector2Int size, bool value)
+    public void SetOccupiedRect(Int2 root, Int2 size, bool value)
     {
         for (int dx = 0; dx < size.x; dx++)
         {
-            for (int dz = 0; dz < size.y; dz++)
+            for (int dz = 0; dz < size.z; dz++)
             {
-                var cell = new Vector2Int(root.x + dx, root.y + dz);
+                var cell = new Int2(root.x + dx, root.z + dz);
                 if (IsInBounds(cell))
                 {
                     SetOccupied(root, cell, value);
@@ -75,13 +75,13 @@ public class GridSystem : MonoBehaviour
     }
 
     // Check if a rectangle can be occupied: in-bounds and all cells are free
-    public bool CanOccupyRect(Vector2Int root, Vector2Int size)
+    public bool CanOccupyRect(Int2 root, Int2 size)
     {
         for (int dx = 0; dx < size.x; dx++)
         {
-            for (int dz = 0; dz < size.y; dz++)
+            for (int dz = 0; dz < size.z; dz++)
             {
-                var cell = new Vector2Int(root.x + dx, root.y + dz);
+                var cell = new Int2(root.x + dx, root.z + dz);
                 if (!IsInBounds(cell) || IsOccupied(cell))
                 {
                     return false;
@@ -99,24 +99,24 @@ public class GridSystem : MonoBehaviour
             for (int z = 0; z < height; z++)
             {
                 grid[x, z].occupied = false;
-                grid[x, z].root = new Vector2Int(-1, -1);
+                grid[x, z].root = new Int2(-1, -1);
             }
         }
     }
 
     // Convert a world position to grid cell indices
-    public Vector2Int WorldToGrid(Vector3 worldPos)
+    public Int2 WorldToGrid(Vector3 worldPos)
     {
         int x = Mathf.FloorToInt((worldPos.x - origin.x) / cellSize);
         int z = Mathf.FloorToInt((worldPos.z - origin.z) / cellSize);
-        return new Vector2Int(x, z);
+        return new Int2(x, z);
     }
 
     // Return the origin (lower-left) world position of a given grid cell
-    public Vector3 GridToWorldPivot(Vector2Int cell)
+    public Vector3 GridToWorldPivot(Int2 cell)
     {
         float cx = origin.x + (cell.x) * cellSize;
-        float cz = origin.z + (cell.y) * cellSize;
+        float cz = origin.z + (cell.z) * cellSize;
         return new Vector3(cx, origin.y, cz);
     }
 
@@ -134,7 +134,7 @@ public class GridSystem : MonoBehaviour
         Debug.Log(gridState);
     }
 
-    public Vector2Int GetGridSize()
+    public Int2 GetGridSize()
     {
         return size;
     }
