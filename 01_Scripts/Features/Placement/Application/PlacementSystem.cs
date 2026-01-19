@@ -134,7 +134,7 @@ public class PlacementSystem : MonoBehaviour
             Vector3 pointer = grid.GridToWorldPivot(currentCell);
             if (placePrefab != null)
             {
-                rootIndex.TryGetValue(placePrefab.Type, out var parent);
+                rootIndex.TryGetValue(placePrefab.Type.PlacementType, out var parent);
                 Transform placed = Instantiate(placePrefab.transform, pointer, Quaternion.identity, parent);
             }
 

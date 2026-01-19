@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlacementCellView : MonoBehaviour, IView
 {
+
+
     public void Show()
     {
         gameObject.SetActive(true);

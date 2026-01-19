@@ -25,12 +25,12 @@ public class PlacementController : MonoBehaviour, IPlacementController
             placementSystem.PlacementUpdated += placementUpdatedHandler;
     }
 
-    public bool CanPlace(FacilityType type)
+    public bool CanPlace(Placement type)
     {
         return true;
     }
 
-    public GameObject Place(FacilityType type, Vector3 pos, Quaternion rot)
+    public GameObject Place(Placement type, Vector3 pos, Quaternion rot)
     {
         // if (!CanPlace(type))
         // {
@@ -53,12 +53,12 @@ public class PlacementController : MonoBehaviour, IPlacementController
         return null;
     }
 
-    public GameObject GetGameObjectPrefab(FacilityType type)
+    public GameObject GetGameObjectPrefab(Placement type)
     {
         return registry.GetGameObjectPrefab(type);
     }
 
-    public GameObject GetUiIconPrefab(FacilityType type)
+    public GameObject GetUiIconPrefab(Placement type)
     {
         return registry.GetUiIconPrefab(type);
     }
