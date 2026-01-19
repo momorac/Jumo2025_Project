@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class Placeable : MonoBehaviour
+public class PlaceableObject : MonoBehaviour
 {
-    [SerializeField] private Placement type;
-    public Placement Type => type;
+    [SerializeField] private Placeable type;
+    public Placeable Type => type;
     [SerializeField] private Renderer[] renderers;
 
     [SerializeField] private Vector2Int cellSize;

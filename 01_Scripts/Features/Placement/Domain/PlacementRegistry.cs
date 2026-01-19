@@ -76,55 +76,52 @@ public class PlacementRegistry : ScriptableObject
         hasBuiltIndexes = true;
     }
 
-    public GameObject GetGameObjectPrefab(Placement type)
+    public GameObject GetGameObjectPrefab(FacilityType facilityType)
     {
-        if (type is Facility facility)
+        if (facilityIndex != null && facilityIndex.TryGetValue(facilityType, out var component))
         {
-            if (facilityIndex != null && facilityIndex.TryGetValue(facility.FacilityType, out var component))
-            {
-                return component.gameObjectPrefab;
-            }
+            return component.gameObjectPrefab;
         }
-        else if (type is Tile tile)
+        return null;
+    }
+    public GameObject GetGameObjectPrefab(TileType tileType)
+    {
+        if (tileIndex != null && tileIndex.TryGetValue(tileType, out var component))
         {
-            if (tileIndex != null && tileIndex.TryGetValue(tile.TileType, out var component))
-            {
-                return component.gameObjectPrefab;
-            }
+            return component.gameObjectPrefab;
         }
-        else if (type is Decoration decoration)
+        return null;
+    }
+    public GameObject GetGameObjectPrefab(DecorationType decorationType)
+    {
+        if (decorationIndex != null && decorationIndex.TryGetValue(decorationType, out var component))
         {
-            if (decorationIndex != null && decorationIndex.TryGetValue(decoration.DecorationType, out var component))
-            {
-                return component.gameObjectPrefab;
-            }
+            return component.gameObjectPrefab;
         }
         return null;
     }
 
-
-    public GameObject GetUiIconPrefab(Placement type)
+    public GameObject GetUiIconPrefab(FacilityType facilityType)
     {
-        if (type is Facility facility)
+        if (facilityIndex != null && facilityIndex.TryGetValue(facilityType, out var component))
         {
-            if (facilityIndex != null && facilityIndex.TryGetValue(facility.FacilityType, out var component))
-            {
-                return component.UiIconPrefab;
-            }
+            return component.UiIconPrefab;
         }
-        else if (type is Tile tile)
+        return null;
+    }
+    public GameObject GetUiIconPrefab(TileType tileType)
+    {
+        if (tileIndex != null && tileIndex.TryGetValue(tileType, out var component))
         {
-            if (tileIndex != null && tileIndex.TryGetValue(tile.TileType, out var component))
-            {
-                return component.UiIconPrefab;
-            }
+            return component.UiIconPrefab;
         }
-        else if (type is Decoration decoration)
+        return null;
+    }
+    public GameObject GetUiIconPrefab(DecorationType decorationType)
+    {
+        if (decorationIndex != null && decorationIndex.TryGetValue(decorationType, out var component))
         {
-            if (decorationIndex != null && decorationIndex.TryGetValue(decoration.DecorationType, out var component))
-            {
-                return component.UiIconPrefab;
-            }
+            return component.UiIconPrefab;
         }
         return null;
     }

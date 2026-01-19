@@ -2,7 +2,7 @@
 // Enums for different placement types
 using System;
 
-public enum PlacementType
+public enum PlaceableType
 {
     Facility,
     Tile,
@@ -33,43 +33,43 @@ public enum DecorationType
 
 // Base class for all placement types
 [Serializable]
-public class Placement
+public class Placeable
 {
-    public PlacementType PlacementType;
+    public PlaceableType PlacementType;
 }
 
 [Serializable]
-public class Facility : Placement
+public class Facility : Placeable
 {
     public FacilityType FacilityType;
 
     public Facility(FacilityType facilityType)
     {
-        PlacementType = PlacementType.Facility;
+        PlacementType = PlaceableType.Facility;
         FacilityType = facilityType;
     }
 }
 
 [Serializable]
-public class Tile : Placement
+public class Tile : Placeable
 {
     public TileType TileType;
 
     public Tile(TileType tileType)
     {
-        PlacementType = PlacementType.Tile;
+        PlacementType = PlaceableType.Tile;
         TileType = tileType;
     }
 }
 
 [Serializable]
-public class Decoration : Placement
+public class Decoration : Placeable
 {
     public DecorationType DecorationType;
 
     public Decoration(DecorationType decorationType)
     {
-        PlacementType = PlacementType.Decoration;
+        PlacementType = PlaceableType.Decoration;
         DecorationType = decorationType;
     }
 }

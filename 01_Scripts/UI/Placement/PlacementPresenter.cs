@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlacementPresenter : IPresenter
@@ -25,33 +27,20 @@ public class PlacementPresenter : IPresenter
     public void Dispose()
     {
         Debug.Log("PlacementPresenter Dispose");
-        view.ClearFacilityCells();
+        view.ClearCells();
         view.CloseClicked -= OnCloseClicked;
     }
 
     private void AddAvailableFacility()
     {
-        var availableFacilities = App.GameData.FacilityMetaData.GetUnlockedTypes();
-        if (availableFacilities == null) return;
-
-        foreach (var type in availableFacilities)
+        var facilities = placementController.GetAvailableFacilities();
+        foreach (var facility in facilities)
         {
-            if (placementController.CanPlace(type))
-            {
-                var prefab = (placementController as PlacementController).GetUiIconPrefab(type);
-
-                if (prefab == null)
-                {
-                    Debug.LogWarning($"No UI prefab found for facility type: {type}");
-                    continue;
-                }
-                else
-                {
-                    view.AddFacilityCell(type, prefab);
-                }
-            }
+            GameObject prefab = placementController.GetUiIconPrefab(facility);
+            view.AddPlaceableCell(new Facility(facility), prefab);
         }
     }
+
 
     private void OnCloseClicked()
     {

@@ -78,7 +78,7 @@ public class GameSessionRunner : MonoBehaviour
     private void OnPlacementUpdated(PlacementRecord[,] records)
     {
         if (App.GameData == null) return;
-        App.SetPlacementData(new PlacementMetaData(placementController.GetGridSize(), records));
+        App.SetPlacementData(new PlacementData(placementController.GetGridSize(), records));
         Debug.Log("[GameSessionRunner] Placement data updated in GameMetaData.");
     }
 

@@ -15,9 +15,9 @@ public static class App
         GameDataChanged?.Invoke(GameData);
     }
 
-    public static void SetPlacementData(PlacementMetaData placementData)
+    public static void SetPlacementData(PlacementData placementData)
     {
-        GameData.PlacementMetaData = placementData;
+        GameData.PlacementData = placementData;
         GameDataChanged?.Invoke(GameData);
     }
 

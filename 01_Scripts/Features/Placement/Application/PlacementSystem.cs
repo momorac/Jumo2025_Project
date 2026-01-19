@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 [Serializable]
 public class BuildingRoot
 {
-    public PlacementType type;
+    public PlaceableType type;
     public Transform root;
 }
 
@@ -17,7 +17,7 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField] private Camera mainCamera;
 
     [Header("Prefabs")]
-    [SerializeField] private Placeable placePrefab;
+    [SerializeField] private PlaceableObject placePrefab;
     // [SerializeField] private List<Placeable> placeablePrefabs = new List<Placeable>();
 
     [Header("Parents by Type")]
@@ -28,12 +28,12 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField] private float rayMaxDistance = 200f;
 
 
-    private Placeable previewCell;
+    private PlaceableObject previewCell;
     private Vector2Int currentCell = new Vector2Int(-1, -1);
     private bool isPlaceable = true;
 
     // Save/Load state
-    private readonly Dictionary<PlacementType, Transform> rootIndex = new Dictionary<PlacementType, Transform>();
+    private readonly Dictionary<PlaceableType, Transform> rootIndex = new Dictionary<PlaceableType, Transform>();
     private bool isLoading;
 
     // event
@@ -171,7 +171,7 @@ public class PlacementSystem : MonoBehaviour
 
     public void StartPlacing(GameObject prefab)
     {
-        placePrefab = prefab.GetComponent<Placeable>();
+        placePrefab = prefab.GetComponent<PlaceableObject>();
 
         if (placePrefab != null)
         {

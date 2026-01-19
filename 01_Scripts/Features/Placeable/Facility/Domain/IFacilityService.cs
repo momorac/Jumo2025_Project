@@ -1,6 +1,6 @@
 public interface IFacilityService
 {
-    Placement Type { get; }
+    Placeable Type { get; }
     void Initialize();
     void OnPlaced();
     void OnRemoved();

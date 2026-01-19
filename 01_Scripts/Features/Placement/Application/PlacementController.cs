@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -25,12 +26,12 @@ public class PlacementController : MonoBehaviour, IPlacementController
             placementSystem.PlacementUpdated += placementUpdatedHandler;
     }
 
-    public bool CanPlace(Placement type)
+    public bool CanPlace(Placeable type)
     {
         return true;
     }
 
-    public GameObject Place(Placement type, Vector3 pos, Quaternion rot)
+    public GameObject Place(Placeable type, Vector3 pos, Quaternion rot)
     {
         // if (!CanPlace(type))
         // {
@@ -53,19 +54,81 @@ public class PlacementController : MonoBehaviour, IPlacementController
         return null;
     }
 
-    public GameObject GetGameObjectPrefab(Placement type)
-    {
-        return registry.GetGameObjectPrefab(type);
-    }
 
-    public GameObject GetUiIconPrefab(Placement type)
-    {
-        return registry.GetUiIconPrefab(type);
-    }
 
     public Vector2Int GetGridSize()
     {
         return placementSystem.GetGridSize();
+    }
+
+
+    public IReadOnlyCollection<FacilityType> GetAvailableFacilities()
+    {
+        return App.GameData.PlaceableData.GetUnlockedFacilities();
+    }
+    public IReadOnlyCollection<TileType> GetAvailableTiles()
+    {
+        return App.GameData.PlaceableData.GetUnlockedTiles();
+    }
+    public IReadOnlyCollection<DecorationType> GetAvailableDecorations()
+    {
+        return App.GameData.PlaceableData.GetUnlockedDecorations();
+    }
+
+    public GameObject GetGameObjectPrefab(FacilityType facilityType)
+    {
+        GameObject prefab = registry.GetGameObjectPrefab(facilityType);
+        if (prefab == null)
+        {
+            Debug.LogWarning($"GameObject prefab missing for placeable {facilityType}");
+        }
+        return prefab;
+    }
+    public GameObject GetGameObjectPrefab(TileType tileType)
+    {
+        GameObject prefab = registry.GetGameObjectPrefab(tileType);
+        if (prefab == null)
+        {
+            Debug.LogWarning($"GameObject prefab missing for placeable {tileType}");
+        }
+        return prefab;
+    }
+    public GameObject GetGameObjectPrefab(DecorationType decorationType)
+    {
+        GameObject prefab = registry.GetGameObjectPrefab(decorationType);
+        if (prefab == null)
+        {
+            Debug.LogWarning($"GameObject prefab missing for placeable {decorationType}");
+        }
+        return prefab;
+    }
+
+    public GameObject GetUiIconPrefab(FacilityType facilityType)
+    {
+        GameObject prefab = registry.GetUiIconPrefab(facilityType);
+        if (prefab == null)
+        {
+            Debug.LogWarning($"UI Icon prefab missing for placeable {facilityType}");
+        }
+        return prefab;
+    }
+    public GameObject GetUiIconPrefab(TileType tileType)
+    {
+        GameObject prefab = registry.GetUiIconPrefab(tileType);
+        if (prefab == null)
+        {
+            Debug.LogWarning($"UI Icon prefab missing for placeable {tileType}");
+        }
+        return prefab;
+    }
+    public GameObject GetUiIconPrefab(DecorationType decorationType)
+    {
+        GameObject prefab = registry.GetUiIconPrefab(decorationType);
+        if (prefab == null)
+        {
+            Debug.LogWarning($"UI Icon prefab missing for placeable {decorationType}");
+        }
+        return prefab;
     }
 
     private void OnDestroy()

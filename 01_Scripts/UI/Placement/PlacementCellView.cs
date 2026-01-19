@@ -14,7 +14,7 @@ public class PlacementCellView : MonoBehaviour, IView
         gameObject.SetActive(false);
     }
 
-    public void Bind(FacilityType type)
+    public void Bind(Placeable type)
     {
         // Bind data to UI elements here
     }
