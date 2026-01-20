@@ -14,8 +14,16 @@ public class HUDPresenter : IPresenter
     public void Initialize()
     {
         view.PlaceClicked += OnPlaceClicked;
-
+        App.EconomyService.OnMoneyChanged += OnMoneyChanged;
+        view.UpdateMoney(App.EconomyService.GetMoney());
     }
+
+    private void OnMoneyChanged(int newAmount)
+    {
+        // 구현
+        view.UpdateMoney(newAmount);
+    }
+
     private void OnPlaceClicked()
     {
         // 구현

@@ -9,6 +9,7 @@ public class EconomyService
     public EconomyService(int balance)
     {
         economy = new Economy(balance);
+        OnMoneyChanged?.Invoke(economy.Money);
     }
 
     public void AddIncome(int amount)

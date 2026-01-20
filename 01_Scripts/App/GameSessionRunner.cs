@@ -15,9 +15,7 @@ public class GameSessionRunner : MonoBehaviour
     private SimLoop simLoop;
     private PhaseController phaseController;
 
-    // 서비스 인스턴스
-
-    private EconomyService economy;
+    // 서비스 인스턴스는 App에서 관리
 
     private void Awake()
     {
@@ -37,7 +35,7 @@ public class GameSessionRunner : MonoBehaviour
 
         // 저장 로드 후 App에 등록(단일 소스)
         App.SetGameData(SaveService.Load());
-        economy = new EconomyService(App.GameData.EconomyBalance);
+        App.SetEconomyService(new EconomyService(App.GameData.EconomyData.Money));
 
         placementController.Initialize();
     }
@@ -77,9 +75,9 @@ public class GameSessionRunner : MonoBehaviour
     private void OnApplicationQuit()
     {
         // 종료 시 최신 경제 잔액 반영 후 저장
-        App.GameData.EconomyBalance = economy.GetMoney();
         SaveService.Save(App.GameData);
 
+        App.SetEconomyService(null);
         App.SetGameData(null);
     }
 }

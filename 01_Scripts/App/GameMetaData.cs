@@ -5,15 +5,15 @@ using UnityEngine;
 [System.Serializable]
 public class GameMetaData
 {
-    public int EconomyBalance;
+    public EconomyData EconomyData;
     public PlacementData PlacementData;
     public PlaceableData PlaceableData;
 
     public GameMetaData()
     {
-        EconomyBalance = 0;
         PlacementData = null;
         PlaceableData = new PlaceableData();
+        EconomyData = new EconomyData(100);
 
         PlaceableData.Unlock(FacilityType.JumoHouse);
         PlaceableData.Unlock(FacilityType.Hearth);
@@ -93,6 +93,16 @@ public class PlaceableData
     public IReadOnlyCollection<DecorationType> GetUnlockedDecorations()
     {
         return unlockedDecorations;
+    }
+}
+
+public class EconomyData
+{
+    public int Money;
+
+    public EconomyData(int balance)
+    {
+        Money = balance;
     }
 }
 
