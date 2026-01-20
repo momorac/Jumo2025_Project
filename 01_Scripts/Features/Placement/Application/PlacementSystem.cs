@@ -195,7 +195,7 @@ public class PlacementSystem : MonoBehaviour
 
     private void CleanPlacementData()
     {
-        App.SetPlacementData(new PlacementData(grid.GetGridSize(), new PlacementRecord[grid.GetGridSize().x, grid.GetGridSize().z]));
+        App.SetPlacementData(new PlacementData(grid.GetGridSize(), grid.GetGridRecords()));
     }
 
     private void LoadPlacementData()
