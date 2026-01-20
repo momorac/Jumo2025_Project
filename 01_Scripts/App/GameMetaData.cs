@@ -17,6 +17,7 @@ public class GameMetaData
 
         PlaceableData.Unlock(FacilityType.JumoHouse);
         PlaceableData.Unlock(FacilityType.Hearth);
+        PlaceableData.Unlock(FacilityType.Table);
     }
 }
 
