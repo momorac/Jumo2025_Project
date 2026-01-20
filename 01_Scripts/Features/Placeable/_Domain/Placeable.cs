@@ -4,30 +4,34 @@ using System;
 
 public enum PlaceableType
 {
-    Facility,
-    Tile,
-    Decoration
+    None = 0,
+    Facility = 1,
+    Tile = 2,
+    Decoration = 3
 }
 
 public enum FacilityType
 {
-    JumoHouse = 0,
-    Hearth = 1,
-    Table = 2
+    None = 0,
+    JumoHouse = 1,
+    Hearth = 2,
+    Table = 3
 }
 
 public enum TileType
 {
-    Grass = 0,
-    Water = 1,
-    Sand = 2
+    None = 0,
+    Grass = 1,
+    Water = 2,
+    Sand = 3
 }
 
 public enum DecorationType
 {
-    Plant = 0,
-    Statue = 1,
-    Fountain = 2
+    None = 0,
+    Plant = 1,
+    Statue = 2,
+    Fountain = 3
 }
 
 

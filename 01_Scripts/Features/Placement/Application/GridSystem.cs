@@ -46,12 +46,26 @@ public class GridSystem : MonoBehaviour
         return grid[cell.x, cell.z].occupied;
     }
 
-    public void SetOccupied(Int2 root, Int2 cell, bool value, Placeable placedType)
+    public void SetOccupied(Int2 root, Int2 cell, bool value, Placeable _placeable)
     {
         if (!IsInBounds(cell)) return;
-        grid[cell.x, cell.z].occupied = value;
-        grid[cell.x, cell.z].root = root;
-        grid[cell.x, cell.z].placedType = placedType;
+        PlacementRecord record = grid[cell.x, cell.z];
+        record.occupied = value;
+        record.root = root;
+
+        record.placeable.type = _placeable.PlaceableType;
+        switch (record.placeable.type)
+        {
+            case PlaceableType.Facility:
+                record.placeable.facilityType = (_placeable as Facility).Type;
+                break;
+            case PlaceableType.Tile:
+                record.placeable.tileType = (_placeable as Tile).Type;
+                break;
+            case PlaceableType.Decoration:
+                record.placeable.decorationType = (_placeable as Decoration).Type;
+                break;
+        }
     }
 
     // Occupy or free a rectangle region starting at root (lower-left), with given size (width,height)

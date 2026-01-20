@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlacementRegistry
   m_EditorClassIdentifier: Assembly-CSharp::FacilityRegistry
   facilityEntries:
-  - type: 1
+  - type: 2
     component:
       gameObjectPrefab: {fileID: 6731427639401032758, guid: 9763473db875b804b9c44f47a4d7d3d0, type: 3}
       UiIconImage: {fileID: 21300000, guid: 44a054df1702e39458b7072b08d0f212, type: 3}

@@ -7,15 +7,23 @@ using UnityEngine;
 public class PlacementRecord
 {
     public bool occupied;
-    public Placeable placedType;
+    public PlaceableDTO placeable;
     public Int2 root;
     public Transform transform;
 
     public PlacementRecord()
     {
         this.occupied = false;
-        this.placedType = null;
+        this.placeable = new PlaceableDTO();
         this.root = new Int2(-1, -1);
         this.transform = null;
     }
+}
+
+public struct PlaceableDTO
+{
+    public PlaceableType type;
+    public FacilityType facilityType;
+    public TileType tileType;
+    public DecorationType decorationType;
 }
