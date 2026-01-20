@@ -149,6 +149,23 @@ public class GridSystem : MonoBehaviour
         return size;
     }
 
+    public void SetGridRecords(PlacementRecord[,] data)
+    {
+        if (data.GetLength(0) != width || data.GetLength(1) != height)
+        {
+            Debug.LogError("SetGridRecords: Data size does not match grid size.");
+            return;
+        }
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int z = 0; z < height; z++)
+            {
+                grid[x, z] = data[x, z];
+            }
+        }
+    }
+
     public PlacementRecord[,] GetGridRecords()
     {
         return grid.Clone() as PlacementRecord[,];

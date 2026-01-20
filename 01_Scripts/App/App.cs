@@ -21,6 +21,13 @@ public static class App
         GameDataChanged?.Invoke(GameData);
     }
 
+    public static PlacementData GetPlacementData()
+    {
+        if (GameData == null)
+            return null;
+        return GameData?.PlacementData;
+    }
+
     // 안전 사용 헬퍼
     public static bool HasGameData => GameData != null;
 }

@@ -15,6 +15,7 @@ public class PlacementSystem : MonoBehaviour
     [Header("References")]
     [SerializeField] private GridSystem grid;
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private PlacementRegistry registry;
 
     [Header("Prefabs")]
     [SerializeField] private PlaceableObject placePrefab;
@@ -53,7 +54,7 @@ public class PlacementSystem : MonoBehaviour
             }
         }
 
-        SavePlacementData();
+        LoadPlacementData();
     }
 
     void Update()
@@ -139,21 +140,23 @@ public class PlacementSystem : MonoBehaviour
         // Left click to place
         if (Input.GetMouseButtonDown(0))
         {
-            // Corner-based placement: use cell origin without center offset
-            Vector3 pointer = grid.GridToWorldPivot(currentCell);
-            if (placePrefab != null)
-            {
-                rootIndex.TryGetValue(placePrefab.Type.PlaceableType, out var parent);
-                Transform placed = Instantiate(placePrefab.transform, pointer, Quaternion.identity, parent);
-            }
-
-            SetCellsOccupied(currentCell, true);
+            Place(currentCell, placePrefab);
             previewCell.SetPreviewColor(true, true);
 
             grid.LogCurrentGridState();
             OnPlacementUpdated();
             OnPlacementFinished();
         }
+    }
+
+    private void Place(Int2 targetCell, PlaceableObject prefab)
+    {
+        Vector3 pointer = grid.GridToWorldPivot(targetCell);
+
+        rootIndex.TryGetValue(prefab.Type.PlaceableType, out var parent);
+        Transform placed = Instantiate(prefab.transform, pointer, Quaternion.identity, parent);
+
+        SetCellsOccupied(targetCell, true);
     }
 
     private bool CheckCellAvailability(Int2 rootCell)
@@ -195,48 +198,60 @@ public class PlacementSystem : MonoBehaviour
         App.SetPlacementData(new PlacementData(grid.GetGridSize(), new PlacementRecord[grid.GetGridSize().x, grid.GetGridSize().z]));
     }
 
+    private void LoadPlacementData()
+    {
+        Debug.Log("[PlacementSystem] Loading placement data from GameMetaData...");
 
-    // private void LoadPlacements()
-    // {
-    //     isLoading = true;
-    //     try
-    //     {
-    //         var data = PlacementSaveService.Load();
-    //         if (data == null || data.records == null) return;
+        if (!App.HasGameData)
+            return;
 
-    //         foreach (var rec in data.records)
-    //         {
-    //             var cell = new Vector2Int(rec.x, rec.y);
-    //             if (!grid.IsInBounds(cell)) continue;
+        PlacementRecord[,] data = App.GetPlacementData().Placements;
 
-    //             Placeable prefabToUse = null;
-    //             // Prefer ID-based lookup
-    //             if (rec.id != 0 && prefabIndexById.TryGetValue(rec.id, out var foundById))
-    //             {
-    //                 prefabToUse = foundById;
-    //             }
-    //             else if (placePrefab != null)
-    //             {
-    //                 prefabToUse = placePrefab; // fallback
-    //             }
+        if (data == null)
+        {
+            Debug.Log("[PlacementSystem] No placement data found.");
+            return;
+        }
 
-    //             if (prefabToUse == null) continue;
+        grid.SetGridRecords(data);
 
-    //             Vector3 pos = grid.GridToWorldPivot(cell);
-    //             rootIndex.TryGetValue(prefabToUse.Type, out var parent);
-    //             Instantiate(prefabToUse.transform, pos, Quaternion.identity, parent);
+        Dictionary<Int2, PlaceableDTO> roots = new Dictionary<Int2, PlaceableDTO>();
 
-    //             // Occupy cells based on prefab size
-    //             grid.SetOccupiedRect(cell, prefabToUse.CellSize, true);
+        for (int x = 0; x < data.GetLength(0); x++)
+        {
+            for (int z = 0; z < data.GetLength(1); z++)
+            {
+                var record = data[x, z];
+                if (record.occupied)
+                {
+                    roots[record.root] = record.placeable;
+                }
+            }
+        }
 
-    //             placed.Add(new PlacementRecord { id = ComputeStableId(prefabToUse.name), x = cell.x, y = cell.y });
-    //         }
-    //     }
-    //     finally
-    //     {
-    //         isLoading = false;
-    //     }
-    // }
+        foreach (var kvp in roots)
+        {
+            Int2 root = kvp.Key;
+            PlaceableDTO dto = kvp.Value;
+
+            GameObject prefab = null;
+            switch (dto.type)
+            {
+                case PlaceableType.Facility:
+                    prefab = registry.GetGameObjectPrefab(dto.facilityType);
+                    break;
+                case PlaceableType.Tile:
+                    prefab = registry.GetGameObjectPrefab(dto.tileType);
+                    break;
+                case PlaceableType.Decoration:
+                    prefab = registry.GetGameObjectPrefab(dto.decorationType);
+                    break;
+            }
+
+            Place(root, prefab.GetComponent<PlaceableObject>());
+        }
+
+    }
 
     [ContextMenu("DEBUG: Clear Placements")]
     public void ClearPlacementsEditor()

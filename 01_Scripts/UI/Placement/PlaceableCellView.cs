@@ -24,7 +24,7 @@ public class PlaceableCellView : MonoBehaviour, IView
     public void Bind(Placeable type, Sprite icon, Action<Placeable> onClick)
     {
         this.type = type;
-        text_name.text = type.GetDisplayName();
+        text_name.text = type.ToString();
         image_icon.sprite = icon;
         button_select.onClick.RemoveAllListeners();
         button_select.onClick.AddListener(() => onClick?.Invoke(this.type));

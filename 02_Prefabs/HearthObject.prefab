@@ -157,6 +157,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc571e74def0ecd44aa082876c8f31a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Placeable
+  type:
+    PlaceableType: 1
   renderers:
   - {fileID: 4661657582169749421}
   cellSize:
