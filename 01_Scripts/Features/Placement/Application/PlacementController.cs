@@ -64,6 +64,19 @@ public class PlacementController : MonoBehaviour, IPlacementController
         return App.GameData.PlaceableData.GetUnlockedDecorations();
     }
 
+    public string GetDisplayName(FacilityType facilityType)
+    {
+        return registry.GetDisplayName(facilityType);
+    }
+    public string GetDisplayName(TileType tileType)
+    {
+        return registry.GetDisplayName(tileType);
+    }
+    public string GetDisplayName(DecorationType decorationType)
+    {
+        return registry.GetDisplayName(decorationType);
+    }
+
     public GameObject GetGameObjectPrefab(Placeable type)
     {
         if (type is Facility facilityType)

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2248242122966473702
+--- !u!1 &7066230548949568051
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,10 +8,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7926156309034398864}
-  - component: {fileID: 2838285530082345223}
-  - component: {fileID: 4661657582169749421}
-  - component: {fileID: 7101859479249339006}
+  - component: {fileID: 6739545377858952678}
+  - component: {fileID: 2504396387830237127}
+  - component: {fileID: 1289529328620858464}
+  - component: {fileID: 4482648662743868299}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -19,36 +19,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7926156309034398864
+--- !u!4 &6739545377858952678
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2248242122966473702}
+  m_GameObject: {fileID: 7066230548949568051}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: 0.5, z: 0.5}
-  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_LocalPosition: {x: 1.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 3, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 776256900232011852}
+  m_Father: {fileID: 3607346640507568940}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &2838285530082345223
+--- !u!33 &2504396387830237127
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2248242122966473702}
+  m_GameObject: {fileID: 7066230548949568051}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &4661657582169749421
+--- !u!23 &1289529328620858464
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2248242122966473702}
+  m_GameObject: {fileID: 7066230548949568051}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -91,13 +91,13 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7101859479249339006
+--- !u!65 &4482648662743868299
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2248242122966473702}
+  m_GameObject: {fileID: 7066230548949568051}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -112,7 +112,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &6731427639401032758
+--- !u!1 &7269804284210555065
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,38 +120,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 776256900232011852}
-  - component: {fileID: 3713585594503170871}
+  - component: {fileID: 3607346640507568940}
+  - component: {fileID: 5332258841434663628}
   m_Layer: 0
-  m_Name: HearthObject
+  m_Name: JumoHouseObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &776256900232011852
+--- !u!4 &3607346640507568940
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6731427639401032758}
+  m_GameObject: {fileID: 7269804284210555065}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7926156309034398864}
+  - {fileID: 6739545377858952678}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3713585594503170871
+--- !u!114 &5332258841434663628
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6731427639401032758}
+  m_GameObject: {fileID: 7269804284210555065}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc571e74def0ecd44aa082876c8f31a7, type: 3}
@@ -159,9 +159,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Placeable
   type:
     PlaceableType: 1
-    displayName: Hearth
+    displayName: JumoHouse
   renderers:
-  - {fileID: 4661657582169749421}
+  - {fileID: 1289529328620858464}
   cellSize:
-    x: 2
-    z: 1
+    x: 3
+    z: 2

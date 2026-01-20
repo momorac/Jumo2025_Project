@@ -7,6 +7,7 @@ public class PlacementComponent
 {
     public GameObject gameObjectPrefab;
     public Sprite UiIconImage;
+    public string displayName;
 }
 
 [CreateAssetMenu(menuName = "Settings/Facility Registry", fileName = "PlacementRegistry")]
@@ -74,6 +75,31 @@ public class PlacementRegistry : ScriptableObject
         }
 
         hasBuiltIndexes = true;
+    }
+
+    public string GetDisplayName(FacilityType facilityType)
+    {
+        if (facilityIndex != null && facilityIndex.TryGetValue(facilityType, out var component))
+        {
+            return component.displayName;
+        }
+        return string.Empty;
+    }
+    public string GetDisplayName(TileType tileType)
+    {
+        if (tileIndex != null && tileIndex.TryGetValue(tileType, out var component))
+        {
+            return component.displayName;
+        }
+        return string.Empty;
+    }
+    public string GetDisplayName(DecorationType decorationType)
+    {
+        if (decorationIndex != null && decorationIndex.TryGetValue(decorationType, out var component))
+        {
+            return component.displayName;
+        }
+        return string.Empty;
     }
 
     public GameObject GetGameObjectPrefab(FacilityType facilityType)

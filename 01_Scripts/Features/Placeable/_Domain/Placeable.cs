@@ -40,7 +40,6 @@ public enum DecorationType
 public class Placeable
 {
     public PlaceableType PlaceableType;
-    public string displayName;
 }
 
 [Serializable]

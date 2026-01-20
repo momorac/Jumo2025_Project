@@ -18,11 +18,11 @@ public class PlacementView : WindowViewBase
         button_close.onClick.AddListener(() => CloseClicked?.Invoke());
     }
 
-    public void AddPlaceableCell(Placeable placeable, Sprite icon, Action<Placeable> onClick)
+    public void AddPlaceableCell(Placeable _placeable, string name, Sprite icon, Action<Placeable> onClick)
     {
         var cellObject = Instantiate(placeableCellPrefab, content_parent);
         var cellView = cellObject.GetComponent<PlaceableCellView>();
-        cellView.Bind(placeable, icon, onClick);
+        cellView.Bind(_placeable, name, icon, onClick);
     }
 
     public void ClearCells()

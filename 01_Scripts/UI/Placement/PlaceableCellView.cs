@@ -21,10 +21,10 @@ public class PlaceableCellView : MonoBehaviour, IView
         gameObject.SetActive(false);
     }
 
-    public void Bind(Placeable type, Sprite icon, Action<Placeable> onClick)
+    public void Bind(Placeable _type, string name, Sprite icon, Action<Placeable> onClick)
     {
-        this.type = type;
-        text_name.text = type.displayName;
+        this.type = _type;
+        text_name.text = name;
         image_icon.sprite = icon;
         button_select.onClick.RemoveAllListeners();
         button_select.onClick.AddListener(() => onClick?.Invoke(this.type));

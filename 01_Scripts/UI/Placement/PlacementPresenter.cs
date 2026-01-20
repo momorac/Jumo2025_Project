@@ -37,7 +37,8 @@ public class PlacementPresenter : IPresenter
         foreach (var facility in facilities)
         {
             Sprite icon = controller.GetUiIcon(facility);
-            view.AddPlaceableCell(new Facility(facility), icon, StartPlacing);
+            string name = controller.GetDisplayName(facility);
+            view.AddPlaceableCell(new Facility(facility), name, icon, StartPlacing);
         }
     }
 

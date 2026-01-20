@@ -11,10 +11,13 @@ public interface IPlacementController
     public IReadOnlyCollection<TileType> GetAvailableTiles();
     public IReadOnlyCollection<DecorationType> GetAvailableDecorations();
 
-    public GameObject GetGameObjectPrefab(Placeable type);
     public GameObject GetGameObjectPrefab(FacilityType facilityType);
     public GameObject GetGameObjectPrefab(TileType tileType);
     public GameObject GetGameObjectPrefab(DecorationType decorationType);
+
+    public string GetDisplayName(FacilityType facilityType);
+    public string GetDisplayName(TileType tileType);
+    public string GetDisplayName(DecorationType decorationType);
 
     public Sprite GetUiIcon(FacilityType facilityType);
     public Sprite GetUiIcon(TileType tileType);
