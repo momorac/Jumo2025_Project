@@ -159,6 +159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Placeable
   type:
     PlaceableType: 1
+    displayName: "\uC544\uAD81\uC774"
   renderers:
   - {fileID: 4661657582169749421}
   cellSize:
