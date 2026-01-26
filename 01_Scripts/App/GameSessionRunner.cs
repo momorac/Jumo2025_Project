@@ -34,8 +34,7 @@ public class GameSessionRunner : MonoBehaviour
         phaseController = new PhaseController(phases, startingPhase);
 
         // 저장 로드 후 App에 등록(단일 소스)
-        App.SetGameData(SaveService.Load());
-        App.SetEconomyService(new EconomyService(App.GameData.EconomyData.Money));
+        App.InitializeGameData(SaveService.Load());
 
         placementController.Initialize();
     }
@@ -78,6 +77,6 @@ public class GameSessionRunner : MonoBehaviour
         SaveService.Save(App.GameData);
 
         App.SetEconomyService(null);
-        App.SetGameData(null);
+        App.InitializeGameData(null);
     }
 }

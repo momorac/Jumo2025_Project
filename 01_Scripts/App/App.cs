@@ -11,11 +11,14 @@ public static class App
     // 변경 알림(필요 시)
     public static event Action<GameMetaData> GameDataChanged;
 
-    // 등록/갱신
-    public static void SetGameData(GameMetaData data)
+    // 초기화
+    public static void InitializeGameData(GameMetaData data)
     {
         GameData = data;
         GameDataChanged?.Invoke(GameData);
+
+        // EconomyService 초기화
+        SetEconomyService(new EconomyService(App.GameData.EconomyData.Money));
     }
 
     // 세션 서비스 등록/해제
