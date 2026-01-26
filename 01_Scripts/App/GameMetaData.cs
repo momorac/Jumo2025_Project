@@ -12,16 +12,18 @@ public class GameMetaData
 [Serializable]
 public class SessionData
 {
-    public int availableSeats;
+    public List<Table> availableSeats;
+    public event Action<Table> OnSeatsChanged;
 
     public SessionData()
     {
-        availableSeats = 0;
+        availableSeats = new List<Table>();
     }
 
-    public void ModifySeats(int count)
+    public void RegisterSeat(Table table)
     {
-        availableSeats += count;
+        availableSeats.Add(table);
+        OnSeatsChanged?.Invoke(table);
     }
 }
 

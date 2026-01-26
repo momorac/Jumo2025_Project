@@ -19,9 +19,14 @@ public class GameSessionRunner : MonoBehaviour
 
     private void Awake()
     {
+
+        // 저장된 데이터 로드 후 App에 등록
+        App.InitializeGameData(SaveService.Load());
+
         // 코어 시뮬레이션 상태 초기화
         simClock = new SimClock(dayLengthSeconds);
         simLoop = new SimLoop(simClock);
+        AddSimSystems();
 
         var phases = new List<IPhaseState>
         {
@@ -32,9 +37,6 @@ public class GameSessionRunner : MonoBehaviour
         };
 
         phaseController = new PhaseController(phases, startingPhase);
-
-        // 저장 로드 후 App에 등록(단일 소스)
-        App.InitializeGameData(SaveService.Load());
 
         placementController.Initialize();
     }
@@ -56,6 +58,11 @@ public class GameSessionRunner : MonoBehaviour
         {
             ChangePhase(PhaseId.Closing);
         }
+    }
+
+    private void AddSimSystems()
+    {
+        simLoop.AddSystem(new CustomerSpawnSimSystem());
     }
 
     // 선택적 외부 제어(예: UI에서)

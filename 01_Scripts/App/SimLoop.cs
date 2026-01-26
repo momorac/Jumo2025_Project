@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using UnityEngine;
 
 public class SimLoop
 {
@@ -19,6 +20,7 @@ public class SimLoop
     public void AddSystem(ISimSystem system)
     {
         systems.Add(system);
+        system.Initialize();
     }
 
     public void SetEnabled(bool value)
@@ -41,6 +43,8 @@ public class SimLoop
 
     private void Tick(float deltaTime)
     {
+        // Debug.Log("TICK");
+
         simClock.Tick(deltaTime);
 
         foreach (var system in systems)
