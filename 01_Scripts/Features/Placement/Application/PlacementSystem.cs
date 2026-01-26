@@ -251,6 +251,7 @@ public class PlacementSystem : MonoBehaviour
             Place(root, prefab.GetComponent<PlaceableObject>());
         }
 
+        Debug.Log("[PlacementSystem] Placement data loaded successfully.");
     }
 
     [ContextMenu("DEBUG: Clear Placements")]
