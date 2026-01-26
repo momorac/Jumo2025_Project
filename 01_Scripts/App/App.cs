@@ -1,5 +1,5 @@
-using System;
-using System.Net.NetworkInformation;
+
+using UnityEngine;
 
 public static class App
 {
@@ -13,8 +13,6 @@ public static class App
 
     public static EconomyService EconomyService { get; private set; }
 
-    // 변경 알림(필요 시)
-    public static event Action<GameMetaData> GameDataChanged;
 
     // 초기화
     public static void InitializeGameData(GameMetaData data)
@@ -22,7 +20,6 @@ public static class App
         SessionData = data.SessionData;
         PlacementData = data.PlacementData;
         PlaceableData = data.PlaceableData;
-        GameDataChanged?.Invoke(data);
 
         // EconomyService 초기화
         EconomyService = new EconomyService();
@@ -43,12 +40,6 @@ public static class App
     public static void SetPlacementData(PlacementData placementData)
     {
         PlacementData = placementData;
-        GameDataChanged?.Invoke(new GameMetaData
-        {
-            SessionData = SessionData,
-            PlacementData = PlacementData,
-            PlaceableData = PlaceableData
-        });
     }
 
     public static PlacementData GetPlacementData()

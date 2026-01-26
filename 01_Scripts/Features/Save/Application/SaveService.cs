@@ -24,6 +24,7 @@ public static class SaveService
                 var json = File.ReadAllText(Path);
                 if (string.IsNullOrEmpty(json))
                 {
+                    Debug.LogWarning("[SaveService] Save file is empty, initializing new save.");
                     return InitializeNewSave();
                 }
 
@@ -36,6 +37,7 @@ public static class SaveService
             else
             {
                 // 기존에 저장된 파일 없으면 새로운 저장 파일 생성
+                Debug.LogWarning("[SaveService] Save file does not exist, initializing new save.");
                 return InitializeNewSave();
             }
         }

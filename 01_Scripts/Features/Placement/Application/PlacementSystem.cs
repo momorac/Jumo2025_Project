@@ -177,7 +177,6 @@ public class PlacementSystem : MonoBehaviour
 
     private void OnPlacementUpdated()
     {
-        if (App.HasGameData == false) return;
         SavePlacementData();
         Debug.Log("[GameSessionRunner] Placement data updated in GameMetaData.");
     }
