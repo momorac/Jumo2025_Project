@@ -15,31 +15,29 @@ public static class App
 
 
     // 초기화
-    public static void InitializeGameData(GameMetaData data)
+    public static void InitializeGameData(GameMetaData _data)
     {
-        SessionData = data.SessionData;
-        PlacementData = data.PlacementData;
-        PlaceableData = data.PlaceableData;
+        SessionData = new SessionData();
+        PlacementData = _data.PlacementData;
+        PlaceableData = _data.PlaceableData;
 
         // EconomyService 초기화
-        EconomyService = new EconomyService();
+        EconomyService = new EconomyService(_data.EconomyData.Money);
     }
 
-    public static GameMetaData GetGameData()
+    public static GameMetaData GetSessionGameData()
     {
         return new GameMetaData
         {
-            SessionData = SessionData,
             PlacementData = PlacementData,
             PlaceableData = PlaceableData,
             EconomyData = EconomyService.GetEconomyData()
         };
     }
 
-
-    public static void SetPlacementData(PlacementData placementData)
+    public static void SetPlacementData(PlacementData _placementData)
     {
-        PlacementData = placementData;
+        PlacementData = _placementData;
     }
 
     public static PlacementData GetPlacementData()

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 [System.Serializable]
 public class GameMetaData
 {
-    public SessionData SessionData;
     public PlacementData PlacementData;
     public PlaceableData PlaceableData;
     public Economy EconomyData;

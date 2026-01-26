@@ -4,9 +4,9 @@ public class Economy
 {
     public int Money { get; private set; }
 
-    public Economy()
+    public Economy(int initialMoney)
     {
-        Money = 100;
+        Money = initialMoney;
     }
 
     public void Add(int amount)

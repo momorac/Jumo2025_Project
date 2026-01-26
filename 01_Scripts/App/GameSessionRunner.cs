@@ -67,7 +67,7 @@ public class GameSessionRunner : MonoBehaviour
     // 게임 데이터 로컬 저장
     public void SaveGameData()
     {
-        SaveService.Save(App.GetGameData());
+        SaveService.Save(App.GetSessionGameData());
     }
 
 

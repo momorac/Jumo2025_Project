@@ -54,10 +54,9 @@ public static class SaveService
     {
         var newData = new GameMetaData()
         {
-            SessionData = new SessionData(),
             PlacementData = null,
             PlaceableData = new PlaceableData(),
-            EconomyData = new Economy()
+            EconomyData = new Economy(100)
         };
 
         Save(newData);

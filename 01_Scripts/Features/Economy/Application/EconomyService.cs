@@ -6,9 +6,9 @@ public class EconomyService
 
     public event Action<int> OnMoneyChanged;
 
-    public EconomyService()
+    public EconomyService(int initialMoney)
     {
-        economy = new Economy();
+        economy = new Economy(initialMoney);
         OnMoneyChanged?.Invoke(economy.Money);
     }
 
