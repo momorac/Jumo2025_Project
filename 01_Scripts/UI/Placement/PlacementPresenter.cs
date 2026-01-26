@@ -19,14 +19,14 @@ public class PlacementPresenter : IPresenter
 
     public void Initialize()
     {
-        Debug.Log("PlacementPresenter Initialize");
+        // Debug.Log("PlacementPresenter Initialize");
         view.CloseClicked += OnCloseClicked;
         AddAvailableFacility();
     }
 
     public void Dispose()
     {
-        Debug.Log("PlacementPresenter Dispose");
+        // Debug.Log("PlacementPresenter Dispose");
         view.ClearCells();
         view.CloseClicked -= OnCloseClicked;
     }
