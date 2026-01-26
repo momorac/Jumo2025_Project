@@ -22,28 +22,6 @@ public class PlacementController : MonoBehaviour, IPlacementController
         return true;
     }
 
-    public GameObject Place(Placeable type, Vector3 pos, Quaternion rot)
-    {
-        // if (!CanPlace(type))
-        // {
-        //     Debug.LogWarning($"Cannot place facility: {type}");
-        //     return null;
-        // }
-
-        // var prefab = registry.GetPrefab(type);
-
-        // // 권장: PlacementSystem이 그리드 검증/스냅/레코드 갱신/Instantiate/이벤트를 담당
-        // if (placementSystem.TryPlace(prefab, type, pos, rot, out var go))
-        // {
-        //     var service = go.GetComponent<IFacilityService>();
-        //     service?.Initialize();
-        //     service?.OnPlaced();
-        //     return go;
-        // }
-
-        // Debug.LogWarning($"Placement failed at {pos} for {type}");
-        return null;
-    }
 
     public void StartPlacing(Placeable placeable)
     {

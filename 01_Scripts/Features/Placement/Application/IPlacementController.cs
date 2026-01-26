@@ -4,7 +4,6 @@ using UnityEngine;
 public interface IPlacementController
 {
     bool CanPlace(Placeable type);
-    GameObject Place(Placeable type, Vector3 pos, Quaternion rot);
     void StartPlacing(Placeable placeable);
 
     public IReadOnlyCollection<FacilityType> GetAvailableFacilities();
