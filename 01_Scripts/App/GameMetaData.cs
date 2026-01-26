@@ -1,25 +1,31 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 [System.Serializable]
 public class GameMetaData
 {
-    public EconomyData EconomyData;
+    public SessionData SessionData;
     public PlacementData PlacementData;
     public PlaceableData PlaceableData;
+    public Economy EconomyData;
+}
 
-    public GameMetaData()
+[Serializable]
+public class SessionData
+{
+    public int availableSeats;
+
+    public SessionData()
     {
-        PlacementData = null;
-        PlaceableData = new PlaceableData();
-        EconomyData = new EconomyData(100);
+        availableSeats = 0;
+    }
 
-        PlaceableData.Unlock(FacilityType.JumoHouse);
-        PlaceableData.Unlock(FacilityType.Hearth);
-        PlaceableData.Unlock(FacilityType.Table);
+    public void ModifySeats(int count)
+    {
+        availableSeats += count;
     }
 }
+
 
 [Serializable]
 public class PlacementData
@@ -52,6 +58,13 @@ public class PlaceableData
     public HashSet<FacilityType> unlockedFacilities = new HashSet<FacilityType>();
     public HashSet<TileType> unlockedTiles = new HashSet<TileType>();
     public HashSet<DecorationType> unlockedDecorations = new HashSet<DecorationType>();
+
+    public PlaceableData()
+    {
+        Unlock(FacilityType.Table);
+        Unlock(FacilityType.JumoHouse);
+        Unlock(FacilityType.Hearth);
+    }
 
     public bool IsUnlocked(FacilityType type)
     {
@@ -93,16 +106,6 @@ public class PlaceableData
     public IReadOnlyCollection<DecorationType> GetUnlockedDecorations()
     {
         return unlockedDecorations;
-    }
-}
-
-public class EconomyData
-{
-    public int Money;
-
-    public EconomyData(int balance)
-    {
-        Money = balance;
     }
 }
 

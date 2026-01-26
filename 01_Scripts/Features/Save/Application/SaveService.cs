@@ -22,6 +22,11 @@ public static class SaveService
             if (File.Exists(Path))
             {
                 var json = File.ReadAllText(Path);
+                if (string.IsNullOrEmpty(json))
+                {
+                    return InitializeNewSave();
+                }
+
                 var data = JsonConvert.DeserializeObject<GameMetaData>(json);
 #if UNITY_EDITOR
                 Debug.Log($"[SaveService] Loaded from {Path}: {json}");
@@ -31,9 +36,7 @@ public static class SaveService
             else
             {
                 // 기존에 저장된 파일 없으면 새로운 저장 파일 생성
-                var newData = new GameMetaData();
-                Save(newData);
-                return newData;
+                return InitializeNewSave();
             }
         }
         catch (System.Exception e)
@@ -42,6 +45,20 @@ public static class SaveService
             Debug.LogWarning($"[SaveService] Load failed: {e.Message}");
 #endif
         }
-        return new GameMetaData();
+        return null;
+    }
+
+    private static GameMetaData InitializeNewSave()
+    {
+        var newData = new GameMetaData()
+        {
+            SessionData = new SessionData(),
+            PlacementData = null,
+            PlaceableData = new PlaceableData(),
+            EconomyData = new Economy()
+        };
+
+        Save(newData);
+        return newData;
     }
 }

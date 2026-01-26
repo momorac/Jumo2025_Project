@@ -67,16 +67,14 @@ public class GameSessionRunner : MonoBehaviour
     // 게임 데이터 로컬 저장
     public void SaveGameData()
     {
-        SaveService.Save(App.GameData);
+        SaveService.Save(App.GetGameData());
     }
 
 
     private void OnApplicationQuit()
     {
         // 종료 시 최신 경제 잔액 반영 후 저장
-        SaveService.Save(App.GameData);
+        SaveGameData();
 
-        App.SetEconomyService(null);
-        App.InitializeGameData(null);
     }
 }

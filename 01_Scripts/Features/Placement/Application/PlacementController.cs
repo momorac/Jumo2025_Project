@@ -53,15 +53,15 @@ public class PlacementController : MonoBehaviour, IPlacementController
 
     public IReadOnlyCollection<FacilityType> GetAvailableFacilities()
     {
-        return App.GameData.PlaceableData.GetUnlockedFacilities();
+        return App.PlaceableData.GetUnlockedFacilities();
     }
     public IReadOnlyCollection<TileType> GetAvailableTiles()
     {
-        return App.GameData.PlaceableData.GetUnlockedTiles();
+        return App.PlaceableData.GetUnlockedTiles();
     }
     public IReadOnlyCollection<DecorationType> GetAvailableDecorations()
     {
-        return App.GameData.PlaceableData.GetUnlockedDecorations();
+        return App.PlaceableData.GetUnlockedDecorations();
     }
 
     public string GetDisplayName(FacilityType facilityType)

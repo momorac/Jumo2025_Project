@@ -1,11 +1,16 @@
 using System;
+using System.Net.NetworkInformation;
 
 public static class App
 {
     // 전역 모델
-    public static GameMetaData GameData { get; private set; }
+    // public static GameMetaData GameData { get; private set; }
 
-    // 세션 서비스: Economy
+
+    public static SessionData SessionData;
+    public static PlacementData PlacementData;
+    public static PlaceableData PlaceableData;
+
     public static EconomyService EconomyService { get; private set; }
 
     // 변경 알림(필요 시)
@@ -14,32 +19,45 @@ public static class App
     // 초기화
     public static void InitializeGameData(GameMetaData data)
     {
-        GameData = data;
-        GameDataChanged?.Invoke(GameData);
+        SessionData = data.SessionData;
+        PlacementData = data.PlacementData;
+        PlaceableData = data.PlaceableData;
+        GameDataChanged?.Invoke(data);
 
         // EconomyService 초기화
-        SetEconomyService(new EconomyService(App.GameData.EconomyData.Money));
+        EconomyService = new EconomyService();
     }
 
-    // 세션 서비스 등록/해제
-    public static void SetEconomyService(EconomyService service)
+    public static GameMetaData GetGameData()
     {
-        EconomyService = service;
+        return new GameMetaData
+        {
+            SessionData = SessionData,
+            PlacementData = PlacementData,
+            PlaceableData = PlaceableData,
+            EconomyData = EconomyService.GetEconomyData()
+        };
     }
+
 
     public static void SetPlacementData(PlacementData placementData)
     {
-        GameData.PlacementData = placementData;
-        GameDataChanged?.Invoke(GameData);
+        PlacementData = placementData;
+        GameDataChanged?.Invoke(new GameMetaData
+        {
+            SessionData = SessionData,
+            PlacementData = PlacementData,
+            PlaceableData = PlaceableData
+        });
     }
 
     public static PlacementData GetPlacementData()
     {
-        if (GameData == null)
+        if (PlacementData == null)
             return null;
-        return GameData?.PlacementData;
+        return PlacementData;
     }
 
     // 안전 사용 헬퍼
-    public static bool HasGameData => GameData != null;
+    public static bool HasGameData => PlacementData != null;
 }

@@ -4,10 +4,9 @@ public class Economy
 {
     public int Money { get; private set; }
 
-    public Economy(int balance)
+    public Economy()
     {
-        if (balance < 0) throw new ArgumentOutOfRangeException(nameof(balance));
-        Money = balance;
+        Money = 100;
     }
 
     public void Add(int amount)
