@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class GameMetaData
@@ -12,18 +13,39 @@ public class GameMetaData
 [Serializable]
 public class SessionState
 {
-    public List<Table> tables;
-    public event Action<Table> OnTableChanged;
+    public Dictionary<Transform, bool> Seats;
+    public int AvailableSeatsCount;
+    public event Action<Transform, bool> OnSeatsChanged;
 
     public SessionState()
     {
-        tables = new List<Table>();
+        Seats = new Dictionary<Transform, bool>();
+        AvailableSeatsCount = 0;
     }
 
-    public void RegisterTable(Table table)
+    public void RegisterSeat(Transform seat)
     {
-        tables.Add(table);
-        OnTableChanged?.Invoke(table);
+        Seats[seat] = true;
+        AvailableSeatsCount++;
+        OnSeatsChanged?.Invoke(seat, true);
+    }
+
+    public Transform GetAvailableRandomSeat()
+    {
+        List<Transform> availableSeats = new List<Transform>();
+        foreach (var seat in Seats)
+        {
+            if (seat.Value == true)
+            {
+                availableSeats.Add(seat.Key);
+            }
+        }
+
+        if (availableSeats.Count == 0)
+            return null;
+
+        int randomIndex = UnityEngine.Random.Range(0, availableSeats.Count);
+        return availableSeats[randomIndex];
     }
 }
 

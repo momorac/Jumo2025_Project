@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Table : MonoBehaviour, IFacilityService
@@ -7,56 +8,18 @@ public class Table : MonoBehaviour, IFacilityService
     [SerializeField] private Transform[] seatRoot;
     public int Capacity => seatRoot.Length;
 
-    public bool IsFullyOccupied()
-    {
-        if (seatRoot == null || seatRoot.Length == 0) return true;
-        for (int i = 0; i < seatRoot.Length; i++)
-        {
-            if (seatRoot[i] != null && seatRoot[i].childCount == 0)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public bool HasAvailableSeat()
-    {
-        if (seatRoot == null || seatRoot.Length == 0) return false;
-        for (int i = 0; i < seatRoot.Length; i++)
-        {
-            if (seatRoot[i] != null && seatRoot[i].childCount == 0)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Transform GetFirstAvailableSeat()
-    {
-        if (seatRoot == null) return null;
-        for (int i = 0; i < seatRoot.Length; i++)
-        {
-            Transform seat = seatRoot[i];
-            if (seat != null && seat.childCount == 0)
-            {
-                return seat;
-            }
-        }
-        return null;
-    }
-
     public void Initialize(Placeable _placeable)
     {
         this.Type = _placeable;
+        for (int i = 0; i < seatRoot.Length; i++)
+        {
+            App.SessionState.RegisterSeat(seatRoot[i]);
+        }
     }
 
     public void OnPlaced()
     {
-        App.SessionData.RegisterTable(this);
-
-        Debug.Log($"<color=green>Table placed. Capacity: {Capacity}. Total available seats: {App.SessionData.tables}</color>");
+        Debug.Log($"<color=green>Table placed. Capacity: {Capacity}.</color>");
     }
 
     public void OnRemoved()
