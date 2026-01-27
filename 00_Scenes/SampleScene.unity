@@ -2500,33 +2500,6 @@ Transform:
   - {fileID: 1530353480}
   m_Father: {fileID: 969496342}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1742626388 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6449082010380367930, guid: 6a6eba48d49915a41a900641ebca4675, type: 3}
-  m_PrefabInstance: {fileID: 1933766641748559915}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1742626390
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1742626388}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 031a87d59fca9b94aae5db75d4776a7a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1745120188
 GameObject:
   m_ObjectHideFlags: 0
@@ -2755,35 +2728,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pedestrian
       objectReference: {fileID: 0}
+    - target: {fileID: 8480970361268489815, guid: 6a6eba48d49915a41a900641ebca4675, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 692662127}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8268961185469551363, guid: 6a6eba48d49915a41a900641ebca4675, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 1933766641748559918}
-    - targetCorrespondingSourceObject: {fileID: 6449082010380367930, guid: 6a6eba48d49915a41a900641ebca4675, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1742626390}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a6eba48d49915a41a900641ebca4675, type: 3}
---- !u!1 &1933766641748559916 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8268961185469551363, guid: 6a6eba48d49915a41a900641ebca4675, type: 3}
-  m_PrefabInstance: {fileID: 1933766641748559915}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1933766641748559918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1933766641748559916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4af74ce1d53e06a4e90e5564882a6cb5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Pedestrian
-  target: {fileID: 692662127}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

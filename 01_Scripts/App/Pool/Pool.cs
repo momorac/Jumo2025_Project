@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Pool;
 
-public abstract class Pool<T> : MonoBehaviour where T : MonoBehaviour
+public abstract class Pool<T> where T : MonoBehaviour
 {
     public abstract T Prefab { get; }
 
@@ -24,7 +24,7 @@ public abstract class Pool<T> : MonoBehaviour where T : MonoBehaviour
 
     private T OnCreateObject()
     {
-        T instance = Instantiate(Prefab);
+        T instance = Object.Instantiate(Prefab);
         return instance;
     }
 
@@ -40,7 +40,7 @@ public abstract class Pool<T> : MonoBehaviour where T : MonoBehaviour
 
     private void OnDestroyPooledObject(T obj)
     {
-        Destroy(obj.gameObject);
+        Object.Destroy(obj.gameObject);
     }
 
 }

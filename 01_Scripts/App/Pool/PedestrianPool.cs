@@ -3,21 +3,17 @@ using UnityEngine.Pool;
 
 public class PedestrianPool : Pool<Pedestrian>
 {
-    [Header("Pool Settings")]
-    [SerializeField] private Pedestrian prefab;
-    [SerializeField] private bool _collectionCheck = true;
-    [SerializeField] private int _defaultCapacity = 10;
-    [SerializeField] private int _maxSize = 100;
-
     private IObjectPool<Pedestrian> pool;
+    private PoolEntry poolEntry;
 
-    public override Pedestrian Prefab => prefab;
-    public override bool collectionCheck => _collectionCheck;
-    public override int defaultCapacity => _defaultCapacity;
-    public override int maxSize => _maxSize;
+    public override Pedestrian Prefab => poolEntry.prefab as Pedestrian;
+    public override bool collectionCheck => poolEntry._collectionCheck;
+    public override int defaultCapacity => poolEntry._defaultCapacity;
+    public override int maxSize => poolEntry._maxSize;
 
-    private void Awake()
+    public PedestrianPool(PoolEntry pedestrianPoolEntry)
     {
+        poolEntry = pedestrianPoolEntry;
         pool = CreatePool();
     }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PoolRegistry", menuName = "Scriptable Objects/PoolRegistry")]
 public class PoolRegistry : ScriptableObject
 {
-    [SerializeField] private PoolEntry pedestrianPoolEntry;
+    public PoolEntry pedestrianPoolEntry;
 }
 
 [Serializable]
@@ -15,5 +15,5 @@ public class PoolEntry
     public int _defaultCapacity;
     public int _maxSize;
 
-    public List<Component> prefabs;
+    public Component prefab;
 }

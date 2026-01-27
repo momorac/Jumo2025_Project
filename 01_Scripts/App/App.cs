@@ -5,24 +5,26 @@ public static class App
 {
     // 전역 모델
     // public static GameMetaData GameData { get; private set; }
-
-
     public static SessionData SessionData;
     public static PlacementData PlacementData;
     public static PlaceableData PlaceableData;
 
     public static EconomyService EconomyService { get; private set; }
 
+    public static PoolService Pool;
+
 
     // 초기화
     public static void InitializeGameData(GameMetaData _data)
     {
+        Debug.Log("App InitializeGameData");
         SessionData = new SessionData();
         PlacementData = _data.PlacementData;
         PlaceableData = _data.PlaceableData;
 
-        // EconomyService 초기화
+        // 매니저/서비스 초기화
         EconomyService = new EconomyService(_data.EconomyData.Money);
+        Pool = new PoolService();
     }
 
     public static GameMetaData GetSessionGameData()

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 283712114562916332}
+  - component: {fileID: 8480970361268489815}
   - component: {fileID: 596665251550727127}
   m_Layer: 0
   m_Name: Pedestrian
@@ -33,6 +34,20 @@ Transform:
   - {fileID: 5923479565612950144}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8480970361268489815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8268961185469551363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af74ce1d53e06a4e90e5564882a6cb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pedestrian
+  target: {fileID: 0}
+  animator: {fileID: 5675873837405376831}
 --- !u!195 &596665251550727127
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -43,7 +58,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 1.7
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -110,10 +125,40 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5690536973309546847, guid: 37ea06d02658820438fb2a677c70ec4d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5675873837405376831}
   m_SourcePrefab: {fileID: 100100000, guid: 37ea06d02658820438fb2a677c70ec4d, type: 3}
 --- !u!4 &5923479565612950144 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5022368552014302181, guid: 37ea06d02658820438fb2a677c70ec4d, type: 3}
   m_PrefabInstance: {fileID: 1695434634869008741}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6449082010380367930 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5690536973309546847, guid: 37ea06d02658820438fb2a677c70ec4d, type: 3}
+  m_PrefabInstance: {fileID: 1695434634869008741}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5675873837405376831
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6449082010380367930}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 031a87d59fca9b94aae5db75d4776a7a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
