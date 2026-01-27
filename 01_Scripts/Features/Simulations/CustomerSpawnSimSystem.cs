@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CustomerSpawnSimSystem : MonoBehaviour, ISimSystem
+public class CustomerSpawnSimSystem : ISimSystem
 {
     private int spawnedCustomers = 0;
     private List<Table> trackedTables = new List<Table>();
