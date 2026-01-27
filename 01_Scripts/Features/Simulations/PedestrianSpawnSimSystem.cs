@@ -3,8 +3,8 @@ using UnityEngine;
 public class PedestrianSpawnSimSystem : ISimSystem
 {
     private PedestrianPool pool;
-    private float minSpawnInterval = 1f;
-    private float maxSpawnInterval = 5f;
+    private float minSpawnInterval = 8f;
+    private float maxSpawnInterval = 20f;
     private float timeUntilNextSpawn;
 
     public void Initialize()
@@ -21,6 +21,8 @@ public class PedestrianSpawnSimSystem : ISimSystem
             return;
         }
 
+        Debug.Log($"Time until next pedestrian spawn: {timeUntilNextSpawn:F2} seconds.");
+
         timeUntilNextSpawn -= deltaTime;
         if (timeUntilNextSpawn <= 0f)
         {
@@ -31,23 +33,18 @@ public class PedestrianSpawnSimSystem : ISimSystem
 
     private void ResetNextSpawnTimer()
     {
-        // Randomize next interval between [minSpawnInterval, maxSpawnInterval]
-        float min = Mathf.Min(minSpawnInterval, maxSpawnInterval);
-        float max = Mathf.Max(minSpawnInterval, maxSpawnInterval);
-        timeUntilNextSpawn = Random.Range(min, max);
+        timeUntilNextSpawn = Random.Range(minSpawnInterval, maxSpawnInterval);
     }
 
     private void SpawnPedestrian()
     {
         Pedestrian instance = pool.Get();
+        instance.OnWalkComplete += () => pool.Release(instance);
+
         if (instance == null)
         {
             Debug.LogWarning("PedestrianPool returned null instance.");
             return;
-        }
-        else
-        {
-            instance.OnSpawn();
         }
     }
 }

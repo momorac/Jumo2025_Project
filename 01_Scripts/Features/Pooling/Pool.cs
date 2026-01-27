@@ -32,11 +32,13 @@ public abstract class Pool<T> where T : MonoBehaviour
     private void OnGetFromPool(T obj)
     {
         obj.gameObject.SetActive(true);
+        (obj as IPooled)?.OnGet();
     }
 
     private void OnReleaseToPool(T obj)
     {
         obj.gameObject.SetActive(false);
+        (obj as IPooled)?.OnRelease();
     }
 
     private void OnDestroyPooledObject(T obj)

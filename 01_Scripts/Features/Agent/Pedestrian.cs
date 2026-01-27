@@ -1,21 +1,22 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
-using NUnit.Framework;
+using System;
+using Random = UnityEngine.Random;
 
-public class Pedestrian : MonoBehaviour
+public class Pedestrian : MonoBehaviour, IPooled
 {
     [SerializeField] private Animator animator;
+    private NavMeshAgent agent;
 
+    private Transform[] spawnPoints => App.Anchors.CustomerSpawnPoints;
     private Transform start;
     private Transform target;
-
     private bool hasInitialized = false;
 
-    private NavMeshAgent agent;
-    private Transform[] spawnPoints => App.Anchors.CustomerSpawnPoints;
+    public event Action OnWalkComplete;
 
-    public void OnSpawn()
+    public void OnGet()
     {
         if (!hasInitialized)
         {
@@ -41,6 +42,12 @@ public class Pedestrian : MonoBehaviour
         StartCoroutine(SetWalkingWhenMoving());
     }
 
+    public void OnRelease()
+    {
+        OnWalkComplete = null;
+        Debug.Log("<color=yellow>Pedestrian released back to pool.</color>");
+    }
+
     private IEnumerator SetWalkingWhenMoving()
     {
         if (agent == null || animator == null)
@@ -52,5 +59,6 @@ public class Pedestrian : MonoBehaviour
             yield return null;
 
         animator.SetBool("IsWalking", false);
+        OnWalkComplete?.Invoke();
     }
 }
