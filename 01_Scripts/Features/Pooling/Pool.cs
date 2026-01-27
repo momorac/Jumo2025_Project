@@ -4,7 +4,6 @@ using UnityEngine.Pool;
 public abstract class Pool<T> where T : MonoBehaviour
 {
     public abstract T Prefab { get; }
-    public abstract Transform Root { get; }
 
     public abstract bool collectionCheck { get; }
     public abstract int defaultCapacity { get; }
@@ -25,7 +24,7 @@ public abstract class Pool<T> where T : MonoBehaviour
 
     private T OnCreateObject()
     {
-        T instance = Object.Instantiate(Prefab, Root);
+        T instance = Object.Instantiate(Prefab);
         return instance;
     }
 
