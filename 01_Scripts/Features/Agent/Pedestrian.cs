@@ -39,7 +39,7 @@ public class Pedestrian : MonoBehaviour, IPooled
 
         transform.position = start.position;
         agent.SetDestination(target.position);
-        StartCoroutine(SetWalkingWhenMoving());
+        StartCoroutine(TrackWalkingCoroutine());
     }
 
     public void OnRelease()
@@ -48,11 +48,8 @@ public class Pedestrian : MonoBehaviour, IPooled
         Debug.Log("<color=yellow>Pedestrian released back to pool.</color>");
     }
 
-    private IEnumerator SetWalkingWhenMoving()
+    private IEnumerator TrackWalkingCoroutine()
     {
-        if (agent == null || animator == null)
-            yield break;
-
         animator.SetBool("IsWalking", true);
 
         while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
