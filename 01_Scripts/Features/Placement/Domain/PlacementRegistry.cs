@@ -10,7 +10,7 @@ public class PlacementComponent
     public string displayName;
 }
 
-[CreateAssetMenu(menuName = "Settings/Facility Registry", fileName = "PlacementRegistry")]
+[CreateAssetMenu(menuName = "Scriptable Objects/Facility Registry", fileName = "PlacementRegistry")]
 public class PlacementRegistry : ScriptableObject
 {
     [Serializable]
