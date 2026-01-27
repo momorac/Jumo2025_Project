@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat_Table_ID1
+  m_Name: Mat_PixelBase Variant
   m_Shader: {fileID: -6465566751694194690, guid: 877d2d61e529c384b8cb9cadb0f115e8, type: 3}
   m_Parent: {fileID: 2100000, guid: 30ac8e65715ffab43b1d247f3aa7f1f0, type: 2}
   m_ModifiedSerializedProperties: 0
@@ -23,16 +23,9 @@ Material:
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs:
-    - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: f13c0da127b6e30418ee5628864f9989, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+    m_TexEnvs: []
     m_Ints: []
-    m_Floats:
-    - COLOR_GRADING: 1
-    m_Colors:
-    - _EdgeHighlightColor: {r: 1, g: 0.99607843, b: 0.91764706, a: 0.7490196}
-    - _OutlineColor: {r: 0.20754719, g: 0.16599424, b: 0.13275188, a: 0.7176471}
+    m_Floats: []
+    m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
