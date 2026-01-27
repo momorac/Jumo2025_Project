@@ -9,17 +9,17 @@ public class CustomerSpawnSimSystem : ISimSystem
     public void Initialize()
     {
         // seed with any existing tables
-        if (App.SessionData?.availableSeats != null)
+        if (App.SessionData?.tables != null)
         {
-            for (int i = 0; i < App.SessionData.availableSeats.Count; i++)
+            for (int i = 0; i < App.SessionData.tables.Count; i++)
             {
-                var t = App.SessionData.availableSeats[i];
+                var t = App.SessionData.tables[i];
                 if (t != null && !trackedTables.Contains(t)) trackedTables.Add(t);
             }
         }
 
         // subscribe to updates for newly placed tables
-        App.SessionData.OnSeatsChanged += (Table table) =>
+        App.SessionData.OnTableChanged += (Table table) =>
         {
             if (table != null && !trackedTables.Contains(table))
             {

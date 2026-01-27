@@ -54,9 +54,9 @@ public class Table : MonoBehaviour, IFacilityService
 
     public void OnPlaced()
     {
-        App.SessionData.RegisterSeat(this);
+        App.SessionData.RegisterTable(this);
 
-        Debug.Log($"<color=green>Table placed. Capacity: {Capacity}. Total available seats: {App.SessionData.availableSeats}</color>");
+        Debug.Log($"<color=green>Table placed. Capacity: {Capacity}. Total available seats: {App.SessionData.tables}</color>");
     }
 
     public void OnRemoved()
