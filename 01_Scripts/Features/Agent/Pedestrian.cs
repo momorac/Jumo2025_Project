@@ -1,36 +1,44 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using NUnit.Framework;
 
 public class Pedestrian : MonoBehaviour
 {
-    [SerializeField] private Transform target;
     [SerializeField] private Animator animator;
 
+    private Transform start;
+    private Transform target;
+
+    private bool hasInitialized = false;
+
     private NavMeshAgent agent;
+    private Transform[] spawnPoints => App.Anchors.CustomerSpawnPoints;
 
-    void Start()
+    public void OnSpawn()
     {
-        agent = GetComponent<NavMeshAgent>();
-
-        if (agent == null)
+        if (!hasInitialized)
         {
-            Debug.LogWarning($"{nameof(Pedestrian)}: NavMeshAgent가 없습니다.");
+            agent = GetComponent<NavMeshAgent>();
+            hasInitialized = true;
+        }
+
+        if (agent == null || animator == null)
+        {
+            Debug.LogWarning($"{nameof(Pedestrian)}: NavMeshAgent 혹은 Animator가 없습니다.");
             return;
         }
 
-        if (target != null)
-        {
-            agent.SetDestination(target.position);
-            if (animator != null)
-            {
-                StartCoroutine(SetWalkingWhenMoving());
-            }
-        }
-        else
-        {
-            Debug.LogWarning($"{nameof(Pedestrian)}: target이 지정되지 않았습니다.");
-        }
+        Debug.Log("<color=green>Pedestrian spawned.</color>");
+
+        // 위치 랜덤 설정
+        int randomIdx = Random.Range(0, spawnPoints.Length);
+        start = spawnPoints[randomIdx];
+        target = spawnPoints[(randomIdx + 1) % spawnPoints.Length];
+
+        transform.position = start.position;
+        agent.SetDestination(target.position);
+        StartCoroutine(SetWalkingWhenMoving());
     }
 
     private IEnumerator SetWalkingWhenMoving()

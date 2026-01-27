@@ -1898,6 +1898,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameAnchors
   AgentRoot: {fileID: 1200895521}
+  CustomerSpawnPoints:
+  - {fileID: 516713777}
+  - {fileID: 692662127}
 --- !u!1 &1503452030
 GameObject:
   m_ObjectHideFlags: 0
@@ -2722,67 +2725,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1262275565}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1933766641748559915
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 283712114562916332, guid: 6a6eba48d49915a41a900641ebca4675, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -18.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 283712114562916332, guid: 6a6eba48d49915a41a900641ebca4675, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.19999681
-      objectReference: {fileID: 0}
-    - target: {fileID: 283712114562916332, guid: 6a6eba48d49915a41a900641ebca4675, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 13.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 283712114562916332, guid: 6a6eba48d49915a41a900641ebca4675, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 283712114562916332, guid: 6a6eba48d49915a41a900641ebca4675, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 283712114562916332, guid: 6a6eba48d49915a41a900641ebca4675, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 283712114562916332, guid: 6a6eba48d49915a41a900641ebca4675, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 283712114562916332, guid: 6a6eba48d49915a41a900641ebca4675, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 283712114562916332, guid: 6a6eba48d49915a41a900641ebca4675, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 283712114562916332, guid: 6a6eba48d49915a41a900641ebca4675, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8268961185469551363, guid: 6a6eba48d49915a41a900641ebca4675, type: 3}
-      propertyPath: m_Name
-      value: Pedestrian
-      objectReference: {fileID: 0}
-    - target: {fileID: 8480970361268489815, guid: 6a6eba48d49915a41a900641ebca4675, type: 3}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 692662127}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6a6eba48d49915a41a900641ebca4675, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -2793,4 +2735,3 @@ SceneRoots:
   - {fileID: 969496342}
   - {fileID: 1583008428}
   - {fileID: 983198854}
-  - {fileID: 1933766641748559915}

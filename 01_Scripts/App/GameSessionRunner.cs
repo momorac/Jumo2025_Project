@@ -63,6 +63,7 @@ public class GameSessionRunner : MonoBehaviour
     private void AddSimSystems()
     {
         simLoop.AddSystem(new CustomerSpawnSimSystem());
+        simLoop.AddSystem(new PedestrianSpawnSimSystem());
     }
 
     // 선택적 외부 제어(예: UI에서)

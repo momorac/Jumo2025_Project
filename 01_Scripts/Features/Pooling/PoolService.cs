@@ -1,11 +1,11 @@
 using UnityEngine;
-using UnityEngine.Pool;
 
 public class PoolService
 {
     private PoolRegistry poolRegistry;
 
     public PedestrianPool pedestrianPool;
+
 
     public PoolService()
     {

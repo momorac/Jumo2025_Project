@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.SceneManagement;
 
 public class PedestrianPool : Pool<Pedestrian>
 {
@@ -7,6 +8,8 @@ public class PedestrianPool : Pool<Pedestrian>
     private PoolEntry poolEntry;
 
     public override Pedestrian Prefab => poolEntry.prefab as Pedestrian;
+    public override Transform Root => App.Anchors.AgentRoot;
+
     public override bool collectionCheck => poolEntry._collectionCheck;
     public override int defaultCapacity => poolEntry._defaultCapacity;
     public override int maxSize => poolEntry._maxSize;
