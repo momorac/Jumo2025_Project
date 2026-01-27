@@ -4,15 +4,14 @@ using UnityEngine;
 public static class App
 {
     // 전역 모델
-    // public static GameMetaData GameData { get; private set; }
     public static SessionData SessionData;
     public static PlacementData PlacementData;
     public static PlaceableData PlaceableData;
 
     public static EconomyService EconomyService { get; private set; }
+    public static PoolService PoolService { get; private set; }
 
-    public static PoolService Pool;
-
+    public static GameAnchors Anchors { get; set; }
 
     // 초기화
     public static void InitializeGameData(GameMetaData _data)
@@ -24,7 +23,7 @@ public static class App
 
         // 매니저/서비스 초기화
         EconomyService = new EconomyService(_data.EconomyData.Money);
-        Pool = new PoolService();
+        PoolService = new PoolService();
     }
 
     public static GameMetaData GetSessionGameData()
