@@ -11,9 +11,11 @@ public class PoolRegistry : ScriptableObject
 [Serializable]
 public class PoolEntry
 {
+    public Component prefab;
+    public Transform root;
+
     public bool _collectionCheck;
     public int _defaultCapacity;
     public int _maxSize;
 
-    public Component prefab;
 }
