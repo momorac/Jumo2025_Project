@@ -4,7 +4,7 @@ using UnityEngine;
 public static class App
 {
     // 전역 모델
-    public static SessionData SessionData;
+    public static SessionState SessionState;
     public static PlacementData PlacementData;
     public static PlaceableData PlaceableData;
 
@@ -17,7 +17,7 @@ public static class App
     public static void InitializeGameData(GameMetaData _data)
     {
         Debug.Log("App InitializeGameData");
-        SessionData = new SessionData();
+        SessionState = new SessionState();
         PlacementData = _data.PlacementData;
         PlaceableData = _data.PlaceableData;
 

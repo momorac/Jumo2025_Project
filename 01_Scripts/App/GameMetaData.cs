@@ -10,12 +10,12 @@ public class GameMetaData
 }
 
 [Serializable]
-public class SessionData
+public class SessionState
 {
     public List<Table> tables;
     public event Action<Table> OnTableChanged;
 
-    public SessionData()
+    public SessionState()
     {
         tables = new List<Table>();
     }
