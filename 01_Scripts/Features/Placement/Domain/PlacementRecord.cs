@@ -23,7 +23,7 @@ public class PlacementRecord
 public struct PlaceableDTO
 {
     public PlaceableType type;
-    public FacilityType facilityType;
-    public TileType tileType;
-    public DecorationType decorationType;
+    public FacilityType facility;
+    public TileType tile;
+    public DecorationType decoration;
 }

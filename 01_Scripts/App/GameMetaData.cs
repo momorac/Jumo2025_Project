@@ -20,9 +20,9 @@ public class SessionState
 [Serializable]
 public class PlaceableData
 {
-    public HashSet<FacilityType> unlockedFacilities = new HashSet<FacilityType>();
-    public HashSet<TileType> unlockedTiles = new HashSet<TileType>();
-    public HashSet<DecorationType> unlockedDecorations = new HashSet<DecorationType>();
+    public HashSet<FacilityType> ul_facility = new HashSet<FacilityType>();
+    public HashSet<TileType> ul_tile = new HashSet<TileType>();
+    public HashSet<DecorationType> ul_decoration = new HashSet<DecorationType>();
 }
 
 [Serializable]

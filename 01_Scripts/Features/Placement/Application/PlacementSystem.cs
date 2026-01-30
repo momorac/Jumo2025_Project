@@ -241,13 +241,13 @@ public class PlacementSystem : MonoBehaviour
             switch (dto.type)
             {
                 case PlaceableType.Facility:
-                    prefab = registry.GetGameObjectPrefab(dto.facilityType);
+                    prefab = registry.GetGameObjectPrefab(dto.facility);
                     break;
                 case PlaceableType.Tile:
-                    prefab = registry.GetGameObjectPrefab(dto.tileType);
+                    prefab = registry.GetGameObjectPrefab(dto.tile);
                     break;
                 case PlaceableType.Decoration:
-                    prefab = registry.GetGameObjectPrefab(dto.decorationType);
+                    prefab = registry.GetGameObjectPrefab(dto.decoration);
                     break;
             }
 

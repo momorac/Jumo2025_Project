@@ -57,13 +57,13 @@ public class GridSystem : MonoBehaviour
         switch (record.placeable.type)
         {
             case PlaceableType.Facility:
-                record.placeable.facilityType = (_placeable as Facility).Type;
+                record.placeable.facility = (_placeable as Facility).Type;
                 break;
             case PlaceableType.Tile:
-                record.placeable.tileType = (_placeable as Tile).Type;
+                record.placeable.tile = (_placeable as Tile).Type;
                 break;
             case PlaceableType.Decoration:
-                record.placeable.decorationType = (_placeable as Decoration).Type;
+                record.placeable.decoration = (_placeable as Decoration).Type;
                 break;
         }
     }

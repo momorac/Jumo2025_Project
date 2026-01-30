@@ -55,9 +55,9 @@ public static class SaveService
         var placeableData = new PlaceableData();
 
         // 기본 해금 시설들 설정 (기존 PlaceableData 생성자 로직 이동)
-        placeableData.unlockedFacilities.Add(FacilityType.Table);
-        placeableData.unlockedFacilities.Add(FacilityType.JumoHouse);
-        placeableData.unlockedFacilities.Add(FacilityType.Hearth);
+        placeableData.ul_facility.Add(FacilityType.Table);
+        placeableData.ul_facility.Add(FacilityType.JumoHouse);
+        placeableData.ul_facility.Add(FacilityType.Hearth);
 
         var newData = new GameMetaData()
         {
