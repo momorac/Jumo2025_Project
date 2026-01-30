@@ -6,10 +6,10 @@ public class EconomyService
 
     public event Action<int> OnMoneyChanged;
 
-    public EconomyService(int initialMoney)
+    public EconomyService(Economy economy)
     {
-        economy = new Economy(initialMoney);
-        OnMoneyChanged?.Invoke(economy.Money);
+        this.economy = economy ?? throw new ArgumentNullException(nameof(economy));
+        OnMoneyChanged?.Invoke(this.economy.Money);
     }
 
     public void AddIncome(int amount)

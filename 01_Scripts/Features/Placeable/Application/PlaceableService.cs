@@ -7,50 +7,70 @@ public class PlaceableService
     public PlaceableService(PlaceableData placeableData)
     {
         this.placeableData = placeableData ?? new PlaceableData();
+        EnsureCollectionsInitialized();
+    }
+
+    private void EnsureCollectionsInitialized()
+    {
+        if (placeableData.unlockedFacilities == null)
+        {
+            placeableData.unlockedFacilities = new HashSet<FacilityType>();
+        }
+        if (placeableData.unlockedTiles == null)
+        {
+            placeableData.unlockedTiles = new HashSet<TileType>();
+        }
+        if (placeableData.unlockedDecorations == null)
+        {
+            placeableData.unlockedDecorations = new HashSet<DecorationType>();
+        }
     }
 
     public IReadOnlyCollection<FacilityType> GetUnlockedFacilities()
     {
-        return placeableData.GetUnlockedFacilities();
+        return placeableData.unlockedFacilities;
     }
 
     public IReadOnlyCollection<TileType> GetUnlockedTiles()
     {
-        return placeableData.GetUnlockedTiles();
+        return placeableData.unlockedTiles;
     }
 
     public IReadOnlyCollection<DecorationType> GetUnlockedDecorations()
     {
-        return placeableData.GetUnlockedDecorations();
+        return placeableData.unlockedDecorations;
     }
 
     public bool IsUnlocked(FacilityType type)
     {
-        return placeableData.IsUnlocked(type);
+        return placeableData.unlockedFacilities != null && placeableData.unlockedFacilities.Contains(type);
     }
 
     public bool IsUnlocked(TileType type)
     {
-        return placeableData.IsUnlocked(type);
+        return placeableData.unlockedTiles != null && placeableData.unlockedTiles.Contains(type);
     }
 
     public bool IsUnlocked(DecorationType type)
     {
-        return placeableData.IsUnlocked(type);
+        return placeableData.unlockedDecorations != null && placeableData.unlockedDecorations.Contains(type);
     }
 
     public bool Unlock(FacilityType type)
     {
-        return placeableData.Unlock(type);
+        EnsureCollectionsInitialized();
+        return placeableData.unlockedFacilities.Add(type);
     }
 
     public bool Unlock(TileType type)
     {
-        return placeableData.Unlock(type);
+        EnsureCollectionsInitialized();
+        return placeableData.unlockedTiles.Add(type);
     }
 
     public bool Unlock(DecorationType type)
     {
-        return placeableData.Unlock(type);
+        EnsureCollectionsInitialized();
+        return placeableData.unlockedDecorations.Add(type);
     }
 }

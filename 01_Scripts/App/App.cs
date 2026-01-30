@@ -3,28 +3,31 @@ using UnityEngine;
 
 public static class App
 {
-    // 전역 모델
+    // 게임 데이터 도메인
     private static SessionState SessionState;
-    private static PlacementData PlacementData;
+    private static Economy Economy;
     private static PlaceableData PlaceableData;
+    private static PlacementData PlacementData;
 
-    public static EconomyService EconomyService { get; private set; }
+    // 서비스/매니저
     public static SessionService SessionService { get; private set; }
+    public static EconomyService EconomyService { get; private set; }
     public static PlaceableService PlaceableService { get; private set; }
     public static PoolService PoolService { get; private set; }
 
     public static GameAnchors Anchors { get; set; }
 
-    // 초기화
+
     public static void InitializeGameData(GameMetaData _data)
     {
         Debug.Log("App InitializeGameData");
         SessionState = new SessionState();
+        Economy = _data.EconomyData ?? new Economy(100);
         PlacementData = _data.PlacementData;
         PlaceableData = _data.PlaceableData;
 
         // 매니저/서비스 초기화
-        EconomyService = new EconomyService(_data.EconomyData.Money);
+        EconomyService = new EconomyService(Economy);
         SessionService = new SessionService(SessionState);
         PlaceableService = new PlaceableService(PlaceableData);
         PoolService = new PoolService();
@@ -36,7 +39,7 @@ public static class App
         {
             PlacementData = PlacementData,
             PlaceableData = PlaceableData,
-            EconomyData = EconomyService.GetEconomyData()
+            EconomyData = Economy
         };
     }
 

@@ -52,10 +52,17 @@ public static class SaveService
 
     private static GameMetaData InitializeNewSave()
     {
+        var placeableData = new PlaceableData();
+
+        // 기본 해금 시설들 설정 (기존 PlaceableData 생성자 로직 이동)
+        placeableData.unlockedFacilities.Add(FacilityType.Table);
+        placeableData.unlockedFacilities.Add(FacilityType.JumoHouse);
+        placeableData.unlockedFacilities.Add(FacilityType.Hearth);
+
         var newData = new GameMetaData()
         {
             PlacementData = null,
-            PlaceableData = new PlaceableData(),
+            PlaceableData = placeableData,
             EconomyData = new Economy(100)
         };
 

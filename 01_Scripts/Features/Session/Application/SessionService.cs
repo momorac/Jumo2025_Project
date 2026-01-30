@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SessionService
@@ -10,28 +11,19 @@ public class SessionService
         this.sessionState = sessionState ?? throw new ArgumentNullException(nameof(sessionState));
     }
 
-    public event Action<Transform, bool> OnSeatsChanged
-    {
-        add
-        {
-            if (sessionState != null)
-            {
-                sessionState.OnSeatsChanged += value;
-            }
-        }
-        remove
-        {
-            if (sessionState != null)
-            {
-                sessionState.OnSeatsChanged -= value;
-            }
-        }
-    }
+    public event Action<Transform, bool> OnSeatsChanged;
 
     public void RegisterSeat(Transform seat)
     {
         if (seat == null) return;
-        sessionState.RegisterSeat(seat);
+        if (sessionState.Seats == null)
+        {
+            sessionState.Seats = new Dictionary<Transform, bool>();
+        }
+
+        sessionState.Seats[seat] = true;
+        sessionState.AvailableSeatsCount++;
+        OnSeatsChanged?.Invoke(seat, true);
     }
 
     public bool TryOccupyRandomSeat(out Transform seat)
@@ -41,7 +33,21 @@ public class SessionService
         if (sessionState == null || sessionState.Seats == null || sessionState.AvailableSeatsCount <= 0)
             return false;
 
-        seat = sessionState.GetAvailableRandomSeat();
+        // 가용 좌석 목록 수집
+        List<Transform> availableSeats = new List<Transform>();
+        foreach (var kvp in sessionState.Seats)
+        {
+            if (kvp.Value)
+            {
+                availableSeats.Add(kvp.Key);
+            }
+        }
+
+        if (availableSeats.Count == 0)
+            return false;
+
+        int randomIndex = UnityEngine.Random.Range(0, availableSeats.Count);
+        seat = availableSeats[randomIndex];
         if (seat == null)
             return false;
 
