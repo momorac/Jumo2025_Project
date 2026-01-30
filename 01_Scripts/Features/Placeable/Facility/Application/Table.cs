@@ -25,6 +25,11 @@ public class Table : MonoBehaviour, IFacilityService
     public void OnPlaced()
     {
         Debug.Log($"<color=green>Table placed. Capacity: {Capacity}.</color>");
+
+        // 모델 오브젝트 y축 중심으로 90도씩 랜덤하게 회전
+        int randomRotation = Random.Range(0, 4) * 90;
+        transform.GetChild(0).rotation = Quaternion.Euler(0, randomRotation, 0);
+
         RegisterTable();
     }
 
