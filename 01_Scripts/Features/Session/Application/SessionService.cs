@@ -53,6 +53,7 @@ public class SessionService
 
         sessionState.Seats[seat] = false;
         sessionState.AvailableSeatsCount--;
+        OnSeatsChanged?.Invoke(seat, false);
         return true;
     }
 

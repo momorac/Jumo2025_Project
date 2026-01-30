@@ -10,17 +10,18 @@ public class PedestrianSpawnSimSystem : ISimSystem
     public void Initialize()
     {
         pool = App.PoolService.pedestrianPool;
-        ResetNextSpawnTimer();
-    }
 
-    public void Tick(float deltaTime)
-    {
         if (pool == null)
         {
             Debug.LogWarning("PedestrianSpawnSimSystem: Pool is null.");
             return;
         }
 
+        ResetNextSpawnTimer();
+    }
+
+    public void Tick(float deltaTime)
+    {
         // Debug.Log($"Time until next pedestrian spawn: {timeUntilNextSpawn:F2} seconds.");
 
         timeUntilNextSpawn -= deltaTime;
