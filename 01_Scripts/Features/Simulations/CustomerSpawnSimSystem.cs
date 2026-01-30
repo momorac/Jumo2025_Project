@@ -18,10 +18,10 @@ public class CustomerSpawnSimSystem : ISimSystem
         if (!hasAvailableSeat)
             return;
 
-        if (!App.SessionService.TryOccupyRandomSeat(out var seat))
-            return;
-
-        SpawnCustomer(seat);
+        if (App.SessionService.TryOccupyRandomSeat(out var seat))
+        {
+            SpawnCustomer(seat);
+        }
     }
 
     private void OnSeatsChanged(Transform seat, bool isAvailable)
