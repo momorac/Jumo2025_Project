@@ -21,7 +21,7 @@ public class PedestrianSpawnSimSystem : ISimSystem
             return;
         }
 
-        Debug.Log($"Time until next pedestrian spawn: {timeUntilNextSpawn:F2} seconds.");
+        // Debug.Log($"Time until next pedestrian spawn: {timeUntilNextSpawn:F2} seconds.");
 
         timeUntilNextSpawn -= deltaTime;
         if (timeUntilNextSpawn <= 0f)
