@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2090550505654121431}
-  - component: {fileID: 7297937316020736834}
+  - component: {fileID: 1887504698332941180}
   - component: {fileID: 2772027616876920637}
   m_Layer: 0
   m_Name: Customer
@@ -34,7 +34,7 @@ Transform:
   - {fileID: 6491110077721026563}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7297937316020736834
+--- !u!114 &1887504698332941180
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,9 +43,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 871284014466754535}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4af74ce1d53e06a4e90e5564882a6cb5, type: 3}
+  m_Script: {fileID: 11500000, guid: d95b27f9e95d8f44d9b24eb0993c1d54, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Pedestrian
+  m_EditorClassIdentifier: Assembly-CSharp::Customer
   animator: {fileID: 4861584386905263174}
 --- !u!195 &2772027616876920637
 NavMeshAgent:

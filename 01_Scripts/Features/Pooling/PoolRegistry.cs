@@ -6,6 +6,7 @@ using UnityEngine;
 public class PoolRegistry : ScriptableObject
 {
     public PoolEntry pedestrianPoolEntry;
+    public PoolEntry customerPoolEntry;
 }
 
 [Serializable]

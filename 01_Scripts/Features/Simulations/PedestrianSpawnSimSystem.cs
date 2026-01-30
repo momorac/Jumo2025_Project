@@ -32,11 +32,6 @@ public class PedestrianSpawnSimSystem : ISimSystem
         }
     }
 
-    private void ResetNextSpawnTimer()
-    {
-        timeUntilNextSpawn = Random.Range(minSpawnInterval, maxSpawnInterval);
-    }
-
     private void SpawnPedestrian()
     {
         Pedestrian instance = pool.Get();
@@ -48,4 +43,10 @@ public class PedestrianSpawnSimSystem : ISimSystem
             return;
         }
     }
+
+    private void ResetNextSpawnTimer()
+    {
+        timeUntilNextSpawn = Random.Range(minSpawnInterval, maxSpawnInterval);
+    }
+
 }

@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class GameAnchors : MonoBehaviour
 {
-    public Transform AgentRoot;
+    public Transform PedestrianRoot;
+    public Transform CustomerRoot;
 
     public Transform[] CustomerSpawnPoints;
 

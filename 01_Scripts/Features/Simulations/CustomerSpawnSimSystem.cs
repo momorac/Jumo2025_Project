@@ -3,11 +3,15 @@ using UnityEngine;
 
 public class CustomerSpawnSimSystem : ISimSystem
 {
+    private CustomerPool pool;
+
     private int spawnedCustomers = 0;
     private bool hasAvailableSeat;
 
     public void Initialize()
     {
+        pool = App.PoolService.customerPool;
+
         hasAvailableSeat = App.SessionService.GetAvailableSeatsCount() > 0;
         App.SessionService.OnSeatsChanged += OnSeatsChanged;
     }
@@ -31,14 +35,10 @@ public class CustomerSpawnSimSystem : ISimSystem
 
     private void SpawnCustomer(Transform seat)
     {
-        if (seat == null) return;
-
         Debug.Log($"<color=green>Spawning customer #{spawnedCustomers + 1} at seat.</color>");
-        spawnedCustomers++;
 
-        var customerGO = new GameObject("Customer");
-        customerGO.transform.SetParent(seat, worldPositionStays: false);
-        customerGO.transform.localPosition = Vector3.zero;
-        customerGO.transform.localRotation = Quaternion.identity;
+        Customer instance = pool.Get();
+
+        spawnedCustomers++;
     }
 }
