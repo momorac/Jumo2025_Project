@@ -11,6 +11,11 @@ public class Table : MonoBehaviour, IFacilityService
     public void Initialize(Placeable _placeable)
     {
         this.Type = _placeable;
+        RegisterTable();
+    }
+
+    private void RegisterTable()
+    {
         for (int i = 0; i < seatRoot.Length; i++)
         {
             App.SessionService.RegisterSeat(seatRoot[i]);
@@ -20,10 +25,10 @@ public class Table : MonoBehaviour, IFacilityService
     public void OnPlaced()
     {
         Debug.Log($"<color=green>Table placed. Capacity: {Capacity}.</color>");
+        RegisterTable();
     }
 
     public void OnRemoved()
     {
     }
-
 }

@@ -38,6 +38,7 @@ public class CustomerSpawnSimSystem : ISimSystem
         Debug.Log($"<color=green>Spawning customer #{spawnedCustomers + 1} at seat.</color>");
 
         Customer instance = pool.Get();
+        instance.SetSeat(seat);
 
         spawnedCustomers++;
     }

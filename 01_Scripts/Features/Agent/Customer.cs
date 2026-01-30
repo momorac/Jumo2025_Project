@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class Customer : MonoBehaviour, IPooled
 {
@@ -26,6 +27,19 @@ public class Customer : MonoBehaviour, IPooled
         }
 
         Debug.Log("<color=green>CUSTOMER spawned.</color>");
+
+        // 위치 랜덤 설정
+        int randomIdx = Random.Range(0, spawnPoints.Length);
+        start = spawnPoints[randomIdx];
+        target = spawnPoints[(randomIdx + 1) % spawnPoints.Length];
+
+        transform.position = start.position;
+    }
+
+    public void SetSeat(Transform seat)
+    {
+        agent.SetDestination(seat.position);
+        StartCoroutine(TrackWalkingCoroutine());
     }
 
     public void OnRelease()
@@ -34,6 +48,13 @@ public class Customer : MonoBehaviour, IPooled
     }
 
 
-    // public void SeatAt(Table seat)
+    private IEnumerator TrackWalkingCoroutine()
+    {
+        animator.SetBool("IsWalking", true);
 
+        while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
+            yield return null;
+
+        animator.SetBool("IsWalking", false);
+    }
 }
