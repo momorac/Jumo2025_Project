@@ -17,10 +17,11 @@ public class PlaceableObject : MonoBehaviour
 
     private static readonly int OutlineColorID = Shader.PropertyToID("_OutlineColor");
     private Color lastPreviewColor;
+    private Color[] colors = { new Color(0, 1, 0, 1), new Color(1, 0, 0, 1) };
 
     public void SetPreviewColor(bool isAvailable, bool hasPlaced = false)
     {
-        Color color = isAvailable ? Color.green : Color.red;
+        Color color = isAvailable ? colors[0] : colors[1];
 
         // 같은 색이면 작업 생략
         if (lastPreviewColor == color) return;
