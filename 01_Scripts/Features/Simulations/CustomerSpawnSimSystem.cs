@@ -12,10 +12,9 @@ public class CustomerSpawnSimSystem : ISimSystem
 
     public void Tick(float deltaTime)
     {
-        if (App.SessionState?.Seats == null || App.SessionState.AvailableSeatsCount == 0)
+        if (!App.SessionService.TryOccupyRandomSeat(out var seat))
             return;
 
-        Transform seat = App.SessionState.GetAvailableRandomSeat();
         SpawnCustomer(seat);
 
     }
@@ -25,9 +24,6 @@ public class CustomerSpawnSimSystem : ISimSystem
         if (seat == null) return;
 
         Debug.Log($"<color=green>Spawning customer #{spawnedCustomers + 1} at seat.</color>");
-
-        App.SessionState.Seats[seat] = false;
-        App.SessionState.AvailableSeatsCount--;
 
         var customerGO = new GameObject("Customer");
         customerGO.transform.SetParent(seat, worldPositionStays: false);

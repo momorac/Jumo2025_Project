@@ -4,11 +4,13 @@ using UnityEngine;
 public static class App
 {
     // 전역 모델
-    public static SessionState SessionState;
-    public static PlacementData PlacementData;
-    public static PlaceableData PlaceableData;
+    private static SessionState SessionState;
+    private static PlacementData PlacementData;
+    private static PlaceableData PlaceableData;
 
     public static EconomyService EconomyService { get; private set; }
+    public static SessionService SessionService { get; private set; }
+    public static PlaceableService PlaceableService { get; private set; }
     public static PoolService PoolService { get; private set; }
 
     public static GameAnchors Anchors { get; set; }
@@ -23,6 +25,8 @@ public static class App
 
         // 매니저/서비스 초기화
         EconomyService = new EconomyService(_data.EconomyData.Money);
+        SessionService = new SessionService(SessionState);
+        PlaceableService = new PlaceableService(PlaceableData);
         PoolService = new PoolService();
     }
 

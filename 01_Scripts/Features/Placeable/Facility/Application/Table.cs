@@ -13,7 +13,7 @@ public class Table : MonoBehaviour, IFacilityService
         this.Type = _placeable;
         for (int i = 0; i < seatRoot.Length; i++)
         {
-            App.SessionState.RegisterSeat(seatRoot[i]);
+            App.SessionService.RegisterSeat(seatRoot[i]);
         }
     }
 

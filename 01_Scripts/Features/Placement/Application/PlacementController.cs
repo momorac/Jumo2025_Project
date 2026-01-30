@@ -31,15 +31,15 @@ public class PlacementController : MonoBehaviour, IPlacementController
 
     public IReadOnlyCollection<FacilityType> GetAvailableFacilities()
     {
-        return App.PlaceableData.GetUnlockedFacilities();
+        return App.PlaceableService.GetUnlockedFacilities();
     }
     public IReadOnlyCollection<TileType> GetAvailableTiles()
     {
-        return App.PlaceableData.GetUnlockedTiles();
+        return App.PlaceableService.GetUnlockedTiles();
     }
     public IReadOnlyCollection<DecorationType> GetAvailableDecorations()
     {
-        return App.PlaceableData.GetUnlockedDecorations();
+        return App.PlaceableService.GetUnlockedDecorations();
     }
 
     public string GetDisplayName(FacilityType facilityType)
