@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3607346640507568940}
   - component: {fileID: 5332258841434663628}
+  - component: {fileID: 9167800987129103063}
   m_Layer: 0
   m_Name: JumoHouseObject
   m_TagString: Untagged
@@ -57,6 +58,22 @@ MonoBehaviour:
   cellSize:
     x: 6
     z: 4
+--- !u!208 &9167800987129103063
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7269804284210555065}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 3, y: 1, z: 2}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 3, y: 1, z: 2}
+  m_TimeToStationary: 0.5
 --- !u!1001 &7370190462014147659
 PrefabInstance:
   m_ObjectHideFlags: 0

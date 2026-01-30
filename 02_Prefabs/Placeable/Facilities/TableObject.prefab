@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 4235166715507613387}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.593, y: 0.607, z: 0.506}
+  m_LocalPosition: {x: 1.444, y: 0, z: -0.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 4344063560032409710}
   - component: {fileID: 6541855550672339257}
   - component: {fileID: -2810205006245413271}
+  - component: {fileID: 4034589666083745370}
   m_Layer: 0
   m_Name: TableObject
   m_TagString: Untagged
@@ -100,6 +101,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Table
   seatRoot:
   - {fileID: 9154376980253202543}
+--- !u!208 &4034589666083745370
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8276841516861992042}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.5, y: 0.3, z: 1.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 1.5, y: 0.3, z: 1.5}
+  m_TimeToStationary: 0.5
 --- !u!1001 &895126997292620689
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -126,7 +143,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5987550052130055237, guid: fa0879502064996469a950a123cd60eb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.163
+      value: 0.232
       objectReference: {fileID: 0}
     - target: {fileID: 5987550052130055237, guid: fa0879502064996469a950a123cd60eb, type: 3}
       propertyPath: m_LocalPosition.z
