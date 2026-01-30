@@ -9,21 +9,18 @@ public class SessionService
     public SessionService(SessionState sessionState)
     {
         this.sessionState = sessionState ?? throw new ArgumentNullException(nameof(sessionState));
+        sessionState.Seats = new Dictionary<Transform, bool>();
     }
 
     public event Action<Transform, bool> OnSeatsChanged;
 
     public void RegisterSeat(Transform seat)
     {
-        if (seat == null) return;
-        if (sessionState.Seats == null)
-        {
-            sessionState.Seats = new Dictionary<Transform, bool>();
-        }
-
         sessionState.Seats[seat] = true;
         sessionState.AvailableSeatsCount++;
         OnSeatsChanged?.Invoke(seat, true);
+
+        Debug.Log("<color=blue>Seat registered. Total available seats: " + sessionState.AvailableSeatsCount + "</color>");
     }
 
     public bool TryOccupyRandomSeat(out Transform seat)

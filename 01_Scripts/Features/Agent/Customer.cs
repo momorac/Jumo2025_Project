@@ -39,7 +39,7 @@ public class Customer : MonoBehaviour, IPooled
     public void SetSeat(Transform seat)
     {
         agent.SetDestination(seat.position);
-        StartCoroutine(TrackWalkingCoroutine());
+        StartCoroutine(TrackSeatingCoroutine(seat));
     }
 
     public void OnRelease()
@@ -48,13 +48,19 @@ public class Customer : MonoBehaviour, IPooled
     }
 
 
-    private IEnumerator TrackWalkingCoroutine()
+    private IEnumerator TrackSeatingCoroutine(Transform seat)
     {
         animator.SetBool("IsWalking", true);
 
         while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
             yield return null;
 
+        agent.enabled = false;
         animator.SetBool("IsWalking", false);
+        transform.SetPositionAndRotation(seat.position, seat.rotation);
+
+
+        yield return new WaitForSeconds(0.5f);
+        animator.SetTrigger("SitTrigger");
     }
 }

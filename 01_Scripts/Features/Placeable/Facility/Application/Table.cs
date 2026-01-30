@@ -11,7 +11,6 @@ public class Table : MonoBehaviour, IFacilityService
     public void Initialize(Placeable _placeable)
     {
         this.Type = _placeable;
-        RegisterTable();
     }
 
     private void RegisterTable()
