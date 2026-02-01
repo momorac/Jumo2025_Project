@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306fb85c4450fdc4ca14e0bbdbb4ac01, type: 3}
+  m_Name: PlacementRegistry
+  m_EditorClassIdentifier: Assembly-CSharp::FacilityRegistry
+  facilityEntries:
+  - type: 1
+    component:
+      gameObjectPrefab: {fileID: 7269804284210555065, guid: 7c45c35cd94e41c4f94fc97774b8b8f2, type: 3}
+      UiIconImage: {fileID: 21300000, guid: 44a054df1702e39458b7072b08d0f212, type: 3}
+      displayName: "\uC8FC\uBAA8\uC758 \uC9D1"
+  - type: 2
+    component:
+      gameObjectPrefab: {fileID: 6731427639401032758, guid: 9763473db875b804b9c44f47a4d7d3d0, type: 3}
+      UiIconImage: {fileID: 21300000, guid: 44a054df1702e39458b7072b08d0f212, type: 3}
+      displayName: "\uC544\uAD81\uC774"
+  - type: 3
+    component:
+      gameObjectPrefab: {fileID: 8276841516861992042, guid: 8a64ddfe56699f94f93d3116b8c02c19, type: 3}
+      UiIconImage: {fileID: 21300000, guid: 44a054df1702e39458b7072b08d0f212, type: 3}
+      displayName: "\uC88C\uC11D"
+  tileEntries: []
+  decorationEntries: []
