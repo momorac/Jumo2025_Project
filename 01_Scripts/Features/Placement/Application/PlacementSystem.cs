@@ -38,13 +38,12 @@ public class PlacementSystem : MonoBehaviour
     private bool isLoading;
     private bool isPlacing = false;
 
-
-    void Start()
+    public void Initialize(PlacementRegistry registry)
     {
+        this.registry = registry;
+
         if (mainCamera == null)
             mainCamera = Camera.main;
-
-        registry = Resources.Load<PlacementRegistry>("RegistrySettings/PlacementRegistry");
 
         // Map building type -> parent root
         rootIndex.Clear();

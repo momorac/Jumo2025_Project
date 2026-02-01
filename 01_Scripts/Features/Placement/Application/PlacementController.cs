@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 [RequireComponent(typeof(PlacementSystem))]
 public class PlacementController : MonoBehaviour, IPlacementController
@@ -11,9 +12,14 @@ public class PlacementController : MonoBehaviour, IPlacementController
 
     public void Initialize()
     {
-        if (placementSystem == null)
-            placementSystem = GetComponent<PlacementSystem>();
-        registry = Resources.Load<PlacementRegistry>("RegistrySettings/PlacementRegistry");
+        placementSystem = GetComponent<PlacementSystem>();
+
+        AsyncOperationHandle handle = Addressables.LoadAssetAsync<PlacementRegistry>("PlacementRegistry");
+        handle.Completed += (op) =>
+        {
+            registry = op.Result as PlacementRegistry;
+            placementSystem.Initialize(registry);
+        };
     }
 
     public bool CanPlace(Placeable type)
