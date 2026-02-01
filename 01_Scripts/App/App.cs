@@ -1,5 +1,7 @@
 
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public static class App
 {
@@ -17,10 +19,13 @@ public static class App
 
     public static GameAnchors Anchors { get; set; }
 
+    private static bool hasInitialized = false;
+    public static bool HasInitialized => hasInitialized;
 
     public static void InitializeGameData(GameMetaData _data)
     {
-        Debug.Log("App InitializeGameData");
+        hasInitialized = false;
+
         SessionState = new SessionState();
         EconomyData = _data.EconomyData ?? new Economy(100);
         PlacementData = _data.PlacementData;
@@ -30,7 +35,14 @@ public static class App
         EconomyService = new EconomyService(EconomyData);
         SessionService = new SessionService(SessionState);
         PlaceableService = new PlaceableService(PlaceableData);
-        PoolService = new PoolService();
+
+        AsyncOperationHandle handle = Addressables.LoadAssetAsync<PoolRegistry>("Assets/_Project/91_Data/PoolRegistry.asset");
+        handle.Completed += (op) =>
+        {
+            PoolRegistry registry = op.Result as PoolRegistry;
+            PoolService = new PoolService(registry);
+            hasInitialized = true;
+        };
     }
 
     public static GameMetaData GetSessionDataToMeta()

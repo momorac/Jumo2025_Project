@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class GameSessionRunner : MonoBehaviour
 {
@@ -15,13 +16,13 @@ public class GameSessionRunner : MonoBehaviour
     private SimLoop simLoop;
     private PhaseController phaseController;
 
-    // 서비스 인스턴스는 App에서 관리
+    private bool hasInitialized = false;
 
-    private void Awake()
+    private IEnumerator InitializeGameSessionCoroutine()
     {
-
         // 저장된 데이터 로드 후 App에 등록
         App.InitializeGameData(SaveService.Load());
+        yield return new WaitUntil(() => App.HasInitialized);
 
         // 코어 시뮬레이션 상태 초기화
         simClock = new SimClock(dayLengthSeconds);
@@ -39,16 +40,22 @@ public class GameSessionRunner : MonoBehaviour
         phaseController = new PhaseController(phases, startingPhase);
 
         placementController.Initialize();
+        uiManager.InjectSessionControllers(placementController);
+
+        hasInitialized = true;
     }
 
-    private void Start()
+    private void Awake()
     {
-        // 세션 의존성 초기화
-        uiManager.InjectSessionControllers(placementController);
+        StartCoroutine(InitializeGameSessionCoroutine());
     }
+
 
     private void Update()
     {
+        if (!hasInitialized)
+            return;
+
         // 매 프레임: 페이즈의 UI/로직을 수행하고, 활성화되어 있으면 시뮬레이션을 진행
         phaseController.Tick(Time.deltaTime);
         simLoop.Update(Time.deltaTime);
@@ -77,7 +84,6 @@ public class GameSessionRunner : MonoBehaviour
     {
         SaveService.Save(App.GetSessionDataToMeta());
     }
-
 
     private void OnApplicationQuit()
     {

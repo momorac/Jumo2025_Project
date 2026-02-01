@@ -8,10 +8,9 @@ public class PoolService
     public CustomerPool customerPool;
 
 
-    public PoolService()
+    public PoolService(PoolRegistry registry)
     {
-        poolRegistry = Resources.Load<PoolRegistry>("RegistrySettings/PoolRegistry");
-
+        poolRegistry = registry;
         pedestrianPool = new PedestrianPool(poolRegistry.pedestrianPoolEntry);
         customerPool = new CustomerPool(poolRegistry.customerPoolEntry);
     }

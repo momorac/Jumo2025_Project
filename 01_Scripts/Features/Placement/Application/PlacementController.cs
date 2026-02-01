@@ -14,7 +14,7 @@ public class PlacementController : MonoBehaviour, IPlacementController
     {
         placementSystem = GetComponent<PlacementSystem>();
 
-        AsyncOperationHandle handle = Addressables.LoadAssetAsync<PlacementRegistry>("PlacementRegistry");
+        AsyncOperationHandle handle = Addressables.LoadAssetAsync<PlacementRegistry>("Assets/_Project/91_Data/PlacementRegistry.asset");
         handle.Completed += (op) =>
         {
             registry = op.Result as PlacementRegistry;
