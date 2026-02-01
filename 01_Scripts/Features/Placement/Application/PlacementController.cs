@@ -6,15 +6,14 @@ using UnityEngine;
 [RequireComponent(typeof(PlacementSystem))]
 public class PlacementController : MonoBehaviour, IPlacementController
 {
-    [Header("References")]
-    [SerializeField] private PlacementRegistry registry;    // SO 에셋 드래그 할당
-
+    private PlacementRegistry registry;
     private PlacementSystem placementSystem;
 
     public void Initialize()
     {
         if (placementSystem == null)
             placementSystem = GetComponent<PlacementSystem>();
+        registry = Resources.Load<PlacementRegistry>("RegistrySettings/PlacementRegistry");
     }
 
     public bool CanPlace(Placeable type)

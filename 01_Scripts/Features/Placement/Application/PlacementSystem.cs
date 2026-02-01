@@ -15,7 +15,7 @@ public class PlacementSystem : MonoBehaviour
     [Header("References")]
     [SerializeField] private GridSystem grid;
     [SerializeField] private Camera mainCamera;
-    [SerializeField] private PlacementRegistry registry;
+    private PlacementRegistry registry;
 
     [Header("Prefabs")]
     [SerializeField] private PlaceableObject placePrefab;
@@ -43,6 +43,8 @@ public class PlacementSystem : MonoBehaviour
     {
         if (mainCamera == null)
             mainCamera = Camera.main;
+
+        registry = Resources.Load<PlacementRegistry>("RegistrySettings/PlacementRegistry");
 
         // Map building type -> parent root
         rootIndex.Clear();
