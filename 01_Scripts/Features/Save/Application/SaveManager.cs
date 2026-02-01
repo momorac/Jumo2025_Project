@@ -2,7 +2,7 @@ using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
 
-public static class SaveService
+public static class SaveManager
 {
     private static string Path => System.IO.Path.Combine(Application.persistentDataPath, "save.json");
 

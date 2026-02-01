@@ -21,7 +21,7 @@ public class GameSessionRunner : MonoBehaviour
     private IEnumerator InitializeGameSessionCoroutine()
     {
         // 저장된 데이터 로드 후 App에 등록
-        App.InitializeGameData(SaveService.Load());
+        App.InitializeGameData(SaveManager.Load());
         yield return new WaitUntil(() => App.HasInitialized);
 
         // 코어 시뮬레이션 상태 초기화
@@ -82,7 +82,7 @@ public class GameSessionRunner : MonoBehaviour
     // 게임 데이터 로컬 저장
     public void SaveGameData()
     {
-        SaveService.Save(App.GetSessionDataToMeta());
+        SaveManager.Save(App.GetSessionDataToMeta());
     }
 
     private void OnApplicationQuit()
