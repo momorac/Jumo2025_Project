@@ -5,7 +5,7 @@ public static class App
 {
     // 게임 데이터 도메인
     private static SessionState SessionState;
-    private static Economy Economy;
+    private static Economy EconomyData;
     private static PlaceableData PlaceableData;
     private static PlacementData PlacementData;
 
@@ -22,12 +22,12 @@ public static class App
     {
         Debug.Log("App InitializeGameData");
         SessionState = new SessionState();
-        Economy = _data.EconomyData ?? new Economy(100);
+        EconomyData = _data.EconomyData ?? new Economy(100);
         PlacementData = _data.PlacementData;
         PlaceableData = _data.PlaceableData;
 
         // 매니저/서비스 초기화
-        EconomyService = new EconomyService(Economy);
+        EconomyService = new EconomyService(EconomyData);
         SessionService = new SessionService(SessionState);
         PlaceableService = new PlaceableService(PlaceableData);
         PoolService = new PoolService();
@@ -39,7 +39,7 @@ public static class App
         {
             PlacementData = PlacementData,
             PlaceableData = PlaceableData,
-            EconomyData = Economy
+            EconomyData = EconomyData
         };
     }
 
