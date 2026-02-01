@@ -33,7 +33,7 @@ public static class App
         PoolService = new PoolService();
     }
 
-    public static GameMetaData GetSessionGameData()
+    public static GameMetaData GetSessionDataToMeta()
     {
         return new GameMetaData
         {
