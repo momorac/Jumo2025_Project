@@ -42,7 +42,7 @@ public class GridSystem : MonoBehaviour
 
     public bool IsOccupied(Int2 cell)
     {
-        if (!IsInBounds(cell)) return true; // Treat out-of-bounds as occupied
+        if (!IsInBounds(cell)) return true; // 범위를 벗어난 경우도 이미 점유된 것으로 취급
         return grid[cell.x, cell.z].occupied;
     }
 
@@ -68,7 +68,7 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    // Occupy or free a rectangle region starting at root (lower-left), with given size (width,height)
+    // root에서 시작하는 직사각형 영역을 주어진 크기(가로, 세로)로 점유하거나 비우기
     public void SetOccupiedRect(Int2 root, Int2 size, bool value, Placeable placedType)
     {
         for (int dx = 0; dx < size.x; dx++)
@@ -84,7 +84,7 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    // Check if a rectangle can be occupied: in-bounds and all cells are free
+    // 직사각형 영역을 점유할 수 있는지 확인 (범위 안이고 모든 셀이 비어 있는지)
     public bool CanOccupyRect(Int2 root, Int2 size)
     {
         for (int dx = 0; dx < size.x; dx++)
@@ -101,7 +101,7 @@ public class GridSystem : MonoBehaviour
         return true;
     }
 
-    // Clear all occupancy flags
+    // 모든 셀의 점유 상태를 초기화
     public void ClearAllOccupancy()
     {
         for (int x = 0; x < width; x++)
@@ -114,7 +114,7 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    // Convert a world position to grid cell indices
+    // 월드 좌표를 그리드 셀 인덱스로 변환
     public Int2 WorldToGrid(Vector3 worldPos)
     {
         int x = Mathf.FloorToInt((worldPos.x - origin.x) / cellSize);
@@ -122,7 +122,7 @@ public class GridSystem : MonoBehaviour
         return new Int2(x, z);
     }
 
-    // Return the origin (lower-left) world position of a given grid cell
+    // 주어진 그리드 셀의 원점(왼쪽 아래) 월드 좌표 반환
     public Vector3 GridToWorldPivot(Int2 cell)
     {
         float cx = origin.x + (cell.x) * cellSize;
@@ -176,12 +176,12 @@ public class GridSystem : MonoBehaviour
         if (!drawGizmos) return;
         Gizmos.color = gridColor;
 
-        // Draw grid lines
+        // 그리드 선 그리기
         Vector3 start = origin;
         Vector3 right = new Vector3(cellSize * width, 0f, 0f);
         Vector3 forward = new Vector3(0f, 0f, cellSize * height);
 
-        // Lines along Z
+        // Z축 방향 선들
         for (int x = 0; x <= width; x++)
         {
             Vector3 a = start + new Vector3(x * cellSize, 0f, 0f);
@@ -189,7 +189,7 @@ public class GridSystem : MonoBehaviour
             Gizmos.DrawLine(a, b);
         }
 
-        // Lines along X
+        // X축 방향 선들
         for (int z = 0; z <= height; z++)
         {
             Vector3 a = start + new Vector3(0f, 0f, z * cellSize);
@@ -197,7 +197,7 @@ public class GridSystem : MonoBehaviour
             Gizmos.DrawLine(a, b);
         }
 
-        // Draw bounds rectangle
+        // 그리드 경계 사각형 그리기
         Gizmos.color = boundsColor;
         Vector3 p0 = origin;
         Vector3 p1 = origin + right;
