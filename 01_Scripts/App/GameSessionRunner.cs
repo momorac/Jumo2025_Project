@@ -4,6 +4,7 @@ using System.Collections;
 
 public class GameSessionRunner : MonoBehaviour
 {
+    [Header("Game Session Settings")]
     [SerializeField] private float dayLengthSeconds = 60f;
     [SerializeField] private PhaseId startingPhase = PhaseId.Preparation;
 
@@ -17,6 +18,28 @@ public class GameSessionRunner : MonoBehaviour
     private PhaseController phaseController;
 
     private bool hasInitialized = false;
+
+    private void Awake()
+    {
+        StartCoroutine(InitializeGameSessionCoroutine());
+    }
+
+    private void Update()
+    {
+        if (!hasInitialized)
+            return;
+
+        // 매 프레임: 페이즈의 UI/로직을 수행하고, 활성화되어 있으면 시뮬레이션을 진행
+        phaseController.Tick(Time.deltaTime);
+        simLoop.Update(Time.deltaTime);
+
+        // 페이즈 전환 조건 확인
+        if (phaseController.CurrentPhaseID == PhaseId.Open && simClock.IsDayOver())
+        {
+            ChangePhase(PhaseId.Closing);
+        }
+    }
+
 
     private IEnumerator InitializeGameSessionCoroutine()
     {
@@ -45,35 +68,14 @@ public class GameSessionRunner : MonoBehaviour
         hasInitialized = true;
     }
 
-    private void Awake()
-    {
-        StartCoroutine(InitializeGameSessionCoroutine());
-    }
-
-
-    private void Update()
-    {
-        if (!hasInitialized)
-            return;
-
-        // 매 프레임: 페이즈의 UI/로직을 수행하고, 활성화되어 있으면 시뮬레이션을 진행
-        phaseController.Tick(Time.deltaTime);
-        simLoop.Update(Time.deltaTime);
-
-
-        if (phaseController.CurrentPhaseID == PhaseId.Open && simClock.IsDayOver())
-        {
-            ChangePhase(PhaseId.Closing);
-        }
-    }
-
+    // 시뮬레이션 시스템 일괄 추가 메서드
     private void AddSimSystems()
     {
         simLoop.AddSystem(new CustomerSpawnSimSystem());
         simLoop.AddSystem(new PedestrianSpawnSimSystem());
     }
 
-    // 선택적 외부 제어(예: UI에서)
+    // 선택적 페이즈 전환 메서드
     public void ChangePhase(PhaseId next)
     {
         phaseController.Change(next);
@@ -87,8 +89,6 @@ public class GameSessionRunner : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        // 종료 시 최신 경제 잔액 반영 후 저장
         SaveGameData();
-
     }
 }
