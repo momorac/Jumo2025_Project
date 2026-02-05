@@ -24,7 +24,7 @@ public class CustomerSpawnSimSystem : ISimSystem
 
         if (App.SessionService.TryOccupyRandomSeat(out var seat))
         {
-            SpawnCustomer(seat);
+            SpawnCustomerDelay(seat);
         }
     }
 
@@ -33,12 +33,14 @@ public class CustomerSpawnSimSystem : ISimSystem
         hasAvailableSeat = App.SessionService.GetAvailableSeatsCount() > 0;
     }
 
-    private void SpawnCustomer(Transform seat)
+    private void SpawnCustomerDelay(Transform seat)
     {
-        Debug.Log($"<color=green>Spawning customer #{spawnedCustomers + 1} at seat.</color>");
+        float delay = Random.Range(3f, 10f);
+
+        Debug.Log($"<color=green>Spawning customer #{spawnedCustomers + 1} at seat {delay} seconds after.</color>");
 
         Customer instance = pool.Get();
-        instance.SetSeat(seat);
+        instance.SetSeatDealy(seat, delay);
 
         spawnedCustomers++;
     }

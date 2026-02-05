@@ -8,8 +8,6 @@ public class Customer : MonoBehaviour, IPooled
     private NavMeshAgent agent;
 
     private Transform[] spawnPoints => App.Anchors.CustomerSpawnPoints;
-    private Transform start;
-    private Transform target;
     private bool hasInitialized = false;
 
     public void OnGet()
@@ -30,16 +28,7 @@ public class Customer : MonoBehaviour, IPooled
 
         // 위치 랜덤 설정
         int randomIdx = Random.Range(0, spawnPoints.Length);
-        start = spawnPoints[randomIdx];
-        target = spawnPoints[(randomIdx + 1) % spawnPoints.Length];
-
-        transform.position = start.position;
-    }
-
-    public void SetSeat(Transform seat)
-    {
-        agent.SetDestination(seat.position);
-        StartCoroutine(TrackSeatingCoroutine(seat));
+        transform.position = spawnPoints[randomIdx].position;
     }
 
     public void OnRelease()
@@ -47,20 +36,44 @@ public class Customer : MonoBehaviour, IPooled
         Debug.Log("<color=yellow>CUSTOMER released back to pool.</color>");
     }
 
-
-    private IEnumerator TrackSeatingCoroutine(Transform seat)
+    public void SetSeatDealy(Transform seat, float delay)
     {
+        StartCoroutine(MoveToSeatCoroutine(seat, delay));
+    }
+
+    private IEnumerator MoveToSeatCoroutine(Transform seat, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        agent.SetDestination(seat.position);
         animator.SetBool("IsWalking", true);
 
         while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
             yield return null;
 
         agent.enabled = false;
+
+        // 현재 위치부터 seat.position 자연스럽게 lerp
+        transform.LookAt(seat.position);
+
+        Vector3 startPos = transform.position;
+        Vector3 targetPos = seat.position;
+
+        float duration = 0.4f;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            float t = elapsed / duration;
+            transform.position = Vector3.Lerp(startPos, targetPos, t);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
         animator.SetBool("IsWalking", false);
-        transform.SetPositionAndRotation(seat.position, seat.rotation);
 
 
-        yield return new WaitForSeconds(0.5f);
+        transform.SetPositionAndRotation(targetPos, seat.rotation);
         animator.SetTrigger("SitTrigger");
     }
 }
