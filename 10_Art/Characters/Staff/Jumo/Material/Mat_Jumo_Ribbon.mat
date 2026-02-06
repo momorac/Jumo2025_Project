@@ -33,10 +33,10 @@ Material:
     - PROPIXELIZER_DITHERING: 0
     - _Cull: 0
     - _EdgeBevelWeight: 0
-    - _ID: 3
+    - _ID: 2
     m_Colors:
     - _AmbientLight: {r: 0, g: 0, b: 0, a: 0}
-    - _EdgeHighlightColor: {r: 1, g: 0.99607843, b: 0.91764706, a: 0}
+    - _EdgeHighlightColor: {r: 1, g: 0.91764706, b: 0.931556, a: 0.7411765}
     - _OutlineColor: {r: 0.3056603, g: 0.22303812, b: 0.18627976, a: 0.62352943}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

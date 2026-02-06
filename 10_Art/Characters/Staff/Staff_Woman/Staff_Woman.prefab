@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 06fe84ca6a31be942ac7ae203c54e933, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.85451
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 06fe84ca6a31be942ac7ae203c54e933, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.05
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 06fe84ca6a31be942ac7ae203c54e933, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.04583
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 06fe84ca6a31be942ac7ae203c54e933, type: 3}
       propertyPath: m_LocalRotation.w
@@ -58,7 +58,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: f62977ee042553340946cbdba05ec1e9, type: 2}
     - target: {fileID: 919132149155446097, guid: 06fe84ca6a31be942ac7ae203c54e933, type: 3}
       propertyPath: m_Name
-      value: DM_Staff_Woman
+      value: Staff_Woman
       objectReference: {fileID: 0}
     - target: {fileID: 2971868347028883882, guid: 06fe84ca6a31be942ac7ae203c54e933, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
