@@ -384,14 +384,14 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 100
+  far clip plane: 1000
   field of view: 60
   orthographic: 1
   orthographic size: 50
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: d4213191b912a464da733225883ab211, type: 2}
   m_TargetDisplay: 0
@@ -412,7 +412,7 @@ Transform:
   m_GameObject: {fileID: 173120459}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 50, y: 0.79, z: 50}
+  m_LocalPosition: {x: 50, y: 200, z: 50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -574,12 +574,12 @@ MonoBehaviour:
     m_Bits: 34
   FixedTargetResolution: 640
   ClampCameraOrthoSize: 1
-  Mode: 2
-  PixelSize: 0.032
+  Mode: 0
+  PixelSize: 0.05
   overrideUsePixelExpansion: 0
   UsePixelExpansion: 1
   PixelizationFilter: 1
-  UsePixelArtUpscalingFilter: 0
+  UsePixelArtUpscalingFilter: 1
   TargetScale: 1
   FullscreenColorGradingLUT: {fileID: 0}
   EnableProPixelizer: 1
