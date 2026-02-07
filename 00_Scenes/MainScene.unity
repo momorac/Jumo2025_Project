@@ -391,7 +391,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: d4213191b912a464da733225883ab211, type: 2}
   m_TargetDisplay: 0
@@ -579,7 +579,7 @@ MonoBehaviour:
   overrideUsePixelExpansion: 0
   UsePixelExpansion: 1
   PixelizationFilter: 1
-  UsePixelArtUpscalingFilter: 1
+  UsePixelArtUpscalingFilter: 0
   TargetScale: 1
   FullscreenColorGradingLUT: {fileID: 0}
   EnableProPixelizer: 1
