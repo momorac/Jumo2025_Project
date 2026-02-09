@@ -164,7 +164,7 @@ Material:
     - _HueVariation: {r: 1, g: 0.5, b: 0, a: 0.1}
     - _OutlineColor: {r: 1, g: 1, b: 1, a: 0.5019608}
     - _PixelGridOrigin: {r: 0, g: 0, b: 0, a: 0}
-    - _ShadowColor: {r: 0.6377357, g: 0.022862135, b: 0.04697475, a: 1}
+    - _ShadowColor: {r: 0.28932002, g: 0.3962264, b: 0.35563332, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
