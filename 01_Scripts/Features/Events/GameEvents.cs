@@ -1,0 +1,144 @@
+using UnityEngine;
+
+// ===== Customer 관련 이벤트 =====
+
+#region Customer Events
+/// <summary> Customer가 좌석에 앉아서 주문할 준비가 된 경우 </summary>
+public struct CustomerReadyToOrderEvent : IGameEvent
+{
+    public Customer Customer;
+    public Transform SeatTransform;
+    public OrderData Order;
+
+    public CustomerReadyToOrderEvent(Customer customer, Transform seatTransform, OrderData order)
+    {
+        Customer = customer;
+        SeatTransform = seatTransform;
+        Order = order;
+    }
+}
+
+/// <summary> Customer가 주문을 취소하고 떠나는 경우 (대기 시간 초과 등) </summary>
+public struct CustomerLeftEvent : IGameEvent
+{
+    public Customer Customer;
+    public Transform SeatTransform;
+    public bool WasServed;
+
+    public CustomerLeftEvent(Customer customer, Transform seatTransform, bool wasServed)
+    {
+        Customer = customer;
+        SeatTransform = seatTransform;
+        WasServed = wasServed;
+    }
+}
+#endregion
+
+#region Staff Task Events
+/// <summary> 새로운 Task가 TaskQueue에 추가된 경우 </summary>
+public struct TaskCreatedEvent : IGameEvent
+{
+    public IStaffTask Task;
+
+    public TaskCreatedEvent(IStaffTask task)
+    {
+        Task = task;
+    }
+}
+
+/// <summary>Task가 Staff에게 배정된 경우</summary>
+public struct TaskAssignedEvent : IGameEvent
+{
+    public IStaffTask Task;
+    public Staff Staff;
+
+    public TaskAssignedEvent(IStaffTask task, Staff staff)
+    {
+        Task = task;
+        Staff = staff;
+    }
+}
+
+/// <summary>Task가 완료된 경우</summary>
+public struct TaskCompletedEvent : IGameEvent
+{
+    public IStaffTask Task;
+    public Staff Staff;
+
+    public TaskCompletedEvent(IStaffTask task, Staff staff)
+    {
+        Task = task;
+        Staff = staff;
+    }
+}
+
+#endregion
+
+#region Order Events
+
+/// <summary>주문이 접수된 경우</summary>
+public struct OrderTakenEvent : IGameEvent
+{
+    public Customer Customer;
+    public OrderData Order;
+
+    public OrderTakenEvent(Customer customer, OrderData order)
+    {
+        Customer = customer;
+        Order = order;
+    }
+}
+
+/// <summary>음식/음료가 서빙된 경우</summary>
+public struct OrderServedEvent : IGameEvent
+{
+    public Customer Customer;
+    public OrderData Order;
+
+    public OrderServedEvent(Customer customer, OrderData order)
+    {
+        Customer = customer;
+        Order = order;
+    }
+}
+#endregion
+
+#region Pointing Events
+
+/// <summary>말풍선이 클릭된 경우</summary>
+public struct BubbleClickedEvent : IGameEvent
+{
+    public Customer Customer;
+    public Transform TargetPosition;
+
+    public BubbleClickedEvent(Customer customer, Transform targetPosition)
+    {
+        Customer = customer;
+        TargetPosition = targetPosition;
+    }
+}
+
+/// <summary>Staff가 수동으로 선택된 경우</summary>
+public struct StaffSelectedEvent : IGameEvent
+{
+    public Staff Staff;
+
+    public StaffSelectedEvent(Staff staff)
+    {
+        Staff = staff;
+    }
+}
+
+/// <summary>목적지가 클릭된 경우 (Staff 수동 이동)</summary>
+public struct DestinationClickedEvent : IGameEvent
+{
+    public Vector3 Position;
+    public IClickable ClickedObject;
+
+    public DestinationClickedEvent(Vector3 position, IClickable clickedObject)
+    {
+        Position = position;
+        ClickedObject = clickedObject;
+    }
+}
+#endregion

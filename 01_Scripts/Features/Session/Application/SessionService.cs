@@ -20,7 +20,7 @@ public class SessionService
         sessionState.AvailableSeatsCount++;
         OnSeatsChanged?.Invoke(seat, true);
 
-        Debug.Log("<color=blue>Seat registered. Total available seats: " + sessionState.AvailableSeatsCount + "</color>");
+        Debug.Log("<color=green>Seat registered. Total available seats: " + sessionState.AvailableSeatsCount + "</color>");
     }
 
     public bool TryOccupyRandomSeat(out Transform seat)

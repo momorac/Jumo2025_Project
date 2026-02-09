@@ -2,13 +2,28 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
 
+/// <summary>
+/// Customer 에이전트
+/// CustomerController를 통해 FSM 관리
+/// IPooled 구현으로 오브젝트 풀링 지원
+/// </summary>
+[RequireComponent(typeof(CustomerController))]
 public class Customer : MonoBehaviour, IPooled
 {
     [SerializeField] private Animator animator;
     private NavMeshAgent agent;
+    private CustomerController controller;
 
     private Transform[] spawnPoints => App.Anchors.CustomerSpawnPoints;
     private bool hasInitialized = false;
+
+    // 현재 주문 접근자
+    public OrderData CurrentOrder => controller?.CurrentOrder;
+
+    private void Awake()
+    {
+        controller = GetComponent<CustomerController>();
+    }
 
     public void OnGet()
     {
@@ -24,6 +39,9 @@ public class Customer : MonoBehaviour, IPooled
             return;
         }
 
+        // NavMeshAgent 활성화
+        agent.enabled = true;
+
         Debug.Log("<color=green>CUSTOMER spawned.</color>");
 
         // 위치 랜덤 설정
@@ -36,44 +54,45 @@ public class Customer : MonoBehaviour, IPooled
         Debug.Log("<color=yellow>CUSTOMER released back to pool.</color>");
     }
 
-    public void SetSeatDealy(Transform seat, float delay)
+    /// <summary>
+    /// 풀에 반환
+    /// </summary>
+    public void Release()
     {
-        StartCoroutine(MoveToSeatCoroutine(seat, delay));
+        App.PoolService.customerPool.Release(this);
     }
 
-    private IEnumerator MoveToSeatCoroutine(Transform seat, float delay)
+    /// <summary>
+    /// 좌석 배정 (지연 포함)
+    /// 기존 API 호환성 유지
+    /// </summary>
+    public void SetSeatDealy(Transform seat, float delay)
+    {
+        StartCoroutine(AssignSeatDelayedCoroutine(seat, delay));
+    }
+
+    private IEnumerator AssignSeatDelayedCoroutine(Transform seat, float delay)
     {
         yield return new WaitForSeconds(delay);
 
-        agent.SetDestination(seat.position);
-        animator.SetBool("IsWalking", true);
+        // CustomerController를 통해 FSM 시작
+        controller?.AssignSeat(seat);
+    }
 
-        while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
-            yield return null;
+    /// <summary>
+    /// 주문 접수됨
+    /// </summary>
+    public void OnOrderTaken()
+    {
+        controller?.OnOrderTaken();
+    }
 
-        agent.enabled = false;
-
-        // 현재 위치부터 seat.position 자연스럽게 lerp
-        transform.LookAt(seat.position);
-
-        Vector3 startPos = transform.position;
-        Vector3 targetPos = seat.position;
-
-        float duration = 0.4f;
-        float elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            float t = elapsed / duration;
-            transform.position = Vector3.Lerp(startPos, targetPos, t);
-
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-        animator.SetBool("IsWalking", false);
-
-
-        transform.SetPositionAndRotation(targetPos, seat.rotation);
-        animator.SetTrigger("SitTrigger");
+    /// <summary>
+    /// 정상 퇴장
+    /// </summary>
+    public void Leave()
+    {
+        controller?.Leave();
     }
 }
+

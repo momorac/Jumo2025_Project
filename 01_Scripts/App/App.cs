@@ -17,6 +17,13 @@ public static class App
     public static PlaceableService PlaceableService { get; private set; }
     public static PoolService PoolService { get; private set; }
 
+    // 새로운 서비스들
+    public static GameEventBus EventBus { get; private set; }
+    public static OrderService OrderService { get; private set; }
+    public static TaskQueue TaskQueue { get; private set; }
+    public static TaskAssigner TaskAssigner { get; private set; }
+    public static StaffRegistry StaffRegistry { get; private set; }
+
     public static GameAnchors Anchors { get; set; }
 
     private static bool hasInitialized = false;
@@ -31,10 +38,19 @@ public static class App
         PlacementData = _data.PlacementData;
         PlaceableData = _data.PlaceableData;
 
+        // 코어 서비스 초기화
+        EventBus = new GameEventBus();
+        StaffRegistry = new StaffRegistry();
+        TaskQueue = new TaskQueue();
+
         // 매니저/서비스 초기화
         EconomyService = new EconomyService(EconomyData);
         SessionService = new SessionService(SessionState);
         PlaceableService = new PlaceableService(PlaceableData);
+        OrderService = new OrderService();
+
+        // TaskAssigner는 EventBus, TaskQueue, StaffRegistry가 초기화된 후 생성
+        TaskAssigner = new TaskAssigner(TaskQueue, StaffRegistry);
 
         AsyncOperationHandle handle = Addressables.LoadAssetAsync<PoolRegistry>("Assets/_Project/91_Data/PoolRegistry.asset");
         handle.Completed += (op) =>
