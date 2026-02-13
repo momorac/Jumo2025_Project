@@ -22,3 +22,8 @@ MonoBehaviour:
     _defaultCapacity: 5
     _maxSize: 30
     prefab: {fileID: 1887504698332941180, guid: 6cb86f5d898dcce44b9bd1dd1857e412, type: 3}
+  bubbleUIPoolEntry:
+    _collectionCheck: 1
+    _defaultCapacity: 5
+    _maxSize: 30
+    prefab: {fileID: 3043787930345997477, guid: e28aee52c52343c4abd2929287f94b23, type: 3}

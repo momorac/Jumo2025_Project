@@ -3,8 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 /// <summary>
-/// Customer FSM 컨트롤러
-/// 상태 전환 및 UI/이벤트 관리
+/// Customer FSM 컨트롤러. 상태 전환 및 UI/이벤트 관리
 /// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
 public class CustomerController : MonoBehaviour
@@ -88,9 +87,6 @@ public class CustomerController : MonoBehaviour
         };
     }
 
-    /// <summary>
-    /// 상태 전환
-    /// </summary>
     public void ChangeState(CustomerStateId newStateId)
     {
         if (!states.ContainsKey(newStateId))
@@ -104,9 +100,7 @@ public class CustomerController : MonoBehaviour
         currentState.Enter();
     }
 
-    /// <summary>
-    /// 좌석 배정 및 이동 시작
-    /// </summary>
+
     public void AssignSeat(Transform seat)
     {
         assignedSeat = seat;
@@ -118,9 +112,7 @@ public class CustomerController : MonoBehaviour
         ChangeState(CustomerStateId.WalkingToSeat);
     }
 
-    /// <summary>
-    /// 착석 처리
-    /// </summary>
+    /// <summary> 착석 처리 </summary>
     public void SitDown()
     {
         EnableNavMeshAgent(false);
@@ -133,9 +125,7 @@ public class CustomerController : MonoBehaviour
         ChangeState(CustomerStateId.WaitingToOrder);
     }
 
-    /// <summary>
-    /// 주문 접수됨 (Staff가 주문을 받음)
-    /// </summary>
+    /// <summary> 주문 접수됨 (Staff가 주문을 받음) </summary>
     public void OnOrderTaken()
     {
         wasServed = true;
@@ -145,9 +135,7 @@ public class CustomerController : MonoBehaviour
         ChangeState(CustomerStateId.WaitingForFood);
     }
 
-    /// <summary>
-    /// 주문 없이 이탈
-    /// </summary>
+    /// <summary>주문 없이 이탈</summary>
     public void LeaveWithoutOrder()
     {
         wasServed = false;
@@ -155,9 +143,7 @@ public class CustomerController : MonoBehaviour
         ChangeState(CustomerStateId.Leaving);
     }
 
-    /// <summary>
-    /// 정상 퇴장
-    /// </summary>
+    /// <summary> 정상 퇴장 </summary>
     public void Leave()
     {
         // 주문 완료 처리
@@ -169,9 +155,7 @@ public class CustomerController : MonoBehaviour
         ChangeState(CustomerStateId.Leaving);
     }
 
-    /// <summary>
-    /// 좌석 해제
-    /// </summary>
+    /// <summary> 좌석 해제 </summary>
     public void ReleaseSeat()
     {
         if (assignedSeat != null)
@@ -181,32 +165,19 @@ public class CustomerController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 풀에 반환
-    /// </summary>
+    /// <summary> 풀에 반환 </summary>
     public void ReturnToPool()
     {
         customer.Release();
     }
 
-    /// <summary>
-    /// 말풍선 표시/숨김
-    /// </summary>
-    public void ShowBubble(bool show)
+    /// <summary>말풍선 표시/숨김</summary>
+    public void ShowBubble(bool value)
     {
-        if (bubbleUI != null)
-        {
-            bubbleUI.SetVisible(show);
-            if (show)
-            {
-                bubbleUI.SetCustomer(customer);
-            }
-        }
+        bubbleUI.SetVisible(value);
     }
 
-    /// <summary>
-    /// NavMesh 목적지 설정
-    /// </summary>
+    /// <summary>NavMesh 목적지 설정</summary>
     public void SetDestination(Vector3 position)
     {
         if (agent != null && agent.enabled)
@@ -215,9 +186,7 @@ public class CustomerController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// NavMeshAgent 활성화/비활성화
-    /// </summary>
+    /// <summary>NavMeshAgent 활성화/비활성화</summary>
     public void EnableNavMeshAgent(bool enable)
     {
         if (agent != null)
@@ -226,9 +195,7 @@ public class CustomerController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 목적지 도착 여부 확인
-    /// </summary>
+    /// <summary>목적지 도착 여부 확인</summary>
     public bool HasReachedDestination()
     {
         if (agent == null || !agent.enabled)
@@ -237,9 +204,7 @@ public class CustomerController : MonoBehaviour
         return !agent.pathPending && agent.remainingDistance <= stoppingDistance;
     }
 
-    /// <summary>
-    /// 애니메이션 파라미터 설정
-    /// </summary>
+    /// <summary>애니메이션 파라미터 설정</summary>
     public void SetAnimation(string paramName, bool value)
     {
         if (animator != null)
@@ -248,9 +213,7 @@ public class CustomerController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 애니메이션 트리거
-    /// </summary>
+    /// <summary>애니메이션 트리거 설정</summary>
     public void TriggerAnimation(string triggerName)
     {
         if (animator != null)

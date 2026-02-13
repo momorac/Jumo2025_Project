@@ -3,9 +3,7 @@ using UnityEngine.AI;
 using System.Collections;
 
 /// <summary>
-/// Customer 에이전트
-/// CustomerController를 통해 FSM 관리
-/// IPooled 구현으로 오브젝트 풀링 지원
+/// Customer 에이전트 / CustomerController를 통해 FSM 관리
 /// </summary>
 [RequireComponent(typeof(CustomerController))]
 public class Customer : MonoBehaviour, IPooled
@@ -54,9 +52,6 @@ public class Customer : MonoBehaviour, IPooled
         Debug.Log("<color=yellow>CUSTOMER released back to pool.</color>");
     }
 
-    /// <summary>
-    /// 풀에 반환
-    /// </summary>
     public void Release()
     {
         App.PoolService.customerPool.Release(this);
@@ -64,7 +59,6 @@ public class Customer : MonoBehaviour, IPooled
 
     /// <summary>
     /// 좌석 배정 (지연 포함)
-    /// 기존 API 호환성 유지
     /// </summary>
     public void SetSeatDealy(Transform seat, float delay)
     {
@@ -79,17 +73,13 @@ public class Customer : MonoBehaviour, IPooled
         controller?.AssignSeat(seat);
     }
 
-    /// <summary>
-    /// 주문 접수됨
-    /// </summary>
+    /// <summary> 주문 접수됨 </summary>
     public void OnOrderTaken()
     {
         controller?.OnOrderTaken();
     }
 
-    /// <summary>
-    /// 정상 퇴장
-    /// </summary>
+    /// <summary> 정상 퇴장 </summary>
     public void Leave()
     {
         controller?.Leave();
