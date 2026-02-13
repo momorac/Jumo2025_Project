@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat_Jumo_Dress
+  m_Name: Mat_Jumo_Dress_front
   m_Shader: {fileID: -6465566751694194690, guid: 877d2d61e529c384b8cb9cadb0f115e8, type: 3}
   m_Parent: {fileID: 2100000, guid: 30ac8e65715ffab43b1d247f3aa7f1f0, type: 2}
   m_ModifiedSerializedProperties: 0
@@ -31,6 +31,7 @@ Material:
     m_Floats:
     - COLOR_GRADING: 0
     - PROPIXELIZER_DITHERING: 0
+    - _Cull: 2
     - _EdgeBevelWeight: 0
     - _ID: 3
     m_Colors:
