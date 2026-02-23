@@ -9,8 +9,8 @@ using UnityEngine.AI;
 public class CustomerController : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private Animator animator;
+    private NavMeshAgent agent;
+    private Animator animator;
     [SerializeField] private BubbleUI bubbleUI;
 
     [Header("Settings")]
@@ -33,15 +33,11 @@ public class CustomerController : MonoBehaviour
     public bool WasServed => wasServed;
     public CustomerStateId CurrentStateId => currentState?.Id ?? CustomerStateId.Spawned;
 
-    private void Awake()
+    public void Initialize(Customer customer, NavMeshAgent agent, Animator animator)
     {
-        customer = GetComponent<Customer>();
-
-        if (agent == null)
-            agent = GetComponent<NavMeshAgent>();
-
-        if (animator == null)
-            animator = GetComponent<Animator>();
+        this.customer = customer;
+        this.agent = agent;
+        this.animator = animator;
 
         InitializeStates();
     }

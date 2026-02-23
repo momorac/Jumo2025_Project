@@ -18,16 +18,14 @@ public class Customer : MonoBehaviour, IPooled
     // 현재 주문 접근자
     public OrderData CurrentOrder => controller?.CurrentOrder;
 
-    private void Awake()
-    {
-        controller = GetComponent<CustomerController>();
-    }
-
     public void OnGet()
     {
         if (!hasInitialized)
         {
             agent = GetComponent<NavMeshAgent>();
+            controller = GetComponent<CustomerController>();
+            controller.Initialize(this, agent, animator);
+
             hasInitialized = true;
         }
 
