@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95b27f9e95d8f44d9b24eb0993c1d54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Customer
-  animator: {fileID: 0}
+  animator: {fileID: 5218902611881045885}
 --- !u!114 &443095298624988618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CustomerController
   agent: {fileID: 2772027616876920637}
-  animator: {fileID: 0}
+  animator: {fileID: 5218902611881045885}
   bubbleUI: {fileID: 5203072195695618030}
   stoppingDistance: 0.3
 --- !u!195 &2772027616876920637
@@ -326,6 +326,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2090550505654121431}
     m_Modifications:
+    - target: {fileID: 3681642179327044709, guid: 7f9ee1829285e4d4f962f302fa991210, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 43ebe236003381e41aa2d662dc9b70ae, type: 2}
     - target: {fileID: 7347621532918609439, guid: 7f9ee1829285e4d4f962f302fa991210, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -378,5 +382,10 @@ PrefabInstance:
 --- !u!4 &2201530772617884935 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7347621532918609439, guid: 7f9ee1829285e4d4f962f302fa991210, type: 3}
+  m_PrefabInstance: {fileID: 8897589250248475416}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5218902611881045885 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3681642179327044709, guid: 7f9ee1829285e4d4f962f302fa991210, type: 3}
   m_PrefabInstance: {fileID: 8897589250248475416}
   m_PrefabAsset: {fileID: 0}
