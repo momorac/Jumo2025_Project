@@ -123,11 +123,14 @@ public class CustomerController : MonoBehaviour
         seq.Append(transform.DOMove(assignedSeat.MotionRoots[0].position, 0.33f)).Join(transform.DOLocalRotateQuaternion(assignedSeat.MotionRoots[0].rotation, 0.33f));
         seq.Append(transform.DOMove(assignedSeat.MotionRoots[1].position, 0.66f)).Join(transform.DOLocalRotateQuaternion(assignedSeat.MotionRoots[1].rotation, 0.66f));
         seq.Append(transform.DOMove(assignedSeat.MotionRoots[2].position, 0.66f)).Join(transform.DOLocalRotateQuaternion(assignedSeat.MotionRoots[2].rotation, 0.66f));
+        seq.AppendCallback(() =>
+        {
+            // 착석 후 주문 대기 상태로 전환
+            ChangeState(CustomerStateId.WaitingToOrder);
+        });
         seq.Play();
 
 
-        // 주문 대기 상태로 전환
-        ChangeState(CustomerStateId.WaitingToOrder);
     }
 
     /// <summary> 주문 접수됨 (Staff가 주문을 받음) </summary>

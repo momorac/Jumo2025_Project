@@ -1,6 +1,4 @@
-/// <summary>
-/// Customer 상태 ID
-/// </summary>
+/// <summary> Customer 상태 ID/// </summary>
 public enum CustomerStateId
 {
     Spawned,            // 스폰됨
@@ -12,28 +10,18 @@ public enum CustomerStateId
     Leaving             // 퇴장 중
 }
 
-/// <summary>
-/// Customer 상태 인터페이스
-/// </summary>
+/// <summary>Customer 상태 인터페이스</summary>
 public interface ICustomerState
 {
-    /// <summary>
-    /// 상태 ID
-    /// </summary>
+    /// <summary>상태 ID</summary>
     CustomerStateId Id { get; }
 
-    /// <summary>
-    /// 상태 진입 시 호출
-    /// </summary>
+    /// <summary> 상태 진입 시 호출 </summary>
     void Enter();
 
-    /// <summary>
-    /// 매 프레임 호출
-    /// </summary>
+    /// <summary> 매 프레임 호출 </summary>
     void Tick(float deltaTime);
 
-    /// <summary>
-    /// 상태 종료 시 호출
-    /// </summary>
+    /// <summary> 상태 종료 시 호출 </summary>
     void Exit();
 }

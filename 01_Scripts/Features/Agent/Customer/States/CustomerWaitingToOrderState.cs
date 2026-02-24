@@ -10,7 +10,7 @@ public class CustomerWaitingToOrderState : ICustomerState
 
     private readonly CustomerController controller;
     private float waitTime;
-    private float maxWaitTime = 30f; // 최대 대기 시간
+    private float maxWaitTime = 60f; // 최대 대기 시간
 
     public CustomerWaitingToOrderState(CustomerController controller)
     {
