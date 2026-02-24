@@ -9,12 +9,12 @@ public class SessionService
     public SessionService(SessionState sessionState)
     {
         this.sessionState = sessionState ?? throw new ArgumentNullException(nameof(sessionState));
-        sessionState.Seats = new Dictionary<Transform, bool>();
+        sessionState.Seats = new Dictionary<Seat, bool>();
     }
 
-    public event Action<Transform, bool> OnSeatsChanged;
+    public event Action<Seat, bool> OnSeatsChanged;
 
-    public void RegisterSeat(Transform seat)
+    public void RegisterSeat(Seat seat)
     {
         sessionState.Seats[seat] = true;
         sessionState.AvailableSeatsCount++;
@@ -23,7 +23,7 @@ public class SessionService
         Debug.Log("<color=green>Seat registered. Total available seats: " + sessionState.AvailableSeatsCount + "</color>");
     }
 
-    public bool TryOccupyRandomSeat(out Transform seat)
+    public bool TryOccupyRandomSeat(out Seat seat)
     {
         seat = null;
 
@@ -31,7 +31,7 @@ public class SessionService
             return false;
 
         // 가용 좌석 목록 수집
-        List<Transform> availableSeats = new List<Transform>();
+        List<Seat> availableSeats = new List<Seat>();
         foreach (var kvp in sessionState.Seats)
         {
             if (kvp.Value)

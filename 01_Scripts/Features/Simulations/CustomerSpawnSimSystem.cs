@@ -28,12 +28,12 @@ public class CustomerSpawnSimSystem : ISimSystem
         }
     }
 
-    private void OnSeatsChanged(Transform seat, bool isAvailable)
+    private void OnSeatsChanged(Seat seat, bool isAvailable)
     {
         hasAvailableSeat = App.SessionService.GetAvailableSeatsCount() > 0;
     }
 
-    private void SpawnCustomerDelay(Transform seat)
+    private void SpawnCustomerDelay(Seat seat)
     {
         float delay = Random.Range(3f, 10f);
 

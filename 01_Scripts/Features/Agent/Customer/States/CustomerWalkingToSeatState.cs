@@ -17,7 +17,7 @@ public class CustomerWalkingToSeatState : ICustomerState
     public void Enter()
     {
         controller.SetAnimation("IsWalking", true);
-        controller.SetDestination(controller.AssignedSeat.position);
+        controller.SetDestination(controller.AssignedSeat.Root.position);
         Debug.Log($"<color=yellow>{controller.name}: Walking to seat</color>");
     }
 

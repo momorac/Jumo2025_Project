@@ -58,12 +58,12 @@ public class Customer : MonoBehaviour, IPooled
     /// <summary>
     /// 좌석 배정 (지연 포함)
     /// </summary>
-    public void SetSeatDealy(Transform seat, float delay)
+    public void SetSeatDealy(Seat seat, float delay)
     {
         StartCoroutine(AssignSeatDelayedCoroutine(seat, delay));
     }
 
-    private IEnumerator AssignSeatDelayedCoroutine(Transform seat, float delay)
+    private IEnumerator AssignSeatDelayedCoroutine(Seat seat, float delay)
     {
         yield return new WaitForSeconds(delay);
 

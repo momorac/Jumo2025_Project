@@ -10,10 +10,10 @@ public struct CustomerReadyToOrderEvent : IGameEvent
     public Transform SeatTransform;
     public OrderData Order;
 
-    public CustomerReadyToOrderEvent(Customer customer, Transform seatTransform, OrderData order)
+    public CustomerReadyToOrderEvent(Customer customer, Seat seat, OrderData order)
     {
         Customer = customer;
-        SeatTransform = seatTransform;
+        SeatTransform = seat.Root;
         Order = order;
     }
 }
@@ -25,10 +25,10 @@ public struct CustomerLeftEvent : IGameEvent
     public Transform SeatTransform;
     public bool WasServed;
 
-    public CustomerLeftEvent(Customer customer, Transform seatTransform, bool wasServed)
+    public CustomerLeftEvent(Customer customer, Seat seat, bool wasServed)
     {
         Customer = customer;
-        SeatTransform = seatTransform;
+        SeatTransform = seat.Root;
         WasServed = wasServed;
     }
 }

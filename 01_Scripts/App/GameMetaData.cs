@@ -13,7 +13,7 @@ public class GameMetaData
 [Serializable]
 public class SessionState
 {
-    public Dictionary<Transform, bool> Seats = new Dictionary<Transform, bool>();
+    public Dictionary<Seat, bool> Seats = new Dictionary<Seat, bool>();
     public int AvailableSeatsCount;
 }
 

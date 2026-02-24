@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using DG.Tweening;
 
 /// <summary>
 /// Customer FSM 컨트롤러. 상태 전환 및 UI/이벤트 관리
@@ -22,13 +23,13 @@ public class CustomerController : MonoBehaviour
 
     // 데이터
     private Customer customer;
-    private Transform assignedSeat;
+    private Seat assignedSeat;
     private OrderData currentOrder;
     private bool wasServed;
 
     // 프로퍼티
     public Customer Customer => customer;
-    public Transform AssignedSeat => assignedSeat;
+    public Seat AssignedSeat => assignedSeat;
     public OrderData CurrentOrder => currentOrder;
     public bool WasServed => wasServed;
     public CustomerStateId CurrentStateId => currentState?.Id ?? CustomerStateId.Spawned;
@@ -97,7 +98,7 @@ public class CustomerController : MonoBehaviour
     }
 
 
-    public void AssignSeat(Transform seat)
+    public void AssignSeat(Seat seat)
     {
         assignedSeat = seat;
 
@@ -114,8 +115,16 @@ public class CustomerController : MonoBehaviour
         EnableNavMeshAgent(false);
 
         // 좌석 위치로 정확히 이동
-        transform.SetPositionAndRotation(assignedSeat.position, assignedSeat.rotation);
+        transform.SetPositionAndRotation(assignedSeat.Root.position, assignedSeat.Root.rotation);
         TriggerAnimation("SitTrigger");
+
+        // 모션 애니메이션에 transform 적용
+        Sequence seq = DOTween.Sequence();
+        seq.Append(transform.DOMove(assignedSeat.MotionRoots[0].position, 0.33f)).Join(transform.DOLocalRotateQuaternion(assignedSeat.MotionRoots[0].rotation, 0.33f));
+        seq.Append(transform.DOMove(assignedSeat.MotionRoots[1].position, 0.66f)).Join(transform.DOLocalRotateQuaternion(assignedSeat.MotionRoots[1].rotation, 0.66f));
+        seq.Append(transform.DOMove(assignedSeat.MotionRoots[2].position, 0.66f)).Join(transform.DOLocalRotateQuaternion(assignedSeat.MotionRoots[2].rotation, 0.66f));
+        seq.Play();
+
 
         // 주문 대기 상태로 전환
         ChangeState(CustomerStateId.WaitingToOrder);
@@ -217,4 +226,5 @@ public class CustomerController : MonoBehaviour
             animator.SetTrigger(triggerName);
         }
     }
+
 }

@@ -5,8 +5,8 @@ public class Table : MonoBehaviour, IFacilityService
 {
     public Placeable Type { get; private set; }
 
-    [SerializeField] private Transform[] seatRoot;
-    public int Capacity => seatRoot.Length;
+    [SerializeField] private Seat[] seatRoots;
+    public int Capacity => seatRoots.Length;
 
     public void Initialize(Placeable _placeable)
     {
@@ -15,9 +15,9 @@ public class Table : MonoBehaviour, IFacilityService
 
     private void RegisterTable()
     {
-        for (int i = 0; i < seatRoot.Length; i++)
+        for (int i = 0; i < seatRoots.Length; i++)
         {
-            App.SessionService.RegisterSeat(seatRoot[i]);
+            App.SessionService.RegisterSeat(seatRoots[i]);
         }
     }
 
@@ -35,4 +35,11 @@ public class Table : MonoBehaviour, IFacilityService
     public void OnRemoved()
     {
     }
+}
+
+[System.Serializable]
+public class Seat
+{
+    public Transform Root;
+    public List<Transform> MotionRoots;
 }
