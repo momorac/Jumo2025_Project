@@ -83,7 +83,9 @@ public class TaskAssigner
         }
         else
         {
-            staffRegistry.GetClosestIdleStaff(evt.Position)?.MoveTo(evt.Position);
+            // 선택된 Staff가 없으면 기본 Staff(주모) 이동
+            var defaultStaff = staffRegistry.GetDefaultStaff();
+            defaultStaff?.MoveTo(evt.Position);
         }
     }
 

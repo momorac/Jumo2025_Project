@@ -10,6 +10,7 @@ public class StaffRegistry
 {
     private readonly List<Staff> registeredStaffs = new();
     private Staff selectedStaff;
+    private Staff defaultStaff;
 
     public void Register(Staff staff)
     {
@@ -73,4 +74,14 @@ public class StaffRegistry
 
     /// <summary>Staff 수 반환</summary>
     public int Count => registeredStaffs.Count;
+
+    /// <summary>기본 Staff(주모) 설정</summary>
+    public void SetDefaultStaff(Staff staff)
+    {
+        defaultStaff = staff;
+        Debug.Log($"<color=cyan>Default staff set: {staff.name}</color>");
+    }
+
+    /// <summary>기본 Staff(주모) 반환</summary>
+    public Staff GetDefaultStaff() => defaultStaff;
 }

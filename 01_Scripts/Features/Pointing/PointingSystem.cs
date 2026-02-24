@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// 클릭 이벤트 중앙 관리 시스템
@@ -53,6 +54,10 @@ public class PointingSystem : MonoBehaviour
 
     private void HandleClick()
     {
+        // UI 위를 클릭한 경우 무시
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+            return;
+
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
         if (showDebugRay)
@@ -73,16 +78,16 @@ public class PointingSystem : MonoBehaviour
             {
                 clickable.OnClicked(hit.point);
 
-                // Staff가 선택된 상태에서 다른 곳 클릭 시 목적지 이벤트 발행
-                if (isStaffSelected && !(clickable is Staff))
+                // Staff가 아닌 곳 클릭 시 목적지 이벤트 발행 (선택된 Staff 또는 기본 Staff 이동)
+                if (!(clickable is Staff))
                 {
                     App.EventBus.Publish(new DestinationClickedEvent(hit.point, clickable));
                     ClearStaffSelection();
                 }
             }
-            else if (isStaffSelected)
+            else
             {
-                // IClickable이 아닌 곳을 클릭해도 목적지로 사용
+                // IClickable이 아닌 곳을 클릭해도 목적지로 사용 (선택된 Staff 또는 기본 Staff 이동)
                 App.EventBus.Publish(new DestinationClickedEvent(hit.point, null));
                 ClearStaffSelection();
             }
