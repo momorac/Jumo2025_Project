@@ -10,6 +10,7 @@ public static class App
     private static Economy EconomyData;
     private static PlaceableData PlaceableData;
     private static PlacementData PlacementData;
+    private static IngredientData IngredientData;
 
     // 서비스/매니저
     public static SessionService SessionService { get; private set; }
@@ -23,6 +24,7 @@ public static class App
     public static TaskQueue TaskQueue { get; private set; }
     public static TaskAssigner TaskAssigner { get; private set; }
     public static StaffRegistry StaffRegistry { get; private set; }
+    public static IngredientService IngredientService { get; private set; }
 
     public static GameAnchors Anchors { get; set; }
 
@@ -37,6 +39,7 @@ public static class App
         EconomyData = _data.EconomyData ?? new Economy(100);
         PlacementData = _data.PlacementData;
         PlaceableData = _data.PlaceableData;
+        IngredientData = _data.IngredientData ?? new IngredientData();
 
         // 코어 서비스 초기화
         EventBus = new GameEventBus();
@@ -52,11 +55,20 @@ public static class App
         // TaskAssigner는 EventBus, TaskQueue, StaffRegistry가 초기화된 후 생성
         TaskAssigner = new TaskAssigner(TaskQueue, StaffRegistry);
 
+        // PoolRegistry 로드 및 PoolService 초기화
         AsyncOperationHandle handle = Addressables.LoadAssetAsync<PoolRegistry>("Assets/_Project/91_Data/PoolRegistry.asset");
         handle.Completed += (op) =>
         {
             PoolRegistry registry = op.Result as PoolRegistry;
             PoolService = new PoolService(registry);
+        };
+
+        // IngredientRegistry 로드
+        AsyncOperationHandle ingredientHandle = Addressables.LoadAssetAsync<IngredientRegistry>("Assets/_Project/91_Data/IngredientRegistry.asset");
+        ingredientHandle.Completed += (ingredientOp) =>
+        {
+            IngredientRegistry ingredientRegistry = ingredientOp.Result as IngredientRegistry;
+            IngredientService = new IngredientService(IngredientData, ingredientRegistry);
             hasInitialized = true;
         };
     }
@@ -67,7 +79,8 @@ public static class App
         {
             PlacementData = PlacementData,
             PlaceableData = PlaceableData,
-            EconomyData = EconomyData
+            EconomyData = EconomyData,
+            IngredientData = IngredientData
         };
     }
 

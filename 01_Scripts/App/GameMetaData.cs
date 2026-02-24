@@ -8,6 +8,7 @@ public class GameMetaData
     public PlaceableData PlaceableData;
     public PlacementData PlacementData;
     public Economy EconomyData;
+    public IngredientData IngredientData;
 }
 
 [Serializable]

@@ -29,5 +29,7 @@ public class EconomyService
 
     public int GetMoney() => economy.Money;
 
+    public bool CanAfford(int amount) => economy.Money >= amount;
+
     public Economy GetEconomyData() => economy;
 }
