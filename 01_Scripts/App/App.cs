@@ -11,6 +11,7 @@ public static class App
     private static PlaceableData PlaceableData;
     private static PlacementData PlacementData;
     private static IngredientData IngredientData;
+    private static RecipeData RecipeData;
 
     // 서비스/매니저
     public static SessionService SessionService { get; private set; }
@@ -25,6 +26,7 @@ public static class App
     public static TaskAssigner TaskAssigner { get; private set; }
     public static StaffRegistry StaffRegistry { get; private set; }
     public static IngredientService IngredientService { get; private set; }
+    public static RecipeService RecipeService { get; private set; }
 
     public static GameAnchors Anchors { get; set; }
 
@@ -40,6 +42,7 @@ public static class App
         PlacementData = _data.PlacementData;
         PlaceableData = _data.PlaceableData;
         IngredientData = _data.IngredientData ?? new IngredientData();
+        RecipeData = _data.RecipeData ?? new RecipeData();
 
         // 코어 서비스 초기화
         EventBus = new GameEventBus();
@@ -69,7 +72,15 @@ public static class App
         {
             IngredientRegistry ingredientRegistry = ingredientOp.Result as IngredientRegistry;
             IngredientService = new IngredientService(IngredientData, ingredientRegistry);
-            hasInitialized = true;
+
+            // RecipeRegistry 로드
+            AsyncOperationHandle recipeHandle = Addressables.LoadAssetAsync<RecipeRegistry>("Assets/_Project/91_Data/RecipeRegistry.asset");
+            recipeHandle.Completed += (recipeOp) =>
+            {
+                RecipeRegistry recipeRegistry = recipeOp.Result as RecipeRegistry;
+                RecipeService = new RecipeService(RecipeData, recipeRegistry);
+                hasInitialized = true;
+            };
         };
     }
 
@@ -80,7 +91,8 @@ public static class App
             PlacementData = PlacementData,
             PlaceableData = PlaceableData,
             EconomyData = EconomyData,
-            IngredientData = IngredientData
+            IngredientData = IngredientData,
+            RecipeData = RecipeData
         };
     }
 

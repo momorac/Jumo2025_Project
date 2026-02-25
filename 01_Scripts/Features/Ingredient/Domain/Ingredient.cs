@@ -5,7 +5,8 @@ public enum IngredientCategory
     Grain = 1,      // 곡식
     Vegetable = 2,  // 채소
     Meat = 3,       // 육류
-    Seasoning = 4   // 부재료
+    Seasoning = 4,  // 부재료
+    Intermediate = 5 // 중간재료 (김치류)
 }
 
 /// <summary>개별 재료 타입</summary>
@@ -36,5 +37,12 @@ public enum IngredientType
     Tofu = 401,         // 두부
     Flour = 402,        // 밀가루
     Salt = 403,         // 소금
-    Paste = 404         // 장
+    Paste = 404,        // 장
+
+    // 중간재료 (Intermediate) - 500번대 (레시피 결과물이자 재료)
+    KimchiCabbage = 501,     // 배추김치
+    KimchiRadish = 502,      // 깍두기
+    KimchiGreenOnion = 503,  // 파김치
+    Dongchimi = 504,         // 동치미
+    NabakKimchi = 505        // 나박김치
 }
