@@ -141,16 +141,42 @@ public class RecipeCSVImporter : EditorWindow
         { "단품", RecipeCategory.SingleDish },
     };
 
-    // 소분류 → CookingFacilityType 매핑
-    private static readonly Dictionary<RecipeSubCategory, CookingFacilityType> FacilityMap = new Dictionary<RecipeSubCategory, CookingFacilityType>
+    // 소분류 → CookingFacilityType 기본값 매핑
+    private static readonly Dictionary<RecipeSubCategory, List<CookingFacilityType>> DefaultFacilitiesMap = new Dictionary<RecipeSubCategory, List<CookingFacilityType>>
     {
-        { RecipeSubCategory.Rice, CookingFacilityType.Pot },
-        { RecipeSubCategory.Soup, CookingFacilityType.Pot },
-        { RecipeSubCategory.Kimchi, CookingFacilityType.JangdokJar },
-        { RecipeSubCategory.SideDish, CookingFacilityType.Cauldron },
-        { RecipeSubCategory.StewBowl, CookingFacilityType.Cauldron },
-        { RecipeSubCategory.Jeon, CookingFacilityType.Brazier },
-        { RecipeSubCategory.Dish, CookingFacilityType.Brazier },
+        { RecipeSubCategory.Rice,     new List<CookingFacilityType> { CookingFacilityType.Pot } },
+        { RecipeSubCategory.Soup,     new List<CookingFacilityType> { CookingFacilityType.Pot } },
+        { RecipeSubCategory.Kimchi,   new List<CookingFacilityType> { CookingFacilityType.JangdokJar } },
+        { RecipeSubCategory.SideDish, new List<CookingFacilityType> { CookingFacilityType.Cauldron } },
+        { RecipeSubCategory.StewBowl, new List<CookingFacilityType> { CookingFacilityType.Cauldron } },
+        { RecipeSubCategory.Jeon,     new List<CookingFacilityType> { CookingFacilityType.Brazier } },
+        { RecipeSubCategory.Dish,     new List<CookingFacilityType> { CookingFacilityType.Brazier } },
+    };
+
+    // 한글 조리시설명 → CookingFacilityType 매핑
+    private static readonly Dictionary<string, CookingFacilityType> FacilityNameMap = new Dictionary<string, CookingFacilityType>
+    {
+        { "솥",    CookingFacilityType.Pot },
+        { "가마솥", CookingFacilityType.Cauldron },
+        { "화로",   CookingFacilityType.Brazier },
+        { "장독대", CookingFacilityType.JangdokJar },
+        { "Pot",        CookingFacilityType.Pot },
+        { "Cauldron",   CookingFacilityType.Cauldron },
+        { "Brazier",    CookingFacilityType.Brazier },
+        { "JangdokJar", CookingFacilityType.JangdokJar },
+    };
+
+    // 한글 재료명 → IngredientType 매핑 (중간재료 포함 - outputIngredient용)
+    private static readonly Dictionary<string, IngredientType> OutputIngredientMap = new Dictionary<string, IngredientType>
+    {
+        { "배추김치", IngredientType.KimchiCabbage },
+        { "깍두기", IngredientType.KimchiRadish },
+        { "파김치", IngredientType.KimchiGreenOnion },
+        { "동치미", IngredientType.Dongchimi },
+        { "나박김치", IngredientType.NabakKimchi },
+        { "없음", IngredientType.None },
+        { "None", IngredientType.None },
+        { "", IngredientType.None },
     };
 
     // 김치 레시피 → 생성되는 IngredientType 매핑
@@ -196,9 +222,16 @@ public class RecipeCSVImporter : EditorWindow
         EditorGUILayout.Space();
 
         EditorGUILayout.HelpBox(
-            "CSV 형식:\n" +
-            "대분류,소분류,이름,재료\n" +
-            "차림요리,김치,배추김치,\"고추, 배추, 소금\"\n\n" +
+            "CSV 형식 (10개 컬럼):\n" +
+            "대분류,소분류,이름,재료,조리시설,조리시간,가격,버퍼여부,버퍼수량,생성재료\n\n" +
+            "재료 형식: \"재료명숫자, 재료명숫자\" (숫자 생략시 1개)\n" +
+            "조리시설: 슬래시(/)로 여러 개 지정 가능\n" +
+            "  예) 솥  /  솥/가마솥  /  화로/가마솥\n" +
+            "  종류: 솥, 가마솥, 화로, 장독대\n\n" +
+            "예시:\n" +
+            "차림요리,김치,배추김치,\"고추1,배추2,소금1\",장독대,10,1000,O,10,배추김치\n" +
+            "단품요리,국밥,돼지국밥,\"돼지2,무1,파1\",솥/가마솥,6,8000,X,1,없음\n\n" +
+            "버퍼여부: O/X 또는 TRUE/FALSE\n" +
             "한글이 깨지면 인코딩을 EUC-KR로 변경해보세요.",
             MessageType.Info);
 
@@ -289,11 +322,19 @@ public class RecipeCSVImporter : EditorWindow
                 SerializedProperty element = entriesProperty.GetArrayElementAtIndex(index);
 
                 // 각 필드 설정
-                element.FindPropertyRelative("type").enumValueIndex = (int)recipe.type;
-                element.FindPropertyRelative("category").enumValueIndex = (int)recipe.category;
+                element.FindPropertyRelative("type").enumValueIndex = GetEnumIndex<RecipeType>(recipe.type);
+                element.FindPropertyRelative("category").enumValueIndex = GetEnumIndex<RecipeCategory>(recipe.category);
                 element.FindPropertyRelative("subCategory").enumValueIndex = GetEnumIndex<RecipeSubCategory>(recipe.subCategory);
                 element.FindPropertyRelative("displayName").stringValue = recipe.displayName;
-                element.FindPropertyRelative("requiredFacility").enumValueIndex = (int)recipe.requiredFacility;
+                // 조리시설 목록 설정
+                SerializedProperty facilitiesProp = element.FindPropertyRelative("requiredFacilities");
+                facilitiesProp.ClearArray();
+                foreach (var facility in recipe.requiredFacilities)
+                {
+                    int fIdx = facilitiesProp.arraySize;
+                    facilitiesProp.InsertArrayElementAtIndex(fIdx);
+                    facilitiesProp.GetArrayElementAtIndex(fIdx).enumValueIndex = GetEnumIndex<CookingFacilityType>(facility);
+                }
                 element.FindPropertyRelative("cookingTime").floatValue = recipe.cookingTime;
                 element.FindPropertyRelative("basePrice").intValue = recipe.basePrice;
                 element.FindPropertyRelative("isBufferResource").boolValue = recipe.isBufferResource;
@@ -337,9 +378,9 @@ public class RecipeCSVImporter : EditorWindow
     {
         // CSV 파싱 (따옴표 내 쉼표 처리)
         var columns = ParseCSVColumns(line);
-        if (columns.Count < 4)
+        if (columns.Count < 10)
         {
-            log.AppendLine($"[Line {lineNum}] 컬럼 부족: {line}");
+            log.AppendLine($"[Line {lineNum}] 컬럼 부족 (10개 필요, {columns.Count}개 발견): {line}");
             return null;
         }
 
@@ -347,6 +388,12 @@ public class RecipeCSVImporter : EditorWindow
         string subCategoryStr = columns[1].Trim();
         string name = columns[2].Trim();
         string ingredientsStr = columns[3].Trim();
+        string facilityStr = columns[4].Trim();
+        string cookingTimeStr = columns[5].Trim();
+        string priceStr = columns[6].Trim();
+        string isBufferStr = columns[7].Trim();
+        string bufferAmountStr = columns[8].Trim();
+        string outputIngredientStr = columns[9].Trim();
 
         // RecipeType 매핑
         if (!RecipeNameMap.TryGetValue(name, out RecipeType recipeType))
@@ -372,6 +419,40 @@ public class RecipeCSVImporter : EditorWindow
         // 재료 파싱
         var ingredients = ParseIngredients(ingredientsStr, lineNum, log);
 
+        // 조리시설 파싱 (슬래시로 구분해 여러 개 지정 가능)
+        var facilities = ParseFacilities(facilityStr, subCategory, lineNum, log);
+
+        // 조리시간 파싱
+        float cookingTime = GetDefaultCookingTime(subCategory);
+        if (float.TryParse(cookingTimeStr, out float parsedTime))
+        {
+            cookingTime = parsedTime;
+        }
+
+        // 가격 파싱
+        int price = GetDefaultPrice(category, subCategory);
+        if (int.TryParse(priceStr, out int parsedPrice))
+        {
+            price = parsedPrice;
+        }
+
+        // 버퍼 자원 여부 파싱
+        bool isBuffer = ParseBool(isBufferStr);
+
+        // 버퍼 수량 파싱
+        int bufferAmount = 1;
+        if (int.TryParse(bufferAmountStr, out int parsedAmount))
+        {
+            bufferAmount = parsedAmount;
+        }
+
+        // 생성 재료 파싱
+        IngredientType outputIngredient = IngredientType.None;
+        if (!string.IsNullOrEmpty(outputIngredientStr) && OutputIngredientMap.TryGetValue(outputIngredientStr, out var parsedOutput))
+        {
+            outputIngredient = parsedOutput;
+        }
+
         // RecipeDefinition 생성
         var recipe = new RecipeDefinition
         {
@@ -380,16 +461,54 @@ public class RecipeCSVImporter : EditorWindow
             subCategory = subCategory,
             displayName = name,
             ingredients = ingredients,
-            requiredFacility = FacilityMap.GetValueOrDefault(subCategory, CookingFacilityType.Pot),
-            cookingTime = GetDefaultCookingTime(subCategory),
-            basePrice = GetDefaultPrice(category, subCategory),
-            isBufferResource = subCategory == RecipeSubCategory.Rice || subCategory == RecipeSubCategory.Kimchi,
-            bufferOutputAmount = subCategory == RecipeSubCategory.Rice ? 5 : (subCategory == RecipeSubCategory.Kimchi ? 10 : 1),
-            outputIngredient = KimchiOutputMap.GetValueOrDefault(recipeType, IngredientType.None)
+            requiredFacilities = facilities,
+            cookingTime = cookingTime,
+            basePrice = price,
+            isBufferResource = isBuffer,
+            bufferOutputAmount = bufferAmount,
+            outputIngredient = outputIngredient
         };
 
-        log.AppendLine($"[Line {lineNum}] ✓ {name} ({recipeType})");
+        string facilitiesStr = string.Join("/", facilities);
+        log.AppendLine($"[Line {lineNum}] ✓ {name} ({recipeType}) [{facilitiesStr}]");
         return recipe;
+    }
+
+    private List<CookingFacilityType> ParseFacilities(string facilityStr, RecipeSubCategory subCategory, int lineNum, System.Text.StringBuilder log)
+    {
+        var result = new List<CookingFacilityType>();
+
+        if (!string.IsNullOrEmpty(facilityStr))
+        {
+            string[] parts = facilityStr.Split('/');
+            foreach (string part in parts)
+            {
+                string trimmed = part.Trim();
+                if (string.IsNullOrEmpty(trimmed)) continue;
+
+                if (FacilityNameMap.TryGetValue(trimmed, out var facility))
+                    result.Add(facility);
+                else
+                    log.AppendLine($"  [Line {lineNum}] 알 수 없는 조리시설: {trimmed}");
+            }
+        }
+
+        // 파싱된 시설이 없으면 소분류 기본값 사용
+        if (result.Count == 0)
+        {
+            if (DefaultFacilitiesMap.TryGetValue(subCategory, out var defaults))
+                result.AddRange(defaults);
+            else
+                result.Add(CookingFacilityType.Pot);
+        }
+
+        return result;
+    }
+
+    private bool ParseBool(string value)
+    {
+        string v = value.Trim().ToUpperInvariant();
+        return v == "O" || v == "TRUE" || v == "1" || v == "예" || v == "Y" || v == "YES";
     }
 
     private List<string> ParseCSVColumns(string line)
@@ -427,17 +546,34 @@ public class RecipeCSVImporter : EditorWindow
         ingredientsStr = ingredientsStr.Trim('"', ' ');
         string[] parts = ingredientsStr.Split(',');
 
+        // 재료명 + 숫자 파싱 정규식 (예: "고추1", "돼지2", "배추")
+        var regex = new Regex(@"^(.+?)(\d+)?$");
+
         foreach (string part in parts)
         {
-            string ingredientName = part.Trim();
-            if (string.IsNullOrEmpty(ingredientName)) continue;
+            string trimmed = part.Trim();
+            if (string.IsNullOrEmpty(trimmed)) continue;
+
+            var match = regex.Match(trimmed);
+            if (!match.Success)
+            {
+                log.AppendLine($"  [Line {lineNum}] 파싱 실패: {trimmed}");
+                continue;
+            }
+
+            string ingredientName = match.Groups[1].Value.Trim();
+            int amount = 1;
+            if (match.Groups[2].Success && !string.IsNullOrEmpty(match.Groups[2].Value))
+            {
+                int.TryParse(match.Groups[2].Value, out amount);
+            }
 
             if (IngredientNameMap.TryGetValue(ingredientName, out IngredientType ingredientType))
             {
                 result.Add(new RecipeIngredient
                 {
                     ingredient = ingredientType,
-                    amount = 1
+                    amount = amount
                 });
             }
             else

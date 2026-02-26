@@ -25,8 +25,15 @@ public class RecipeDefinition
     public List<RecipeIngredient> ingredients = new List<RecipeIngredient>();
 
     [Header("조리")]
-    public CookingFacilityType requiredFacility;
+    [Tooltip("조리 가능한 설비 목록 (복수 지정 가능)")]
+    public List<CookingFacilityType> requiredFacilities = new List<CookingFacilityType>();
     public float cookingTime = 3f;
+
+    /// <summary>해당 설비에서 조리 가능한지 확인</summary>
+    public bool CanCookAt(CookingFacilityType facility)
+    {
+        return requiredFacilities.Contains(facility);
+    }
 
     [Header("판매")]
     public int basePrice;
@@ -51,6 +58,7 @@ public class RecipeRegistry : ScriptableObject
     private Dictionary<RecipeType, RecipeDefinition> index;
     private Dictionary<RecipeCategory, List<RecipeDefinition>> categoryIndex;
     private Dictionary<RecipeSubCategory, List<RecipeDefinition>> subCategoryIndex;
+    private Dictionary<CookingFacilityType, List<RecipeDefinition>> facilityIndex;
     private bool hasBuiltIndex = false;
 
     private void OnEnable()
@@ -68,6 +76,7 @@ public class RecipeRegistry : ScriptableObject
         index = new Dictionary<RecipeType, RecipeDefinition>(entries.Count);
         categoryIndex = new Dictionary<RecipeCategory, List<RecipeDefinition>>();
         subCategoryIndex = new Dictionary<RecipeSubCategory, List<RecipeDefinition>>();
+        facilityIndex = new Dictionary<CookingFacilityType, List<RecipeDefinition>>();
 
         foreach (var entry in entries)
         {
@@ -75,17 +84,21 @@ public class RecipeRegistry : ScriptableObject
 
             // 카테고리별 인덱스
             if (!categoryIndex.ContainsKey(entry.category))
-            {
                 categoryIndex[entry.category] = new List<RecipeDefinition>();
-            }
             categoryIndex[entry.category].Add(entry);
 
             // 소분류별 인덱스
             if (!subCategoryIndex.ContainsKey(entry.subCategory))
-            {
                 subCategoryIndex[entry.subCategory] = new List<RecipeDefinition>();
-            }
             subCategoryIndex[entry.subCategory].Add(entry);
+
+            // 조리시설별 인덱스
+            foreach (var facility in entry.requiredFacilities)
+            {
+                if (!facilityIndex.ContainsKey(facility))
+                    facilityIndex[facility] = new List<RecipeDefinition>();
+                facilityIndex[facility].Add(entry);
+            }
         }
 
         hasBuiltIndex = true;
@@ -136,6 +149,13 @@ public class RecipeRegistry : ScriptableObject
                 result.Add(entry);
         }
         return result;
+    }
+
+    /// <summary>특정 조리시설에서 사용 가능한 레시피 목록</summary>
+    public IReadOnlyList<RecipeDefinition> GetByFacility(CookingFacilityType facility)
+    {
+        EnsureIndex();
+        return facilityIndex.TryGetValue(facility, out var list) ? list : new List<RecipeDefinition>();
     }
 
     /// <summary>중간재료를 생성하는 레시피 목록 (김치류)</summary>
