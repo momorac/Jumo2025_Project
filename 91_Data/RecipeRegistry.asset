@@ -1,0 +1,803 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a978891e3eb39446b54c584f5cc95ee, type: 3}
+  m_Name: RecipeRegistry
+  m_EditorClassIdentifier: Assembly-CSharp::RecipeRegistry
+  entries:
+  - type: 0
+    category: 1
+    subCategory: 104
+    displayName: "\uBC30\uCD94\uAE40\uCE58"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 205
+      amount: 1
+    - ingredient: 201
+      amount: 1
+    - ingredient: 403
+      amount: 1
+    requiredFacility: 2
+    cookingTime: 10
+    basePrice: 1000
+    isBufferResource: 1
+    bufferOutputAmount: 10
+    outputIngredient: 501
+  - type: 0
+    category: 1
+    subCategory: 104
+    displayName: "\uAE4D\uB450\uAE30"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 205
+      amount: 1
+    - ingredient: 202
+      amount: 1
+    - ingredient: 403
+      amount: 1
+    requiredFacility: 2
+    cookingTime: 10
+    basePrice: 1000
+    isBufferResource: 1
+    bufferOutputAmount: 10
+    outputIngredient: 502
+  - type: 0
+    category: 1
+    subCategory: 104
+    displayName: "\uD30C\uAE40\uCE58"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 205
+      amount: 1
+    - ingredient: 403
+      amount: 1
+    - ingredient: 203
+      amount: 1
+    requiredFacility: 2
+    cookingTime: 10
+    basePrice: 1000
+    isBufferResource: 1
+    bufferOutputAmount: 10
+    outputIngredient: 503
+  - type: 0
+    category: 1
+    subCategory: 104
+    displayName: "\uB3D9\uCE58\uBBF8"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 202
+      amount: 1
+    - ingredient: 403
+      amount: 1
+    - ingredient: 203
+      amount: 1
+    requiredFacility: 2
+    cookingTime: 10
+    basePrice: 1000
+    isBufferResource: 1
+    bufferOutputAmount: 10
+    outputIngredient: 504
+  - type: 0
+    category: 1
+    subCategory: 104
+    displayName: "\uB098\uBC15\uAE40\uCE58"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 202
+      amount: 1
+    - ingredient: 201
+      amount: 1
+    - ingredient: 403
+      amount: 1
+    - ingredient: 203
+      amount: 1
+    requiredFacility: 2
+    cookingTime: 10
+    basePrice: 1000
+    isBufferResource: 1
+    bufferOutputAmount: 10
+    outputIngredient: 505
+  - type: 0
+    category: 1
+    subCategory: 101
+    displayName: "\uC7A1\uACE1\uBC25"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 101
+      amount: 1
+    requiredFacility: 1
+    cookingTime: 5
+    basePrice: 2000
+    isBufferResource: 1
+    bufferOutputAmount: 5
+    outputIngredient: 0
+  - type: 0
+    category: 1
+    subCategory: 102
+    displayName: "\uBB34\uAD6D"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 202
+      amount: 1
+    - ingredient: 403
+      amount: 1
+    - ingredient: 203
+      amount: 1
+    requiredFacility: 1
+    cookingTime: 3
+    basePrice: 3000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 1
+    subCategory: 101
+    displayName: "\uC300\uBC25"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 103
+      amount: 1
+    requiredFacility: 1
+    cookingTime: 5
+    basePrice: 2000
+    isBufferResource: 1
+    bufferOutputAmount: 5
+    outputIngredient: 0
+  - type: 0
+    category: 1
+    subCategory: 101
+    displayName: "\uCC39\uC300\uBC25"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 104
+      amount: 1
+    requiredFacility: 1
+    cookingTime: 5
+    basePrice: 2000
+    isBufferResource: 1
+    bufferOutputAmount: 5
+    outputIngredient: 0
+  - type: 0
+    category: 1
+    subCategory: 101
+    displayName: "\uBCF4\uB9AC\uBC25"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 102
+      amount: 1
+    requiredFacility: 1
+    cookingTime: 5
+    basePrice: 2000
+    isBufferResource: 1
+    bufferOutputAmount: 5
+    outputIngredient: 0
+  - type: 0
+    category: 1
+    subCategory: 102
+    displayName: "\uACC4\uB780\uAD6D"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 302
+      amount: 1
+    - ingredient: 403
+      amount: 1
+    - ingredient: 203
+      amount: 1
+    requiredFacility: 1
+    cookingTime: 3
+    basePrice: 3000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 1
+    subCategory: 102
+    displayName: "\uAE40\uCE58\uAD6D"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 501
+      amount: 1
+    - ingredient: 401
+      amount: 1
+    requiredFacility: 1
+    cookingTime: 3
+    basePrice: 3000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 1
+    subCategory: 102
+    displayName: "\uB3FC\uC9C0\uACE0\uAE30\uAD6D"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 304
+      amount: 1
+    - ingredient: 403
+      amount: 1
+    - ingredient: 203
+      amount: 1
+    requiredFacility: 1
+    cookingTime: 3
+    basePrice: 3000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 1
+    subCategory: 103
+    displayName: "\uBB34\uC0DD\uCC44"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 205
+      amount: 1
+    - ingredient: 202
+      amount: 1
+    - ingredient: 403
+      amount: 1
+    requiredFacility: 3
+    cookingTime: 4
+    basePrice: 2500
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 1
+    subCategory: 103
+    displayName: "\uACC4\uB780\uBD80\uCE68"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 302
+      amount: 1
+    - ingredient: 403
+      amount: 1
+    requiredFacility: 3
+    cookingTime: 4
+    basePrice: 2500
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 1
+    subCategory: 103
+    displayName: "\uC7A5\uC870\uB9BC"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 304
+      amount: 1
+    - ingredient: 404
+      amount: 1
+    requiredFacility: 3
+    cookingTime: 4
+    basePrice: 2500
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 1
+    subCategory: 103
+    displayName: "\uBD80\uCD94\uBB34\uCE68"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 204
+      amount: 1
+    - ingredient: 404
+      amount: 1
+    requiredFacility: 3
+    cookingTime: 4
+    basePrice: 2500
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 1
+    subCategory: 103
+    displayName: "\uBB34\uC870\uB9BC"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 202
+      amount: 1
+    - ingredient: 404
+      amount: 1
+    requiredFacility: 3
+    cookingTime: 4
+    basePrice: 2500
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 201
+    displayName: "\uAE40\uCE58\uCC0C\uAC1C"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 501
+      amount: 1
+    - ingredient: 401
+      amount: 1
+    requiredFacility: 3
+    cookingTime: 6
+    basePrice: 8000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 201
+    displayName: "\uB41C\uC7A5\uCC0C\uAC1C"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 401
+      amount: 1
+    - ingredient: 404
+      amount: 1
+    requiredFacility: 3
+    cookingTime: 6
+    basePrice: 8000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 201
+    displayName: "\uB3FC\uC9C0\uAD6D\uBC25"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 304
+      amount: 1
+    - ingredient: 403
+      amount: 1
+    - ingredient: 203
+      amount: 1
+    requiredFacility: 3
+    cookingTime: 6
+    basePrice: 8000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 201
+    displayName: "\uB3D9\uD0DC\uD0D5"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 205
+      amount: 1
+    - ingredient: 401
+      amount: 1
+    - ingredient: 202
+      amount: 1
+    - ingredient: 303
+      amount: 1
+    - ingredient: 203
+      amount: 1
+    requiredFacility: 3
+    cookingTime: 6
+    basePrice: 8000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 201
+    displayName: "\uC721\uAC1C\uC7A5"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 205
+      amount: 1
+    - ingredient: 304
+      amount: 1
+    - ingredient: 202
+      amount: 1
+    - ingredient: 404
+      amount: 1
+    - ingredient: 203
+      amount: 1
+    requiredFacility: 3
+    cookingTime: 6
+    basePrice: 8000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 202
+    displayName: "\uAE40\uCE58\uC804"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 501
+      amount: 1
+    - ingredient: 402
+      amount: 1
+    requiredFacility: 4
+    cookingTime: 4
+    basePrice: 6000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 202
+    displayName: "\uB450\uBD80\uC804"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 302
+      amount: 1
+    - ingredient: 401
+      amount: 1
+    - ingredient: 402
+      amount: 1
+    requiredFacility: 4
+    cookingTime: 4
+    basePrice: 6000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 202
+    displayName: "\uB3D9\uD0DC\uC804"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 302
+      amount: 1
+    - ingredient: 402
+      amount: 1
+    - ingredient: 303
+      amount: 1
+    requiredFacility: 4
+    cookingTime: 4
+    basePrice: 6000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 202
+    displayName: "\uC721\uC804"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 302
+      amount: 1
+    - ingredient: 304
+      amount: 1
+    - ingredient: 402
+      amount: 1
+    requiredFacility: 4
+    cookingTime: 4
+    basePrice: 6000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 202
+    displayName: "\uD30C\uC804"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 402
+      amount: 1
+    - ingredient: 203
+      amount: 1
+    requiredFacility: 4
+    cookingTime: 4
+    basePrice: 6000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 202
+    displayName: "\uD574\uBB3C\uD30C\uC804"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 402
+      amount: 1
+    - ingredient: 303
+      amount: 1
+    - ingredient: 203
+      amount: 1
+    requiredFacility: 4
+    cookingTime: 4
+    basePrice: 6000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 202
+    displayName: "\uBD80\uCD94\uC804"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 402
+      amount: 1
+    - ingredient: 204
+      amount: 1
+    requiredFacility: 4
+    cookingTime: 4
+    basePrice: 6000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 203
+    displayName: "\uB3FC\uC9C0\uAD6C\uC774"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 304
+      amount: 1
+    - ingredient: 403
+      amount: 1
+    requiredFacility: 4
+    cookingTime: 5
+    basePrice: 10000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 203
+    displayName: "\uC218\uC721"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 304
+      amount: 1
+    - ingredient: 202
+      amount: 1
+    - ingredient: 403
+      amount: 1
+    - ingredient: 203
+      amount: 1
+    requiredFacility: 4
+    cookingTime: 5
+    basePrice: 10000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 203
+    displayName: "\uAC08\uBE44\uCC1C"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 304
+      amount: 1
+    - ingredient: 202
+      amount: 1
+    - ingredient: 404
+      amount: 1
+    - ingredient: 203
+      amount: 1
+    requiredFacility: 4
+    cookingTime: 5
+    basePrice: 10000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 203
+    displayName: "\uBD88\uACE0\uAE30"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 205
+      amount: 1
+    - ingredient: 304
+      amount: 1
+    - ingredient: 404
+      amount: 1
+    - ingredient: 203
+      amount: 1
+    requiredFacility: 4
+    cookingTime: 5
+    basePrice: 10000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 201
+    displayName: "\uB2ED\uBC31\uC219"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 301
+      amount: 1
+    - ingredient: 403
+      amount: 1
+    - ingredient: 104
+      amount: 1
+    - ingredient: 203
+      amount: 1
+    requiredFacility: 3
+    cookingTime: 6
+    basePrice: 8000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 203
+    displayName: "\uC0DD\uC120\uC870\uB9BC"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 205
+      amount: 1
+    - ingredient: 202
+      amount: 1
+    - ingredient: 303
+      amount: 1
+    - ingredient: 404
+      amount: 1
+    - ingredient: 203
+      amount: 1
+    requiredFacility: 4
+    cookingTime: 5
+    basePrice: 10000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 203
+    displayName: "\uC0DD\uC120\uAD6C\uC774"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 303
+      amount: 1
+    - ingredient: 403
+      amount: 1
+    requiredFacility: 4
+    cookingTime: 5
+    basePrice: 10000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 203
+    displayName: "\uB2ED\uAF2C\uCE58"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 301
+      amount: 1
+    - ingredient: 204
+      amount: 1
+    - ingredient: 203
+      amount: 1
+    requiredFacility: 4
+    cookingTime: 5
+    basePrice: 10000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 202
+    displayName: "\uBC30\uCD94\uC804"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 402
+      amount: 1
+    - ingredient: 201
+      amount: 1
+    requiredFacility: 4
+    cookingTime: 4
+    basePrice: 6000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 201
+    displayName: "\uC7A5\uAD6D\uBC25"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 401
+      amount: 1
+    - ingredient: 202
+      amount: 1
+    - ingredient: 303
+      amount: 1
+    - ingredient: 404
+      amount: 1
+    - ingredient: 203
+      amount: 1
+    requiredFacility: 3
+    cookingTime: 6
+    basePrice: 8000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 201
+    displayName: "\uBD81\uC5B4\uAD6D"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 302
+      amount: 1
+    - ingredient: 401
+      amount: 1
+    - ingredient: 303
+      amount: 1
+    - ingredient: 403
+      amount: 1
+    - ingredient: 203
+      amount: 1
+    requiredFacility: 3
+    cookingTime: 6
+    basePrice: 8000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 201
+    displayName: "\uAC08\uBE44\uD0D5"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 302
+      amount: 1
+    - ingredient: 304
+      amount: 1
+    - ingredient: 202
+      amount: 1
+    - ingredient: 403
+      amount: 1
+    - ingredient: 203
+      amount: 1
+    requiredFacility: 3
+    cookingTime: 6
+    basePrice: 8000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 201
+    displayName: "\uC21C\uB450\uBD80\uCC0C\uAC1C"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 302
+      amount: 1
+    - ingredient: 205
+      amount: 1
+    - ingredient: 401
+      amount: 1
+    - ingredient: 404
+      amount: 1
+    - ingredient: 203
+      amount: 1
+    requiredFacility: 3
+    cookingTime: 6
+    basePrice: 8000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
+  - type: 0
+    category: 2
+    subCategory: 203
+    displayName: "\uB450\uBD80\uC0BC\uD569"
+    icon: {fileID: 0}
+    ingredients:
+    - ingredient: 501
+      amount: 1
+    - ingredient: 304
+      amount: 1
+    - ingredient: 401
+      amount: 1
+    requiredFacility: 4
+    cookingTime: 5
+    basePrice: 10000
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
