@@ -13,9 +13,20 @@ public enum PlaceableType
 public enum FacilityType
 {
     None = 0,
+
+    // === 기존 시설 ===
     JumoHouse = 1,
-    Hearth = 2,
-    Table = 3
+    Table = 2,
+
+    // === 조리 시설 (100번대) ===
+    Pot = 100,           // 솥 - 밥, 국
+    Cauldron = 101,      // 가마솥 - 반찬, 국밥/찌개
+    Brazier = 102,       // 화로 - 전, 요리
+    JangdokJar = 103,    // 장독대 - 김치
+
+    // === 자원 시설 (200번대) ===
+    Well = 200,          // 우물 - 물 제공
+    Stump = 201,         // 그루터기 - 장작 제공
 }
 
 public enum TileType

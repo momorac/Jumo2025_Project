@@ -57,7 +57,7 @@ public static class SaveManager
         // 기본 해금 시설들 설정 (기존 PlaceableData 생성자 로직 이동)
         placeableData.ul_facility.Add(FacilityType.Table);
         placeableData.ul_facility.Add(FacilityType.JumoHouse);
-        placeableData.ul_facility.Add(FacilityType.Hearth);
+        placeableData.ul_facility.Add(FacilityType.Pot);
 
         var newData = new GameMetaData()
         {

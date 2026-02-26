@@ -142,3 +142,22 @@ public struct DestinationClickedEvent : IGameEvent
     }
 }
 #endregion
+
+#region Facility Events
+
+/// <summary>조리 시설의 자원이 부족한 경우</summary>
+public struct FacilityResourceLowEvent : IGameEvent
+{
+    public ICookingFacility Facility;
+    public FacilityResourceType ResourceType;
+    public float CurrentRatio;
+
+    public FacilityResourceLowEvent(ICookingFacility facility, FacilityResourceType resourceType, float currentRatio)
+    {
+        Facility = facility;
+        ResourceType = resourceType;
+        CurrentRatio = currentRatio;
+    }
+}
+
+#endregion
