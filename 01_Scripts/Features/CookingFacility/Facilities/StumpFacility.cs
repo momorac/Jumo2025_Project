@@ -14,7 +14,7 @@ public class StumpFacility : ResourceFacilityBase
 
     public override void OnClicked(Vector3 hitPoint)
     {
-        Debug.Log($"<color=brown>장작더미 클릭됨 - 장작 {currentResource}/{maxResource}</color>");
+        Debug.Log($"<color=brown>장작더미 클릭됨 - 장작 {amountPerCollect}씩 공급</color>");
         // TODO: 직원에게 장작 패기 태스크 할당
     }
 
