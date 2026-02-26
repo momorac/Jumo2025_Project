@@ -31,7 +31,6 @@ public class GameEventBus
     }
 
     /// <summary>이벤트를 발행하여 모든 구독자에게 전달합니다</summary>
-    /// </summary>
     public void Publish<T>(T gameEvent) where T : IGameEvent
     {
         var type = typeof(T);
