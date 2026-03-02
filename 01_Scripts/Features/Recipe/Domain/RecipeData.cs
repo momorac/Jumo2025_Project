@@ -13,10 +13,5 @@ public class RecipeData
 
     public RecipeData()
     {
-        // 기본 해금 레시피 (초기 플레이 가능 메뉴)
-        UnlockedRecipes.Add(RecipeType.WhiteRice);      // 쌀밥
-        UnlockedRecipes.Add(RecipeType.MixedGrainRice); // 잡곡밥
-        UnlockedRecipes.Add(RecipeType.RadishSoup);     // 무국
-        UnlockedRecipes.Add(RecipeType.CabbageKimchi);  // 배추김치
     }
 }

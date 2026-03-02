@@ -8,6 +8,9 @@ public class GameSessionRunner : MonoBehaviour
     [SerializeField] private float dayLengthSeconds = 60f;
     [SerializeField] private PhaseId startingPhase = PhaseId.Preparation;
 
+    [Header("Initial Save Config")]
+    [SerializeField] private InitialSaveConfig initialSaveConfig;
+
     [Header("Application Systems")]
     [SerializeField] private UIManager uiManager;
     [SerializeField] private PlacementController placementController;
@@ -44,7 +47,7 @@ public class GameSessionRunner : MonoBehaviour
     private IEnumerator InitializeGameSessionCoroutine()
     {
         // 저장된 데이터 로드 후 App에 등록
-        App.InitializeGameData(SaveManager.Load());
+        App.InitializeGameData(SaveManager.Load(initialSaveConfig));
         yield return new WaitUntil(() => App.HasInitialized);
 
         // 코어 시뮬레이션 상태 초기화

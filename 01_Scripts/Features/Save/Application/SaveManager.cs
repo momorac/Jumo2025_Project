@@ -15,7 +15,7 @@ public static class SaveManager
 #endif
     }
 
-    public static GameMetaData Load()
+    public static GameMetaData Load(InitialSaveConfig config)
     {
         try
         {
@@ -25,7 +25,7 @@ public static class SaveManager
                 if (string.IsNullOrEmpty(json))
                 {
                     Debug.LogWarning("[SaveService] Save file is empty, initializing new save.");
-                    return InitializeNewSave();
+                    return InitializeNewSave(config);
                 }
 
                 var data = JsonConvert.DeserializeObject<GameMetaData>(json);
@@ -38,7 +38,7 @@ public static class SaveManager
             {
                 // 기존에 저장된 파일 없으면 새로운 저장 파일 생성
                 Debug.LogWarning("[SaveService] Save file does not exist, initializing new save.");
-                return InitializeNewSave();
+                return InitializeNewSave(config);
             }
         }
         catch (System.Exception e)
@@ -50,20 +50,47 @@ public static class SaveManager
         return null;
     }
 
-    private static GameMetaData InitializeNewSave()
+    private static GameMetaData InitializeNewSave(InitialSaveConfig config)
     {
         var placeableData = new PlaceableData();
+        var ingredientData = new IngredientData();
+        var recipeData = new RecipeData();
+        var economy = new Economy(100);
 
-        // 기본 해금 시설들 설정 (기존 PlaceableData 생성자 로직 이동)
-        placeableData.ul_facility.Add(FacilityType.Table);
-        placeableData.ul_facility.Add(FacilityType.JumoHouse);
-        placeableData.ul_facility.Add(FacilityType.Pot);
+        if (config == null)
+        {
+            Debug.LogWarning("[SaveManager] InitialSaveConfig is null. Applying default initial state.");
+        }
+        else
+        {
+            // ── Economy ────────────────────────────────────────────────────
+            economy = new Economy(config.StartingGold);
+
+            // ── Placeable ──────────────────────────────────────────────────
+            foreach (var facility in config.UnlockedFacilities) placeableData.ul_facility.Add(facility);
+            foreach (var tile in config.UnlockedTiles) placeableData.ul_tile.Add(tile);
+            foreach (var decoration in config.UnlockedDecorations) placeableData.ul_decoration.Add(decoration);
+
+            // ── Ingredient ─────────────────────────────────────────────────
+            ingredientData.UnlockedIngredients.Clear();
+            foreach (var ingredient in config.UnlockedIngredients) ingredientData.UnlockedIngredients.Add(ingredient);
+            ingredientData.Inventory.Clear();
+            foreach (var entry in config.StartingInventory) ingredientData.Inventory[entry.type] = entry.amount;
+
+            // ── Recipe ─────────────────────────────────────────────────────
+            recipeData.UnlockedRecipes.Clear();
+            foreach (var recipe in config.UnlockedRecipes) recipeData.UnlockedRecipes.Add(recipe);
+            recipeData.BufferStock.Clear();
+            foreach (var entry in config.StartingBufferStock) recipeData.BufferStock[entry.type] = entry.amount;
+        }
 
         var newData = new GameMetaData()
         {
             PlacementData = null,
             PlaceableData = placeableData,
-            EconomyData = new Economy(100)
+            EconomyData = economy,
+            IngredientData = ingredientData,
+            RecipeData = recipeData,
         };
 
         Save(newData);

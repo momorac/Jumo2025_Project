@@ -28,5 +28,15 @@ MonoBehaviour:
       gameObjectPrefab: {fileID: 8276841516861992042, guid: 8a64ddfe56699f94f93d3116b8c02c19, type: 3}
       UiIconImage: {fileID: 21300000, guid: 44a054df1702e39458b7072b08d0f212, type: 3}
       displayName: "\uC88C\uC11D"
+  - type: 201
+    component:
+      gameObjectPrefab: {fileID: 6195334010307864213, guid: 5da717ac6b946544c95e3e547a538fd7, type: 3}
+      UiIconImage: {fileID: 21300000, guid: 44a054df1702e39458b7072b08d0f212, type: 3}
+      displayName: "\uC7A5\uC791\uD130"
+  - type: 200
+    component:
+      gameObjectPrefab: {fileID: 9135481718149081120, guid: be0c6ab4adf9d964797e0b5edc453475, type: 3}
+      UiIconImage: {fileID: 21300000, guid: 44a054df1702e39458b7072b08d0f212, type: 3}
+      displayName: "\uC6B0\uBB3C"
   tileEntries: []
   decorationEntries: []

@@ -73,14 +73,15 @@ public static class App
             IngredientRegistry ingredientRegistry = ingredientOp.Result as IngredientRegistry;
             IngredientService = new IngredientService(IngredientData, ingredientRegistry);
 
-            // RecipeRegistry 로드
-            AsyncOperationHandle recipeHandle = Addressables.LoadAssetAsync<RecipeRegistry>("Assets/_Project/91_Data/RecipeRegistry.asset");
-            recipeHandle.Completed += (recipeOp) =>
-            {
-                RecipeRegistry recipeRegistry = recipeOp.Result as RecipeRegistry;
-                RecipeService = new RecipeService(RecipeData, recipeRegistry);
-                hasInitialized = true;
-            };
+        };
+
+        // RecipeRegistry 로드
+        AsyncOperationHandle recipeHandle = Addressables.LoadAssetAsync<RecipeRegistry>("Assets/_Project/91_Data/RecipeRegistry.asset");
+        recipeHandle.Completed += (recipeOp) =>
+        {
+            RecipeRegistry recipeRegistry = recipeOp.Result as RecipeRegistry;
+            RecipeService = new RecipeService(RecipeData, recipeRegistry);
+            hasInitialized = true;
         };
     }
 

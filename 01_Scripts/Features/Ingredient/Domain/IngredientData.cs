@@ -13,8 +13,5 @@ public class IngredientData
 
     public IngredientData()
     {
-        // 기본 해금 재료 설정
-        UnlockedIngredients.Add(IngredientType.Rice);
-        UnlockedIngredients.Add(IngredientType.Salt);
     }
 }

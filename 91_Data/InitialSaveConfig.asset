@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 546ae54605e2e244b98008abd865917d, type: 3}
+  m_Name: InitialSaveConfig
+  m_EditorClassIdentifier: Assembly-CSharp::InitialSaveConfig
+  startingGold: 100
+  unlockedFacilities: 020000000100000064000000c8000000c9000000
+  unlockedTiles: 
+  unlockedDecorations: 
+  unlockedIngredients: 6700000093010000
+  startingInventory: []
+  unlockedRecipes: 4e0400004d040000b1040000e9030000
+  startingBufferStock: []
