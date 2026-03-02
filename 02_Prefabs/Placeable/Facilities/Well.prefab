@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5166936394123627834}
+  - component: {fileID: 4379904177156391092}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -32,6 +33,29 @@ Transform:
   - {fileID: 4611227455721665916}
   m_Father: {fileID: 8938720773939443475}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &4379904177156391092
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3776845654246809733}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.5
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 1.5, y: 0.3, z: 1.5}
 --- !u!1 &9135481718149081120
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,6 +65,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8938720773939443475}
+  - component: {fileID: -8634799352430672608}
   - component: {fileID: 9049550832915679731}
   - component: {fileID: 3272979534071953178}
   m_Layer: 0
@@ -66,6 +91,23 @@ Transform:
   - {fileID: 5166936394123627834}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-8634799352430672608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9135481718149081120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cd4e874c77a3e84484129cf9861eae4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WellFacility
+  facilityType: 200
+  providedResourceType: 1
+  amountPerCollect: 10
+  placeable:
+    PlaceableType: 1
 --- !u!114 &9049550832915679731
 MonoBehaviour:
   m_ObjectHideFlags: 0
