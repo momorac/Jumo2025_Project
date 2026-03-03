@@ -3,6 +3,7 @@ using UnityEngine;
 /// <summary>
 /// Staff 작업 수행 상태
 /// 현재 Phase의 Duration 동안 대기하며, 중간 지점에서 OnExecute 호출
+/// 애니메이션은 StaffController가 관리
 /// </summary>
 public class StaffExecutingTaskState : IStaffState
 {
@@ -30,9 +31,6 @@ public class StaffExecutingTaskState : IStaffState
             executionTime = currentPhase.Duration;
             GameLogger.LogVerbose(LogCategory.Staff,
                 $"{controller.name}: executing phase {controller.CurrentPhaseIndex + 1} ({executionTime}s)");
-
-            // Phase별 애니메이션 재생
-            PlayPhaseAnimation(currentPhase);
         }
         else
         {
@@ -61,17 +59,6 @@ public class StaffExecutingTaskState : IStaffState
 
     public void Exit()
     {
-        // 애니메이션 복원
-        controller.SetAnimation("IsWorking", false);
-    }
-
-    private void PlayPhaseAnimation(TaskPhase phase)
-    {
-        if (!string.IsNullOrEmpty(phase.AnimationTrigger))
-        {
-            controller.TriggerAnimation(phase.AnimationTrigger);
-        }
-
-        controller.SetAnimation("IsWorking", true);
+        // 타이밍 상태만 정리. 애니메이션은 Controller가 관리
     }
 }

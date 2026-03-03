@@ -13,7 +13,7 @@ public class StaffController : MonoBehaviour
     [SerializeField] private Animator animator;
 
     [Header("Settings")]
-    [SerializeField] private float stoppingDistance = 0.5f;
+    [SerializeField] private float stoppingDistance;
 
     // FSM
     private Dictionary<StaffStateId, IStaffState> states;
@@ -117,6 +117,9 @@ public class StaffController : MonoBehaviour
         GameLogger.LogVerbose(LogCategory.Staff,
             $"{name}: Phase {currentPhaseIndex + 1}/{currentTask.Phases.Count} of {currentTask.Type}");
 
+        // Phase별 애니메이션 재생
+        PlayPhaseAnimation(phase);
+
         if (phase.MoveTarget != null)
         {
             movingState.SetTarget(phase.MoveTarget.position, withTask: true);
@@ -132,6 +135,9 @@ public class StaffController : MonoBehaviour
     /// <summary>현재 Phase 완료 시 호출. 다음 Phase 또는 Task 완료 처리</summary>
     public void OnPhaseCompleted()
     {
+        // 현재 Phase 애니메이션 정리
+        StopPhaseAnimation();
+
         currentPhaseIndex++;
 
         if (currentTask != null && currentPhaseIndex < currentTask.Phases.Count)
@@ -211,5 +217,21 @@ public class StaffController : MonoBehaviour
         {
             animator.SetTrigger(triggerName);
         }
+    }
+
+    /// <summary>Phase 애니메이션 재생</summary>
+    private void PlayPhaseAnimation(TaskPhase phase)
+    {
+        if (!string.IsNullOrEmpty(phase.AnimationTrigger))
+        {
+            TriggerAnimation(phase.AnimationTrigger);
+        }
+        SetAnimation("IsWorking", true);
+    }
+
+    /// <summary>Phase 애니메이션 정리</summary>
+    private void StopPhaseAnimation()
+    {
+        SetAnimation("IsWorking", false);
     }
 }

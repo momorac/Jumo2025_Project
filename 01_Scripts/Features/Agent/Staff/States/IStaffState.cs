@@ -5,8 +5,7 @@ public enum StaffStateId
 {
     Idle,               // 대기 상태
     MovingToTarget,     // 목표 위치로 이동 중
-    ExecutingTask,      // 작업 수행 중
-    Returning           // 기본 위치로 복귀 중
+    ExecutingTask       // 작업 수행 중
 }
 
 /// <summary>
