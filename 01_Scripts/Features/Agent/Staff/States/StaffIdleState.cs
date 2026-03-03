@@ -18,7 +18,7 @@ public class StaffIdleState : IStaffState
     {
         controller.StopMoving();
         controller.SetAnimation("IsWalking", false);
-        Debug.Log($"<color=cyan>{controller.name}: Entered Idle state</color>");
+        GameLogger.LogVerbose(LogCategory.Staff, $"{controller.name}: entered Idle");
     }
 
     public void Tick(float deltaTime)

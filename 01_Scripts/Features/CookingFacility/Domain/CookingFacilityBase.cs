@@ -57,14 +57,14 @@ public abstract class CookingFacilityBase : MonoBehaviour, ICookingFacility, ICl
     {
         if (!RequiresResources) return;
         currentWater = Mathf.Min(currentWater + amount, maxWater);
-        Debug.Log($"<color=cyan>{name}: Water +{amount} (now {currentWater}/{maxWater})</color>");
+        GameLogger.LogVerbose(LogCategory.Facility, $"{name}: Water +{amount} ({currentWater}/{maxWater})");
     }
 
     public virtual void AddWood(int amount)
     {
         if (!RequiresResources) return;
         currentWood = Mathf.Min(currentWood + amount, maxWood);
-        Debug.Log($"<color=cyan>{name}: Wood +{amount} (now {currentWood}/{maxWood})</color>");
+        GameLogger.LogVerbose(LogCategory.Facility, $"{name}: Wood +{amount} ({currentWood}/{maxWood})");
     }
 
     public virtual void ConsumeResources()
@@ -72,7 +72,7 @@ public abstract class CookingFacilityBase : MonoBehaviour, ICookingFacility, ICl
         if (!RequiresResources) return;
         currentWater = Mathf.Max(0, currentWater - waterPerCook);
         currentWood = Mathf.Max(0, currentWood - woodPerCook);
-        Debug.Log($"<color=yellow>{name}: Resources consumed (Water: {currentWater}, Wood: {currentWood})</color>");
+        GameLogger.LogVerbose(LogCategory.Facility, $"{name}: resources consumed (Water: {currentWater}, Wood: {currentWood})");
 
         // 자원 부족 이벤트 발행
         CheckResourceLevels();
@@ -93,13 +93,13 @@ public abstract class CookingFacilityBase : MonoBehaviour, ICookingFacility, ICl
     public virtual void OnPlaced()
     {
         App.PlaceableService?.RegisterCookingFacility(this);
-        Debug.Log($"<color=green>{name} ({CookingType}) placed and registered</color>");
+        GameLogger.Log(LogCategory.Facility, $"{name} ({CookingType}) placed");
     }
 
     public virtual void OnRemoved()
     {
         App.PlaceableService?.UnregisterCookingFacility(this);
-        Debug.Log($"<color=yellow>{name} ({CookingType}) removed</color>");
+        GameLogger.Log(LogCategory.Facility, $"{name} ({CookingType}) removed");
     }
 
     public abstract void OnClicked(Vector3 hitPoint);

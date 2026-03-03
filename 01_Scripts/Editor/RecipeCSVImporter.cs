@@ -363,7 +363,7 @@ public class RecipeCSVImporter : EditorWindow
             log.AppendLine($"실패: {failCount}개");
             log.AppendLine($"총 레시피: {entriesProperty.arraySize}개");
 
-            Debug.Log($"<color=green>CSV Import 완료: {successCount}개 성공, {failCount}개 실패</color>");
+            Debug.Log($"[RecipeCSVImporter] CSV Import complete: {successCount} success, {failCount} failed");
         }
         catch (System.Exception e)
         {

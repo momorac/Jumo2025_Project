@@ -201,7 +201,7 @@ public class RecipeServiceTester : MonoBehaviour
 
     private void Log(string message)
     {
-        Debug.Log($"<color=magenta>[RecipeTester]</color> {message}");
+        GameLogger.Log(LogCategory.System, $"[RecipeTester] {message}");
 
         if (resultText != null)
         {

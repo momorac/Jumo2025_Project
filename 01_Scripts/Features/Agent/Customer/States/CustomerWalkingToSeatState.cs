@@ -18,7 +18,7 @@ public class CustomerWalkingToSeatState : ICustomerState
     {
         controller.SetAnimation("IsWalking", true);
         controller.SetDestination(controller.AssignedSeat.Root.position);
-        Debug.Log($"<color=yellow>{controller.name}: Walking to seat</color>");
+        GameLogger.LogVerbose(LogCategory.Customer, $"{controller.name}: walking to seat");
     }
 
     public void Tick(float deltaTime)

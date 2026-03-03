@@ -23,7 +23,7 @@ public class CustomerWaitingForCheckoutState : ICustomerState
         // 말풍선 표시 (계산 아이콘)
         controller.ShowBubble(true);
 
-        Debug.Log($"<color=yellow>{controller.name}: Waiting for checkout</color>");
+        GameLogger.LogVerbose(LogCategory.Customer, $"{controller.name}: waiting for checkout");
     }
 
     public void Tick(float deltaTime)

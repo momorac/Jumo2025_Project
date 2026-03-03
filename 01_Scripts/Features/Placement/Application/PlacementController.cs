@@ -76,7 +76,7 @@ public class PlacementController : MonoBehaviour, IPlacementController
         }
         else
         {
-            Debug.LogWarning($"Unknown placeable type: {type}");
+            GameLogger.LogWarning(LogCategory.System, $"Unknown placeable type: {type}");
             return null;
         }
     }
@@ -85,7 +85,7 @@ public class PlacementController : MonoBehaviour, IPlacementController
         GameObject prefab = registry.GetGameObjectPrefab(facilityType);
         if (prefab == null)
         {
-            Debug.LogWarning($"GameObject prefab missing for placeable {facilityType}");
+            GameLogger.LogWarning(LogCategory.System, $"GameObject prefab missing for placeable {facilityType}");
         }
         return prefab;
     }
@@ -94,7 +94,7 @@ public class PlacementController : MonoBehaviour, IPlacementController
         GameObject prefab = registry.GetGameObjectPrefab(tileType);
         if (prefab == null)
         {
-            Debug.LogWarning($"GameObject prefab missing for placeable {tileType}");
+            GameLogger.LogWarning(LogCategory.System, $"GameObject prefab missing for placeable {tileType}");
         }
         return prefab;
     }
@@ -103,7 +103,7 @@ public class PlacementController : MonoBehaviour, IPlacementController
         GameObject prefab = registry.GetGameObjectPrefab(decorationType);
         if (prefab == null)
         {
-            Debug.LogWarning($"GameObject prefab missing for placeable {decorationType}");
+            GameLogger.LogWarning(LogCategory.System, $"GameObject prefab missing for placeable {decorationType}");
         }
         return prefab;
     }
@@ -113,7 +113,7 @@ public class PlacementController : MonoBehaviour, IPlacementController
         Sprite icon = registry.GetUiIcon(facilityType);
         if (icon == null)
         {
-            Debug.LogWarning($"UI Icon prefab missing for placeable {facilityType}");
+            GameLogger.LogWarning(LogCategory.System, $"UI Icon prefab missing for placeable {facilityType}");
         }
         return icon;
     }
@@ -122,7 +122,7 @@ public class PlacementController : MonoBehaviour, IPlacementController
         Sprite icon = registry.GetUiIcon(tileType);
         if (icon == null)
         {
-            Debug.LogWarning($"UI Icon prefab missing for placeable {tileType}");
+            GameLogger.LogWarning(LogCategory.System, $"UI Icon prefab missing for placeable {tileType}");
         }
         return icon;
     }
@@ -131,7 +131,7 @@ public class PlacementController : MonoBehaviour, IPlacementController
         Sprite icon = registry.GetUiIcon(decorationType);
         if (icon == null)
         {
-            Debug.LogWarning($"UI Icon prefab missing for placeable {decorationType}");
+            GameLogger.LogWarning(LogCategory.System, $"UI Icon prefab missing for placeable {decorationType}");
         }
         return icon;
     }

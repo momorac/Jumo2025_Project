@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Table : MonoBehaviour, IFacilityService
 {
     public Placeable Type { get; private set; }
@@ -23,7 +24,7 @@ public class Table : MonoBehaviour, IFacilityService
 
     public void OnPlaced()
     {
-        Debug.Log($"<color=green>Table placed. Capacity: {Capacity}.</color>");
+        GameLogger.Log(LogCategory.Facility, $"Table placed. Capacity: {Capacity}");
 
         // 모델 오브젝트 y축 중심으로 90도씩 랜덤하게 회전
         int randomRotation = Random.Range(0, 4) * 90;

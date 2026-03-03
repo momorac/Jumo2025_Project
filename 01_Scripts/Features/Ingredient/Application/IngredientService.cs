@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 /// <summary>재료 관리 서비스 (해금, 보유량, 구매)</summary>
 public class IngredientService
@@ -28,7 +27,7 @@ public class IngredientService
             return false;
 
         data.UnlockedIngredients.Add(type);
-        Debug.Log($"<color=green>Ingredient unlocked: {type}</color>");
+        GameLogger.Log(LogCategory.Economy, $"Ingredient unlocked: {type}");
         return true;
     }
 
@@ -59,7 +58,7 @@ public class IngredientService
         }
         data.Inventory[type] += amount;
 
-        Debug.Log($"<color=green>Ingredient added: {type} x{amount} (Total: {data.Inventory[type]})</color>");
+        GameLogger.LogVerbose(LogCategory.Economy, $"Ingredient added: {type} x{amount} (Total: {data.Inventory[type]})");
     }
 
     /// <summary>재료 소비 (성공 시 true)</summary>
@@ -70,12 +69,12 @@ public class IngredientService
         int current = GetAmount(type);
         if (current < amount)
         {
-            Debug.LogWarning($"Not enough {type}: have {current}, need {amount}");
+            GameLogger.LogWarning(LogCategory.Economy, $"Not enough {type}: have {current}, need {amount}");
             return false;
         }
 
         data.Inventory[type] -= amount;
-        Debug.Log($"<color=yellow>Ingredient consumed: {type} x{amount} (Remaining: {data.Inventory[type]})</color>");
+        GameLogger.LogVerbose(LogCategory.Economy, $"Ingredient consumed: {type} x{amount} (Remaining: {data.Inventory[type]})");
         return true;
     }
 
@@ -87,7 +86,7 @@ public class IngredientService
         {
             if (GetAmount(req.Key) < req.Value)
             {
-                Debug.LogWarning($"Not enough {req.Key}: have {GetAmount(req.Key)}, need {req.Value}");
+                GameLogger.LogWarning(LogCategory.Economy, $"Not enough {req.Key}: have {GetAmount(req.Key)}, need {req.Value}");
                 return false;
             }
         }
@@ -133,7 +132,7 @@ public class IngredientService
             return false;
 
         Add(type, quantity);
-        Debug.Log($"<color=cyan>Purchased {type} x{quantity} for {totalPrice} gold</color>");
+        GameLogger.Log(LogCategory.Economy, $"Purchased {type} x{quantity} for {totalPrice} gold");
         return true;
     }
 

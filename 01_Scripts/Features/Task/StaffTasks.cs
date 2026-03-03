@@ -33,13 +33,13 @@ public abstract class StaffTaskBase : IStaffTask
     public virtual void Complete()
     {
         IsCompleted = true;
-        Debug.Log($"<color=green>Task {TaskId} ({Type}) completed</color>");
+        GameLogger.Log(LogCategory.Task, $"Task {TaskId} ({Type}) completed");
     }
 
     public virtual void Cancel()
     {
         IsCancelled = true;
-        Debug.Log($"<color=yellow>Task {TaskId} ({Type}) cancelled</color>");
+        GameLogger.LogWarning(LogCategory.Task, $"Task {TaskId} ({Type}) cancelled");
     }
 }
 
@@ -59,7 +59,7 @@ public class TakeOrderTask : StaffTaskBase
 
     public override void Execute(Staff staff)
     {
-        Debug.Log($"<color=cyan>Staff {staff.name} taking order from customer</color>");
+        GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} taking order");
 
         // 주문 접수 이벤트 발행
         App.EventBus.Publish(new OrderTakenEvent(AssociatedCustomer, AssociatedOrder));
@@ -82,7 +82,7 @@ public class ServeDrinkTask : StaffTaskBase
 
     public override void Execute(Staff staff)
     {
-        Debug.Log($"<color=cyan>Staff {staff.name} serving drink to customer</color>");
+        GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} serving drink");
 
         // 서빙 완료 이벤트 발행
         App.EventBus.Publish(new OrderServedEvent(AssociatedCustomer, AssociatedOrder));
@@ -105,7 +105,7 @@ public class ServeFoodTask : StaffTaskBase
 
     public override void Execute(Staff staff)
     {
-        Debug.Log($"<color=cyan>Staff {staff.name} serving food to customer</color>");
+        GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} serving food");
 
         // 서빙 완료 이벤트 발행
         App.EventBus.Publish(new OrderServedEvent(AssociatedCustomer, AssociatedOrder));
@@ -126,7 +126,7 @@ public class CleanTableTask : StaffTaskBase
 
     public override void Execute(Staff staff)
     {
-        Debug.Log($"<color=cyan>Staff {staff.name} cleaning table</color>");
+        GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} cleaning table");
     }
 }
 
@@ -146,7 +146,7 @@ public class CheckoutTask : StaffTaskBase
 
     public override void Execute(Staff staff)
     {
-        Debug.Log($"<color=cyan>Staff {staff.name} processing checkout</color>");
+        GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} processing checkout");
 
         // 경제 시스템에 수익 추가
         if (AssociatedOrder != null)
@@ -184,6 +184,6 @@ public class CollectResourceTask : StaffTaskBase
         // Staff에게 자원 할당
         staff.PickUpResource(ResourceType, amount);
 
-        Debug.Log($"<color=cyan>Staff {staff.name}: {ResourceType} {amount}개 수집 완료</color>");
+        GameLogger.Log(LogCategory.Task, $"{staff.name}: {ResourceType} x{amount} collected");
     }
 }

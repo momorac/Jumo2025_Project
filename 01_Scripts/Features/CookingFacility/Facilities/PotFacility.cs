@@ -10,7 +10,7 @@ public class PotFacility : CookingFacilityBase
 
     public override void OnClicked(Vector3 hitPoint)
     {
-        Debug.Log($"<color=magenta>솥 클릭됨 - 밥/국 조리 가능 (CanCook: {CanCook})</color>");
+        GameLogger.Log(LogCategory.Input, $"Pot clicked (CanCook: {CanCook})");
         // TODO: 조리 메뉴 UI 표시
     }
 }

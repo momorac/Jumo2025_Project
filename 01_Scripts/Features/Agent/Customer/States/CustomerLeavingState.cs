@@ -36,7 +36,7 @@ public class CustomerLeavingState : ICustomerState
             controller.WasServed
         ));
 
-        Debug.Log($"<color=yellow>{controller.name}: Leaving</color>");
+        GameLogger.LogVerbose(LogCategory.Customer, $"{controller.name}: leaving");
     }
 
     public void Tick(float deltaTime)

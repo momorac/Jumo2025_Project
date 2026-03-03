@@ -31,14 +31,14 @@ public class Customer : MonoBehaviour, IPooled
 
         if (agent == null || animator == null)
         {
-            Debug.LogWarning($"{nameof(Customer)}: NavMeshAgent 혹은 Animator가 없습니다.");
+            GameLogger.LogWarning(LogCategory.Customer, $"{nameof(Customer)}: NavMeshAgent or Animator missing");
             return;
         }
 
         // NavMeshAgent 활성화
         agent.enabled = true;
 
-        Debug.Log("<color=green>CUSTOMER spawned.</color>");
+        GameLogger.Log(LogCategory.Customer, $"{name} spawned");
 
         // 위치 랜덤 설정
         int randomIdx = Random.Range(0, spawnPoints.Length);
@@ -47,7 +47,7 @@ public class Customer : MonoBehaviour, IPooled
 
     public void OnRelease()
     {
-        Debug.Log("<color=yellow>CUSTOMER released back to pool.</color>");
+        GameLogger.LogVerbose(LogCategory.Customer, $"{name} released to pool");
     }
 
     public void Release()

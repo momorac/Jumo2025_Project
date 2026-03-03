@@ -11,13 +11,13 @@ public class StumpFacility : ResourceFacilityBase
 
     public override void OnClicked(Vector3 hitPoint)
     {
-        Debug.Log($"<color=brown>장작더미 클릭됨 - 장작 {amountPerCollect}씩 공급</color>");
+        GameLogger.Log(LogCategory.Input, $"Stump clicked: Firewood x{amountPerCollect}");
 
         // 선택된 Staff 또는 가장 가까운 Idle Staff에게 Task 배정
         var staff = App.TaskAssigner.GetBestStaffFor(transform.position);
         if (staff == null)
         {
-            Debug.LogWarning("배정 가능한 Staff가 없습니다");
+            GameLogger.LogWarning(LogCategory.Task, "No available staff for resource collection");
             return;
         }
 

@@ -31,7 +31,7 @@ public class CustomerWaitingToOrderState : ICustomerState
             controller.CurrentOrder
         ));
 
-        Debug.Log($"<color=yellow>{controller.name}: Waiting to order (bubble shown)</color>");
+        GameLogger.LogVerbose(LogCategory.Customer, $"{controller.name}: waiting to order");
     }
 
     public void Tick(float deltaTime)

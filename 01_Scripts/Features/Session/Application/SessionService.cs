@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class SessionService
 {
@@ -20,7 +19,7 @@ public class SessionService
         sessionState.AvailableSeatsCount++;
         OnSeatsChanged?.Invoke(seat, true);
 
-        Debug.Log("<color=green>Seat registered. Total available seats: " + sessionState.AvailableSeatsCount + "</color>");
+        GameLogger.LogVerbose(LogCategory.System, $"Seat registered. Available: {sessionState.AvailableSeatsCount}");
     }
 
     public bool TryOccupyRandomSeat(out Seat seat)

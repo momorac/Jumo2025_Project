@@ -11,13 +11,13 @@ public class WellFacility : ResourceFacilityBase
 
     public override void OnClicked(Vector3 hitPoint)
     {
-        Debug.Log($"<color=cyan>우물 클릭됨 - 물 {amountPerCollect}씩 공급</color>");
+        GameLogger.Log(LogCategory.Input, $"Well clicked: Water x{amountPerCollect}");
 
         // 선택된 Staff 또는 가장 가까운 Idle Staff에게 Task 배정
         var staff = App.TaskAssigner.GetBestStaffFor(transform.position);
         if (staff == null)
         {
-            Debug.LogWarning("배정 가능한 Staff가 없습니다");
+            GameLogger.LogWarning(LogCategory.Task, "No available staff for resource collection");
             return;
         }
 

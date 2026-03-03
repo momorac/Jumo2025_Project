@@ -83,7 +83,7 @@ public class StaffController : MonoBehaviour
     {
         if (!states.ContainsKey(newStateId))
         {
-            Debug.LogWarning($"State {newStateId} not found!");
+            GameLogger.LogWarning(LogCategory.Staff, $"State {newStateId} not found");
             return;
         }
 

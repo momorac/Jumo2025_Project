@@ -22,7 +22,7 @@ public class CustomerEatingState : ICustomerState
         eatTime = controller.CurrentOrder?.EatTime ?? 5f;
 
         controller.SetAnimation("IsEating", true);
-        Debug.Log($"<color=yellow>{controller.name}: Eating ({eatTime}s)</color>");
+        GameLogger.LogVerbose(LogCategory.Customer, $"{controller.name}: eating ({eatTime}s)");
     }
 
     public void Tick(float deltaTime)

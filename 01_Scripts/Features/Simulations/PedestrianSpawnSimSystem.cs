@@ -13,7 +13,7 @@ public class PedestrianSpawnSimSystem : ISimSystem
 
         if (pool == null)
         {
-            Debug.LogWarning("PedestrianSpawnSimSystem: Pool is null.");
+            GameLogger.LogWarning(LogCategory.System, "PedestrianSpawnSimSystem: Pool is null");
             return;
         }
 
@@ -39,7 +39,7 @@ public class PedestrianSpawnSimSystem : ISimSystem
 
         if (instance == null)
         {
-            Debug.LogWarning("PedestrianPool returned null instance.");
+            GameLogger.LogWarning(LogCategory.System, "PedestrianPool returned null instance");
             return;
         }
     }

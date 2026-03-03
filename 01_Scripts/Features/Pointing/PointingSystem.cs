@@ -99,7 +99,7 @@ public class PointingSystem : MonoBehaviour
     {
         selectedStaff = evt.Staff;
         isStaffSelected = true;
-        Debug.Log($"<color=cyan>Staff selected: {evt.Staff.name}</color>");
+        GameLogger.Log(LogCategory.Input, $"Staff selected: {evt.Staff.name}");
     }
 
     private void ClearStaffSelection()
@@ -108,7 +108,7 @@ public class PointingSystem : MonoBehaviour
         {
             selectedStaff = null;
             isStaffSelected = false;
-            Debug.Log("<color=cyan>Staff selection cleared</color>");
+            GameLogger.LogVerbose(LogCategory.Input, "Staff selection cleared");
         }
     }
 

@@ -28,7 +28,7 @@ public class StaffExecutingTaskState : IStaffState
         {
             // 작업 타입에 따른 실행 시간 설정
             executionTime = GetExecutionTime(task.Type);
-            Debug.Log($"<color=gray>{controller.name}: Executing {task.Type} (duration: {executionTime}s)</color>");
+            GameLogger.LogVerbose(LogCategory.Staff, $"{controller.name}: executing {task.Type} ({executionTime}s)");
 
             // 작업 시작 애니메이션
             PlayTaskAnimation(task.Type);

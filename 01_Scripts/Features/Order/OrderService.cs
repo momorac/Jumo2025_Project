@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 /// <summary>
 /// 주문 관리 서비스
@@ -37,7 +36,7 @@ public class OrderService
     {
         if (availableMenus.Count == 0)
         {
-            Debug.LogWarning("No menus available!");
+            GameLogger.LogWarning(LogCategory.Economy, "No menus available");
             return new OrderData();
         }
 
@@ -55,7 +54,7 @@ public class OrderService
         activeOrders[order.OrderId] = order;
         OnOrderCreated?.Invoke(order);
 
-        Debug.Log($"<color=blue>Order created: {order.MenuName} (${order.Price})</color>");
+        GameLogger.Log(LogCategory.Economy, $"Order created: {order.MenuName} (${order.Price})");
         return order;
     }
 
@@ -69,7 +68,7 @@ public class OrderService
             order.Status = newStatus;
             OnOrderStatusChanged?.Invoke(order);
 
-            Debug.Log($"<color=blue>Order {orderId} status changed to: {newStatus}</color>");
+            GameLogger.LogVerbose(LogCategory.Economy, $"Order {orderId} status: {newStatus}");
 
             if (newStatus == OrderStatus.Completed || newStatus == OrderStatus.Cancelled)
             {
@@ -106,7 +105,7 @@ public class OrderService
             OnOrderCompleted?.Invoke(order);
             activeOrders.Remove(orderId);
 
-            Debug.Log($"<color=green>Order {orderId} completed! +${order.Price}</color>");
+            GameLogger.Log(LogCategory.Economy, $"Order {orderId} completed +${order.Price}");
         }
     }
 
@@ -121,7 +120,7 @@ public class OrderService
             OnOrderCompleted?.Invoke(order);
             activeOrders.Remove(orderId);
 
-            Debug.Log($"<color=yellow>Order {orderId} cancelled</color>");
+            GameLogger.LogWarning(LogCategory.Economy, $"Order {orderId} cancelled");
         }
     }
 }

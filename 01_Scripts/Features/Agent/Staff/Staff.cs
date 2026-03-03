@@ -37,7 +37,7 @@ public class Staff : MonoBehaviour, IClickable
     public void OnClicked(Vector3 hitPoint)
     {
         App.StaffRegistry.SelectStaff(this);
-        Debug.Log($"<color=cyan>Staff {name} clicked and selected</color>");
+        GameLogger.Log(LogCategory.Staff, $"Staff {name} selected");
     }
 
     /// <summary>작업 배정 (StaffController에 위임)</summary>
@@ -57,14 +57,14 @@ public class Staff : MonoBehaviour, IClickable
     {
         carryingResourceType = resourceType;
         carryingAmount = amount;
-        Debug.Log($"<color=cyan>{name}: {resourceType} {amount}개 운반 시작</color>");
+        GameLogger.Log(LogCategory.Staff, $"{name}: carrying {resourceType} x{amount}");
         // TODO: 운반 비주얼 활성화
     }
 
     /// <summary>들고 있는 자원 내려놓기 (조리 시설에 전달 후 호출)</summary>
     public void DropResource()
     {
-        Debug.Log($"<color=cyan>{name}: {carryingResourceType} {carryingAmount}개 전달 완료</color>");
+        GameLogger.Log(LogCategory.Staff, $"{name}: delivered {carryingResourceType} x{carryingAmount}");
         carryingResourceType = FacilityResourceType.None;
         carryingAmount = 0;
         // TODO: 운반 비주얼 비활성화

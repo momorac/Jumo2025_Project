@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CustomerSpawnSimSystem : ISimSystem
@@ -37,7 +36,7 @@ public class CustomerSpawnSimSystem : ISimSystem
     {
         float delay = Random.Range(3f, 10f);
 
-        Debug.Log($"<color=green>Spawning customer #{spawnedCustomers + 1} at seat {delay} seconds after.</color>");
+        GameLogger.LogVerbose(LogCategory.System, $"Spawning customer #{spawnedCustomers + 1} at seat {delay}s after");
 
         Customer instance = pool.Get();
         instance.SetSeatDealy(seat, delay);

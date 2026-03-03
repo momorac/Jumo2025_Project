@@ -23,7 +23,7 @@ public class CustomerWaitingForFoodState : ICustomerState
         // 서빙 완료 이벤트 구독
         App.EventBus.Subscribe<OrderServedEvent>(OnOrderServed);
 
-        Debug.Log($"<color=yellow>{controller.name}: Waiting for food/drink</color>");
+        GameLogger.LogVerbose(LogCategory.Customer, $"{controller.name}: waiting for food");
     }
 
     public void Tick(float deltaTime)

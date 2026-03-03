@@ -37,7 +37,7 @@ public class TaskAssigner
     /// <summary>말풍선 클릭 시 TakeOrder 작업 생성 및 배정</summary>
     private void OnBubbleClicked(BubbleClickedEvent evt)
     {
-        Debug.Log($"<color=magenta>Bubble clicked for customer at {evt.TargetPosition.position}</color>");
+        GameLogger.Log(LogCategory.Input, $"Bubble clicked for customer at {evt.TargetPosition.position}");
 
         // 선택된 Staff가 있으면 해당 Staff에게 배정
         // 없으면 가장 가까운 Idle Staff에게 배정
@@ -57,7 +57,7 @@ public class TaskAssigner
         }
         else
         {
-            Debug.LogWarning("No available staff to take order!");
+            GameLogger.LogWarning(LogCategory.Task, "No available staff to take order");
         }
     }
 
@@ -121,7 +121,7 @@ public class TaskAssigner
 
         App.EventBus.Publish(new TaskAssignedEvent(task, staff, hasSetDestination));
 
-        Debug.Log($"<color=green>Task {task.TaskId} ({task.Type}) assigned to {staff.name}</color>");
+        GameLogger.Log(LogCategory.Task, $"Task {task.TaskId} ({task.Type}) assigned to {staff.name}");
     }
 
     /// <summary>수동으로 특정 Staff에게 작업 배정</summary>

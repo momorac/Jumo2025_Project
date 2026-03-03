@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 /// <summary>레시피 관리 서비스 (해금, 조리, 버퍼 관리)</summary>
 public class RecipeService
@@ -28,7 +27,7 @@ public class RecipeService
             return false;
 
         data.UnlockedRecipes.Add(type);
-        Debug.Log($"<color=green>Recipe unlocked: {type}</color>");
+        GameLogger.Log(LogCategory.Economy, $"Recipe unlocked: {type}");
         return true;
     }
 
@@ -120,13 +119,13 @@ public class RecipeService
         var def = registry.GetByType(type);
         if (def == null)
         {
-            Debug.LogWarning($"Recipe not found: {type}");
+            GameLogger.LogWarning(LogCategory.Economy, $"Recipe not found: {type}");
             return false;
         }
 
         if (!CanCook(type))
         {
-            Debug.LogWarning($"Cannot cook {type}: insufficient ingredients");
+            GameLogger.LogWarning(LogCategory.Economy, $"Cannot cook {type}: insufficient ingredients");
             return false;
         }
 
@@ -145,19 +144,19 @@ public class RecipeService
         {
             // 중간재료 생성 (김치류)
             App.IngredientService.Add(def.outputIngredient, 1);
-            Debug.Log($"<color=cyan>Cooked {type} → produced {def.outputIngredient}</color>");
+            GameLogger.Log(LogCategory.Economy, $"Cooked {type} → produced {def.outputIngredient}");
         }
 
         if (def.isBufferResource)
         {
             // 버퍼 자원 추가 (밥/김치)
             AddToBuffer(type, def.bufferOutputAmount);
-            Debug.Log($"<color=cyan>Cooked {type} → buffer +{def.bufferOutputAmount}</color>");
+            GameLogger.Log(LogCategory.Economy, $"Cooked {type} → buffer +{def.bufferOutputAmount}");
         }
         else if (def.outputIngredient == IngredientType.None)
         {
             // 일반 요리 완성
-            Debug.Log($"<color=cyan>Cooked {type} (ready to serve)</color>");
+            GameLogger.Log(LogCategory.Economy, $"Cooked {type} (ready to serve)");
         }
 
         return true;
@@ -182,7 +181,7 @@ public class RecipeService
             data.BufferStock[type] = 0;
 
         data.BufferStock[type] += amount;
-        Debug.Log($"<color=green>Buffer added: {type} +{amount} (Total: {data.BufferStock[type]})</color>");
+        GameLogger.LogVerbose(LogCategory.Economy, $"Buffer added: {type} +{amount} (Total: {data.BufferStock[type]})");
     }
 
     /// <summary>버퍼에서 소비</summary>
@@ -191,12 +190,12 @@ public class RecipeService
         int current = GetBufferStock(type);
         if (current < amount)
         {
-            Debug.LogWarning($"Not enough buffer stock for {type}: have {current}, need {amount}");
+            GameLogger.LogWarning(LogCategory.Economy, $"Not enough buffer stock for {type}: have {current}, need {amount}");
             return false;
         }
 
         data.BufferStock[type] -= amount;
-        Debug.Log($"<color=yellow>Buffer consumed: {type} -{amount} (Remaining: {data.BufferStock[type]})</color>");
+        GameLogger.LogVerbose(LogCategory.Economy, $"Buffer consumed: {type} -{amount} (Remaining: {data.BufferStock[type]})");
         return true;
     }
 

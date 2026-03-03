@@ -23,7 +23,7 @@ public class TaskQueue
         pendingTasks.Add(task);
         SortPendingTasks();
 
-        Debug.Log($"<color=blue>Task {task.TaskId} ({task.Type}) added to queue. Pending: {PendingCount}</color>");
+        GameLogger.LogVerbose(LogCategory.Task, $"Task {task.TaskId} ({task.Type}) queued. Pending: {PendingCount}");
 
         // 작업 생성 이벤트 발행
         App.EventBus.Publish(new TaskCreatedEvent(task));

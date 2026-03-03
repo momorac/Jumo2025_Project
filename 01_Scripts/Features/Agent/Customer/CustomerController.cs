@@ -88,7 +88,7 @@ public class CustomerController : MonoBehaviour
     {
         if (!states.ContainsKey(newStateId))
         {
-            Debug.LogWarning($"Customer state {newStateId} not found!");
+            GameLogger.LogWarning(LogCategory.Customer, $"State {newStateId} not found");
             return;
         }
 
@@ -147,7 +147,7 @@ public class CustomerController : MonoBehaviour
     public void LeaveWithoutOrder()
     {
         wasServed = false;
-        Debug.Log($"<color=red>{name}: Leaving without being served!</color>");
+        GameLogger.LogWarning(LogCategory.Customer, $"{name}: leaving without being served");
         ChangeState(CustomerStateId.Leaving);
     }
 

@@ -14,7 +14,7 @@ public class BrazierFacility : CookingFacilityBase
 
     public override void OnClicked(Vector3 hitPoint)
     {
-        Debug.Log($"<color=magenta>화로 클릭됨 - 전/구이 조리 가능 (CanCook: {CanCook}");
+        GameLogger.Log(LogCategory.Input, $"Brazier clicked (CanCook: {CanCook})");
 
     }
 }

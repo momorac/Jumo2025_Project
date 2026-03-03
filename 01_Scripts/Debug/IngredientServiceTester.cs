@@ -205,7 +205,7 @@ public class IngredientServiceTester : MonoBehaviour
 
     private void Log(string message)
     {
-        Debug.Log($"<color=cyan>[IngredientTester]</color> {message}");
+        GameLogger.Log(LogCategory.System, $"[IngredientTester] {message}");
 
         if (resultText != null)
         {

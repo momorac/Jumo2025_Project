@@ -24,7 +24,7 @@ public abstract class ResourceFacilityBase : MonoBehaviour, IClickable
     /// <returns>수집된 양</returns>
     public virtual int CollectResource()
     {
-        Debug.Log($"<color=blue>{name}: {providedResourceType} {amountPerCollect}만큼 수집됨</color>");
+        GameLogger.LogVerbose(LogCategory.Facility, $"{name}: {providedResourceType} x{amountPerCollect} collected");
         return amountPerCollect;
     }
 

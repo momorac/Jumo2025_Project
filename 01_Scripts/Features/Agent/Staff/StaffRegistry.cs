@@ -17,7 +17,7 @@ public class StaffRegistry
         if (!registeredStaffs.Contains(staff))
         {
             registeredStaffs.Add(staff);
-            Debug.Log($"<color=cyan>Staff registered: {staff.name}. Total: {registeredStaffs.Count}</color>");
+            GameLogger.LogVerbose(LogCategory.Staff, $"Registered: {staff.name}. Total: {registeredStaffs.Count}");
         }
     }
 
@@ -32,7 +32,7 @@ public class StaffRegistry
                 selectedStaff = null;
             }
 
-            Debug.Log($"<color=cyan>Staff unregistered: {staff.name}. Total: {registeredStaffs.Count}</color>");
+            GameLogger.LogVerbose(LogCategory.Staff, $"Unregistered: {staff.name}. Total: {registeredStaffs.Count}");
         }
     }
 
@@ -79,7 +79,7 @@ public class StaffRegistry
     public void SetDefaultStaff(Staff staff)
     {
         defaultStaff = staff;
-        Debug.Log($"<color=cyan>Default staff set: {staff.name}</color>");
+        GameLogger.LogVerbose(LogCategory.Staff, $"Default staff set: {staff.name}");
     }
 
     /// <summary>기본 Staff(주모) 반환</summary>

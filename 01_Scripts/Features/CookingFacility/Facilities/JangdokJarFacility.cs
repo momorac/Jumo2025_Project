@@ -18,7 +18,7 @@ public class JangdokJarFacility : CookingFacilityBase
 
     public override void OnClicked(Vector3 hitPoint)
     {
-        Debug.Log($"<color=magenta>장독대 클릭됨 - 김치 발효 가능       </color>");
+        GameLogger.Log(LogCategory.Input, $"JangdokJar clicked");
         // TODO: 김치 발효 메뉴 UI 표시
     }
 

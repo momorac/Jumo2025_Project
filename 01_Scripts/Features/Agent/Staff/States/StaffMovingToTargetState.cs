@@ -28,7 +28,7 @@ public class StaffMovingToTargetState : IStaffState
     {
         controller.SetAnimation("IsWalking", true);
         controller.SetDestination(targetPosition);
-        Debug.Log($"<color=cyan>{controller.name}: Moving to {targetPosition}</color>");
+        GameLogger.LogVerbose(LogCategory.Staff, $"{controller.name}: moving to {targetPosition}");
     }
 
     public void Tick(float deltaTime)
@@ -52,6 +52,6 @@ public class StaffMovingToTargetState : IStaffState
     public void Exit()
     {
         controller.SetAnimation("IsWalking", false);
-        Debug.Log($"<color=cyan>{controller.name}: Exited MovingToTarget state</color>");
+        GameLogger.LogVerbose(LogCategory.Staff, $"{controller.name}: exited MovingToTarget");
     }
 }

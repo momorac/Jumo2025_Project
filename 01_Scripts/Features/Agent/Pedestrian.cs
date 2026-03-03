@@ -26,11 +26,11 @@ public class Pedestrian : MonoBehaviour, IPooled
 
         if (agent == null || animator == null)
         {
-            Debug.LogWarning($"{nameof(Pedestrian)}: NavMeshAgent 혹은 Animator가 없습니다.");
+            GameLogger.LogWarning(LogCategory.System, $"{nameof(Pedestrian)}: NavMeshAgent or Animator missing");
             return;
         }
 
-        Debug.Log("<color=green>Pedestrian spawned.</color>");
+        GameLogger.LogVerbose(LogCategory.System, $"{name} spawned");
 
         // 위치 랜덤 설정
         int randomIdx = Random.Range(0, spawnPoints.Length);
@@ -45,7 +45,7 @@ public class Pedestrian : MonoBehaviour, IPooled
     public void OnRelease()
     {
         OnWalkComplete = null;
-        Debug.Log("<color=yellow>Pedestrian released back to pool.</color>");
+        GameLogger.LogVerbose(LogCategory.System, $"{name} released to pool");
     }
 
     private IEnumerator TrackWalkingCoroutine()

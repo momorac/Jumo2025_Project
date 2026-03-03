@@ -11,7 +11,7 @@ public class CauldronFacility : CookingFacilityBase
 
     public override void OnClicked(Vector3 hitPoint)
     {
-        Debug.Log($"<color=magenta>가마솥 클릭됨 - 반찬/찌개 조리 가능 (CanCook: {CanCook})</color>");
+        GameLogger.Log(LogCategory.Input, $"Cauldron clicked (CanCook: {CanCook})");
         // TODO: 조리 메뉴 UI 표시
     }
 }

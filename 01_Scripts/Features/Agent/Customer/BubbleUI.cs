@@ -45,7 +45,7 @@ public class BubbleUI : MonoBehaviour
         if (!IsClickable)
             return;
 
-        Debug.Log($"<color=magenta>Bubble clicked for {customer.name}</color>");
+        GameLogger.Log(LogCategory.Input, $"Bubble clicked: {customer.name}");
 
         // BubbleClickedEvent 발행 → TaskAssigner가 처리
         App.EventBus.Publish(new BubbleClickedEvent(customer, customer.transform));

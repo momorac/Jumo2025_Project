@@ -11,7 +11,7 @@ public static class SaveManager
         var json = JsonConvert.SerializeObject(data);
         File.WriteAllText(Path, json);
 #if UNITY_EDITOR
-        Debug.Log($"[SaveService] Saved to {Path}: {json}");
+        GameLogger.LogVerbose(LogCategory.System, $"[SaveService] Saved to {Path}: {json}");
 #endif
     }
 
@@ -24,27 +24,27 @@ public static class SaveManager
                 var json = File.ReadAllText(Path);
                 if (string.IsNullOrEmpty(json))
                 {
-                    Debug.LogWarning("[SaveService] Save file is empty, initializing new save.");
+                    GameLogger.LogWarning(LogCategory.System, "[SaveService] Save file is empty, initializing new save.");
                     return InitializeNewSave(config);
                 }
 
                 var data = JsonConvert.DeserializeObject<GameMetaData>(json);
 #if UNITY_EDITOR
-                Debug.Log($"[SaveService] Loaded from {Path}: {json}");
+                GameLogger.LogVerbose(LogCategory.System, $"[SaveService] Loaded from {Path}: {json}");
 #endif
                 return data;
             }
             else
             {
                 // 기존에 저장된 파일 없으면 새로운 저장 파일 생성
-                Debug.LogWarning("[SaveService] Save file does not exist, initializing new save.");
+                GameLogger.LogWarning(LogCategory.System, "[SaveService] Save file does not exist, initializing new save.");
                 return InitializeNewSave(config);
             }
         }
         catch (System.Exception e)
         {
 #if UNITY_EDITOR
-            Debug.LogWarning($"[SaveService] Load failed: {e.Message}");
+            GameLogger.LogWarning(LogCategory.System, $"[SaveService] Load failed: {e.Message}");
 #endif
         }
         return null;
@@ -59,7 +59,7 @@ public static class SaveManager
 
         if (config == null)
         {
-            Debug.LogWarning("[SaveManager] InitialSaveConfig is null. Applying default initial state.");
+            GameLogger.LogWarning(LogCategory.System, "[SaveManager] InitialSaveConfig is null. Applying default initial state.");
         }
         else
         {
