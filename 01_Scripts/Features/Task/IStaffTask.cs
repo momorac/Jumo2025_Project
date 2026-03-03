@@ -5,11 +5,12 @@ using UnityEngine;
 /// </summary>
 public enum TaskType
 {
-    TakeOrder,      // 주문 받기
-    ServeDrink,     // 음료 서빙
-    ServeFood,      // 음식 서빙
-    CleanTable,     // 테이블 청소
-    Checkout        // 계산
+    TakeOrder,          // 주문 받기
+    ServeDrink,         // 음료 서빙
+    ServeFood,          // 음식 서빙
+    CleanTable,         // 테이블 청소
+    Checkout,           // 계산
+    CollectResource     // 자원 수집 (물/장작)
 }
 
 /// <summary>

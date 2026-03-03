@@ -87,8 +87,16 @@ public class StaffExecutingTaskState : IStaffState
             TaskType.ServeFood => 2f,
             TaskType.CleanTable => 3f,
             TaskType.Checkout => 2f,
+            TaskType.CollectResource => GetCollectResourceTime(),
             _ => 1f
         };
+    }
+
+    private float GetCollectResourceTime()
+    {
+        if (controller.CurrentTask is CollectResourceTask collectTask)
+            return collectTask.CollectDuration;
+        return 3f;
     }
 
     private void PlayTaskAnimation(TaskType taskType)

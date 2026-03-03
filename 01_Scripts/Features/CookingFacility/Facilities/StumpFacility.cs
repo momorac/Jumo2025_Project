@@ -12,6 +12,16 @@ public class StumpFacility : ResourceFacilityBase
     public override void OnClicked(Vector3 hitPoint)
     {
         Debug.Log($"<color=brown>장작더미 클릭됨 - 장작 {amountPerCollect}씩 공급</color>");
-        // TODO: 직원에게 장작 패기 태스크 할당
+
+        // 선택된 Staff 또는 가장 가까운 Idle Staff에게 Task 배정
+        var staff = App.TaskAssigner.GetBestStaffFor(transform.position);
+        if (staff == null)
+        {
+            Debug.LogWarning("배정 가능한 Staff가 없습니다");
+            return;
+        }
+
+        var task = new CollectResourceTask(this, collectDuration);
+        App.TaskAssigner.AssignTaskToStaff(task, staff);
     }
 }

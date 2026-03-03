@@ -2,9 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-/// <summary>
-/// Staff 작업 배정 시스템
-/// 자동 배정 + 수동 지정 지원
+/// <summary> Staff 작업 배정 시스템. 자동 배정 + 수동 지정 지원
 /// </summary>
 public class TaskAssigner
 {
@@ -22,9 +20,7 @@ public class TaskAssigner
         App.EventBus.Subscribe<BubbleClickedEvent>(OnBubbleClicked);
     }
 
-    /// <summary>
-    /// 이벤트 구독 해제
-    /// </summary>
+    /// <summary>이벤트 구독 해제</summary>
     public void Dispose()
     {
         App.EventBus.Unsubscribe<TaskCreatedEvent>(OnTaskCreated);
@@ -32,17 +28,13 @@ public class TaskAssigner
         App.EventBus.Unsubscribe<BubbleClickedEvent>(OnBubbleClicked);
     }
 
-    /// <summary>
-    /// 작업 생성 시 자동 배정 시도
-    /// </summary>
+    /// <summary>작업 생성 시 자동 배정 시도</summary>
     private void OnTaskCreated(TaskCreatedEvent evt)
     {
         TryAutoAssign();
     }
 
-    /// <summary>
-    /// 말풍선 클릭 시 TakeOrder 작업 생성 및 배정
-    /// </summary>
+    /// <summary>말풍선 클릭 시 TakeOrder 작업 생성 및 배정</summary>
     private void OnBubbleClicked(BubbleClickedEvent evt)
     {
         Debug.Log($"<color=magenta>Bubble clicked for customer at {evt.TargetPosition.position}</color>");
@@ -69,9 +61,7 @@ public class TaskAssigner
         }
     }
 
-    /// <summary>
-    /// 수동 목적지 클릭 시 처리
-    /// </summary>
+    /// <summary> 수동 목적지 클릭 시 처리 </summary>
     private void OnDestinationClicked(DestinationClickedEvent evt)
     {
         // 선택된 Staff가 있으면 해당 위치로 이동 명령
@@ -89,9 +79,7 @@ public class TaskAssigner
         }
     }
 
-    /// <summary>
-    /// Idle 상태인 Staff에게 대기 중인 작업 자동 배정
-    /// </summary>
+    /// <summary>Idle 상태인 Staff에게 대기 중인 작업 자동 배정</summary>
     public void TryAutoAssign()
     {
         var idleStaffs = staffRegistry.GetIdleStaffs();
@@ -106,10 +94,7 @@ public class TaskAssigner
         }
     }
 
-    /// <summary>
-    /// 특정 위치에 대해 가장 적합한 Staff 반환
-    /// (가장 가까운 Idle Staff)
-    /// </summary>
+    /// <summary>특정 위치에 대해 가장 적합한 Staff 반환 (가장 가까운 Idle Staff)</summary>
     public Staff GetBestStaffFor(Vector3 targetPosition)
     {
         // 먼저 선택된 Staff 확인
@@ -129,21 +114,17 @@ public class TaskAssigner
             .FirstOrDefault();
     }
 
-    /// <summary>
-    /// 특정 Staff에게 작업 배정
-    /// </summary>
-    public void AssignTaskToStaff(IStaffTask task, Staff staff)
+    /// <summary>특정 Staff에게 작업 배정</summary>
+    public void AssignTaskToStaff(IStaffTask task, Staff staff, bool hasSetDestination = false)
     {
         staff.AssignTask(task);
 
-        App.EventBus.Publish(new TaskAssignedEvent(task, staff));
+        App.EventBus.Publish(new TaskAssignedEvent(task, staff, hasSetDestination));
 
         Debug.Log($"<color=green>Task {task.TaskId} ({task.Type}) assigned to {staff.name}</color>");
     }
 
-    /// <summary>
-    /// 수동으로 특정 Staff에게 작업 배정
-    /// </summary>
+    /// <summary>수동으로 특정 Staff에게 작업 배정</summary>
     public void ManualAssign(Staff staff, IStaffTask task)
     {
         // 대기열에서 제거
@@ -158,6 +139,6 @@ public class TaskAssigner
             }
         }
 
-        AssignTaskToStaff(task, staff);
+        AssignTaskToStaff(task, staff, hasSetDestination: false);
     }
 }

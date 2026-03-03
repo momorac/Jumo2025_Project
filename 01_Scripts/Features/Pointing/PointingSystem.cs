@@ -78,8 +78,9 @@ public class PointingSystem : MonoBehaviour
             {
                 clickable.OnClicked(hit.point);
 
-                // Staff가 아닌 곳 클릭 시 목적지 이벤트 발행 (선택된 Staff 또는 기본 Staff 이동)
-                if (!(clickable is Staff))
+                // Staff가 아닌 곳 클릭 시 목적지 이벤트 발행
+                // 단, 자체적으로 Task를 생성하는 시설(ResourceFacility, CookingFacility)은 제외
+                if (!(clickable is Staff) && !(clickable is ResourceFacilityBase) && !(clickable is CookingFacilityBase))
                 {
                     App.EventBus.Publish(new DestinationClickedEvent(hit.point, clickable));
                     ClearStaffSelection();

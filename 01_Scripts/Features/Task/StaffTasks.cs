@@ -155,3 +155,35 @@ public class CheckoutTask : StaffTaskBase
         }
     }
 }
+
+/// <summary>
+/// 자원 수집 작업
+/// Staff가 자원 시설(우물/장작더미)로 이동 → 수집 모션 → 자원을 들고 있는 상태
+/// </summary>
+public class CollectResourceTask : StaffTaskBase
+{
+    public override TaskType Type => TaskType.CollectResource;
+
+    public ResourceFacilityBase SourceFacility { get; }
+    public FacilityResourceType ResourceType { get; }
+    public float CollectDuration { get; }
+
+    public CollectResourceTask(ResourceFacilityBase facility, float collectDuration, int priority = 7)
+        : base(facility.transform, priority)
+    {
+        SourceFacility = facility;
+        ResourceType = facility.ProvidedResourceType;
+        CollectDuration = collectDuration;
+    }
+
+    public override void Execute(Staff staff)
+    {
+        // 시설에서 자원 수집
+        int amount = SourceFacility.CollectResource();
+
+        // Staff에게 자원 할당
+        staff.PickUpResource(ResourceType, amount);
+
+        Debug.Log($"<color=cyan>Staff {staff.name}: {ResourceType} {amount}개 수집 완료</color>");
+    }
+}

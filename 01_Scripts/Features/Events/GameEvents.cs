@@ -51,11 +51,13 @@ public struct TaskAssignedEvent : IGameEvent
 {
     public IStaffTask Task;
     public Staff Staff;
+    public bool hasSetDestination;
 
-    public TaskAssignedEvent(IStaffTask task, Staff staff)
+    public TaskAssignedEvent(IStaffTask task, Staff staff, bool hasSetDestination)
     {
         Task = task;
         Staff = staff;
+        this.hasSetDestination = hasSetDestination;
     }
 }
 

@@ -10,6 +10,7 @@ public abstract class ResourceFacilityBase : MonoBehaviour, IClickable
     [SerializeField] protected FacilityType facilityType;
     [SerializeField] protected FacilityResourceType providedResourceType;
     [SerializeField] protected int amountPerCollect = 5; // 수집 시 반환되는 고정 양
+    [SerializeField] protected float collectDuration = 3f;  // 수집 모션 재생 시간
 
     [Header("Links")]
     [SerializeField] protected Placeable placeable;
@@ -17,6 +18,7 @@ public abstract class ResourceFacilityBase : MonoBehaviour, IClickable
     public FacilityType FacilityType => facilityType;
     public FacilityResourceType ProvidedResourceType => providedResourceType;
     public int AmountPerCollect => amountPerCollect;
+    public float CollectDuration => collectDuration;
 
     /// <summary> 자원 수집 - 고정된 양 반환 </summary>
     /// <returns>수집된 양</returns>
