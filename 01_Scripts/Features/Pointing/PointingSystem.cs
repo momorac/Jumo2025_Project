@@ -11,9 +11,7 @@ public class PointingSystem : MonoBehaviour
     [SerializeField] private Camera mainCamera;
     [SerializeField] private LayerMask clickableMask;
     [SerializeField] private float rayMaxDistance = 100f;
-
-    [Header("Debug")]
-    [SerializeField] private bool showDebugRay = false;
+    [SerializeField] private LayerMask groundMask;
 
     private Staff selectedStaff;
     private bool isStaffSelected;
@@ -44,12 +42,6 @@ public class PointingSystem : MonoBehaviour
         {
             HandleClick();
         }
-
-        // 우클릭으로 Staff 선택 해제
-        if (Input.GetMouseButtonDown(1))
-        {
-            ClearStaffSelection();
-        }
     }
 
     private void HandleClick()
@@ -60,15 +52,12 @@ public class PointingSystem : MonoBehaviour
 
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
-        if (showDebugRay)
-        {
-            Debug.DrawRay(ray.origin, ray.direction * rayMaxDistance, Color.yellow, 1f);
-        }
 
         if (Physics.Raycast(ray, out RaycastHit hit, rayMaxDistance, clickableMask))
         {
             // IClickable 컴포넌트 검색 (본인 또는 부모에서)
             IClickable clickable = hit.collider.GetComponent<IClickable>();
+
             if (clickable == null)
             {
                 clickable = hit.collider.GetComponentInParent<IClickable>();
@@ -77,20 +66,15 @@ public class PointingSystem : MonoBehaviour
             if (clickable != null && clickable.IsClickable)
             {
                 clickable.OnClicked(hit.point);
+            }
 
-                // Staff가 아닌 곳 클릭 시 목적지 이벤트 발행
-                // 단, 자체적으로 Task를 생성하는 시설(ResourceFacility, CookingFacility)은 제외
-                if (!(clickable is Staff) && !(clickable is ResourceFacilityBase) && !(clickable is CookingFacilityBase))
+            else if (clickable == null)
+            {
+                if (((1 << hit.collider.gameObject.layer) & groundMask) != 0)
                 {
-                    App.EventBus.Publish(new DestinationClickedEvent(hit.point, clickable));
+                    App.EventBus.Publish(new DestinationClickedEvent(hit.point, null));
                     ClearStaffSelection();
                 }
-            }
-            else
-            {
-                // IClickable이 아닌 곳을 클릭해도 목적지로 사용 (선택된 Staff 또는 기본 Staff 이동)
-                App.EventBus.Publish(new DestinationClickedEvent(hit.point, null));
-                ClearStaffSelection();
             }
         }
     }
@@ -112,13 +96,9 @@ public class PointingSystem : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 현재 선택된 Staff 반환
-    /// </summary>
+    /// <summary>현재 선택된 Staff 반환 </summary>
     public Staff GetSelectedStaff() => selectedStaff;
 
-    /// <summary>
-    /// Staff가 선택된 상태인지 반환
-    /// </summary>
+    /// <summary> Staff가 선택된 상태인지 반환 </summary>
     public bool IsStaffSelected() => isStaffSelected;
 }
