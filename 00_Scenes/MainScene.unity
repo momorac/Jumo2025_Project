@@ -430,6 +430,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Jumo
       objectReference: {fileID: 0}
+    - target: {fileID: 1018388167120053454, guid: 2757a61b9b355ad41bbacce1fedefc92, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2090550505654121431, guid: 2757a61b9b355ad41bbacce1fedefc92, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -470,19 +474,54 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2772027616876920637, guid: 2757a61b9b355ad41bbacce1fedefc92, type: 3}
-      propertyPath: m_Speed
+    - target: {fileID: 8673768882740894397, guid: 2757a61b9b355ad41bbacce1fedefc92, type: 3}
+      propertyPath: props.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8673768882740894397, guid: 2757a61b9b355ad41bbacce1fedefc92, type: 3}
+      propertyPath: props.Array.data[0].Id
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8673768882740894397, guid: 2757a61b9b355ad41bbacce1fedefc92, type: 3}
+      propertyPath: props.Array.data[1].Id
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8673768882740894397, guid: 2757a61b9b355ad41bbacce1fedefc92, type: 3}
+      propertyPath: props.Array.data[2].Id
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 2772027616876920637, guid: 2757a61b9b355ad41bbacce1fedefc92, type: 3}
-      propertyPath: m_AngularSpeed
-      value: 180
-      objectReference: {fileID: 0}
+    - target: {fileID: 8673768882740894397, guid: 2757a61b9b355ad41bbacce1fedefc92, type: 3}
+      propertyPath: props.Array.data[0].GameObject
+      value: 
+      objectReference: {fileID: 234252906}
+    - target: {fileID: 8673768882740894397, guid: 2757a61b9b355ad41bbacce1fedefc92, type: 3}
+      propertyPath: props.Array.data[1].GameObject
+      value: 
+      objectReference: {fileID: 234252905}
+    - target: {fileID: 8673768882740894397, guid: 2757a61b9b355ad41bbacce1fedefc92, type: 3}
+      propertyPath: props.Array.data[2].GameObject
+      value: 
+      objectReference: {fileID: 234252904}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2757a61b9b355ad41bbacce1fedefc92, type: 3}
+--- !u!1 &234252904 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1205826276529126208, guid: 2757a61b9b355ad41bbacce1fedefc92, type: 3}
+  m_PrefabInstance: {fileID: 234252903}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &234252905 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1018388167120053454, guid: 2757a61b9b355ad41bbacce1fedefc92, type: 3}
+  m_PrefabInstance: {fileID: 234252903}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &234252906 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2388547378251091656, guid: 2757a61b9b355ad41bbacce1fedefc92, type: 3}
+  m_PrefabInstance: {fileID: 234252903}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0

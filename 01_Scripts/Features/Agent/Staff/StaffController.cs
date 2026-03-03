@@ -2,6 +2,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum StaffPropId
+{
+    None,
+    Tray,        // 쟁반 (서빙 작업 시 등장)
+    CleaningTool, // 청소 도구 (청소 작업 시 등장)
+    Axe,          // 도끼 (장작 수집 시 등장)
+    WaterBucket,         // 양동이 (물 수집 시 등장)
+    Firewood,      // 장작 (장작 수집 후 등장)
+}
+
+[System.Serializable]
+public class StaffProp
+{
+    public StaffPropId Id;
+    public GameObject GameObject;
+}
+
 /// <summary>
 /// Staff FSM 컨트롤러
 /// 상태 전환 및 현재 작업 관리
@@ -14,6 +31,10 @@ public class StaffController : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private float stoppingDistance;
+
+    [Header("Props")]
+    [SerializeField] private List<StaffProp> props;
+
 
     // FSM
     private Dictionary<StaffStateId, IStaffState> states;
@@ -56,6 +77,12 @@ public class StaffController : MonoBehaviour
 
         // Registry에 등록
         App.StaffRegistry.Register(staff);
+
+        // 초기 Prop 비활성화
+        foreach (var prop in props)
+        {
+            prop.GameObject.SetActive(false);
+        }
     }
 
     private void OnDestroy()
@@ -219,11 +246,11 @@ public class StaffController : MonoBehaviour
     /// <summary>Phase 실행 애니메이션 재생 (도착 후 Executing 진입 시 호출)</summary>
     public void PlayPhaseAnimation(TaskPhase phase)
     {
+        SetAnimation("IsWorking", true);
         if (!string.IsNullOrEmpty(phase.AnimationTrigger))
         {
             TriggerAnimation(phase.AnimationTrigger);
         }
-        SetAnimation("IsWorking", true);
     }
 
     /// <summary>Phase 애니메이션 정리</summary>
