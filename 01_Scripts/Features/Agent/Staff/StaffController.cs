@@ -22,12 +22,16 @@ public class StaffController : MonoBehaviour
     // 참조
     private Staff staff;
     private IStaffTask currentTask;
+    private int currentPhaseIndex;
 
     // MovingState 참조 (목표 설정용)
     private StaffMovingToTargetState movingState;
 
     public Staff Staff => staff;
     public IStaffTask CurrentTask => currentTask;
+    public int CurrentPhaseIndex => currentPhaseIndex;
+    public TaskPhase CurrentPhase => currentTask?.Phases != null && currentPhaseIndex < currentTask.Phases.Count
+        ? currentTask.Phases[currentPhaseIndex] : null;
     public StaffStateId CurrentStateId => currentState?.Id ?? StaffStateId.Idle;
     public bool IsIdle => CurrentStateId == StaffStateId.Idle;
 
@@ -95,17 +99,66 @@ public class StaffController : MonoBehaviour
     public void AssignTask(IStaffTask task)
     {
         currentTask = task;
+        currentPhaseIndex = 0;
+        ExecuteCurrentPhase();
+    }
 
-        if (task.TargetPosition != null)
+    /// <summary>현재 Phase의 이동/실행 시작</summary>
+    private void ExecuteCurrentPhase()
+    {
+        var phase = CurrentPhase;
+        if (phase == null)
         {
-            movingState.SetTarget(task.TargetPosition.position, withTask: true);
+            // Phase가 없으면 즉시 완료
+            CompleteCurrentTask();
+            return;
+        }
+
+        GameLogger.LogVerbose(LogCategory.Staff,
+            $"{name}: Phase {currentPhaseIndex + 1}/{currentTask.Phases.Count} of {currentTask.Type}");
+
+        if (phase.MoveTarget != null)
+        {
+            movingState.SetTarget(phase.MoveTarget.position, withTask: true);
             ChangeState(StaffStateId.MovingToTarget);
         }
         else
         {
-            // 위치 이동 없이 바로 실행
+            // 이동 없이 바로 실행
             ChangeState(StaffStateId.ExecutingTask);
         }
+    }
+
+    /// <summary>현재 Phase 완료 시 호출. 다음 Phase 또는 Task 완료 처리</summary>
+    public void OnPhaseCompleted()
+    {
+        currentPhaseIndex++;
+
+        if (currentTask != null && currentPhaseIndex < currentTask.Phases.Count)
+        {
+            // 다음 Phase 실행
+            ExecuteCurrentPhase();
+        }
+        else
+        {
+            // 모든 Phase 완료
+            CompleteCurrentTask();
+        }
+    }
+
+    /// <summary>Task의 모든 Phase 완료 처리</summary>
+    private void CompleteCurrentTask()
+    {
+        var task = currentTask;
+        if (task != null)
+        {
+            App.TaskQueue.CompleteTask(task);
+            App.EventBus.Publish(new TaskCompletedEvent(task, staff));
+        }
+
+        currentTask = null;
+        currentPhaseIndex = 0;
+        ChangeState(StaffStateId.Idle);
     }
 
     /// <summary> 특정 위치로 이동 (작업 없음)</summary>
@@ -113,12 +166,6 @@ public class StaffController : MonoBehaviour
     {
         movingState.SetTarget(position, withTask: false);
         ChangeState(StaffStateId.MovingToTarget);
-    }
-
-    /// <summary>현재 작업 해제</summary>
-    public void ClearCurrentTask()
-    {
-        currentTask = null;
     }
 
     /// <summary>NavMesh 목적지 설정</summary>
@@ -131,7 +178,6 @@ public class StaffController : MonoBehaviour
     }
 
     /// <summary>이동 정지</summary>
-    /// </summary>
     public void StopMoving()
     {
         if (agent != null && agent.enabled)

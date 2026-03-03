@@ -13,22 +13,21 @@ public static class App
     private static IngredientData IngredientData;
     private static RecipeData RecipeData;
 
+    // 이벤트 관련
+    public static TaskQueue TaskQueue { get; private set; }
+    public static TaskAssigner TaskAssigner { get; private set; }
+    public static StaffRegistry StaffRegistry { get; private set; }
+    public static GameAnchors Anchors { get; set; }
+
     // 서비스/매니저
     public static SessionService SessionService { get; private set; }
     public static EconomyService EconomyService { get; private set; }
     public static PlaceableService PlaceableService { get; private set; }
     public static PoolService PoolService { get; private set; }
-
-    // 새로운 서비스들
     public static GameEventBus EventBus { get; private set; }
     public static OrderService OrderService { get; private set; }
-    public static TaskQueue TaskQueue { get; private set; }
-    public static TaskAssigner TaskAssigner { get; private set; }
-    public static StaffRegistry StaffRegistry { get; private set; }
     public static IngredientService IngredientService { get; private set; }
     public static RecipeService RecipeService { get; private set; }
-
-    public static GameAnchors Anchors { get; set; }
 
     private static bool hasInitialized = false;
     public static bool HasInitialized => hasInitialized;

@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
 /// Staff 작업 기본 클래스
-/// 공통 기능을 구현하고 구체적인 작업은 상속하여 구현
+/// 공통 기능을 구현하고 구체적인 작업은 상속하여 구현.
+/// 각 Task는 BuildPhases()를 오버라이드하여 실행 단계를 정의.
 /// </summary>
 public abstract class StaffTaskBase : IStaffTask
 {
@@ -10,7 +12,7 @@ public abstract class StaffTaskBase : IStaffTask
 
     public int TaskId { get; }
     public abstract TaskType Type { get; }
-    public Transform TargetPosition { get; protected set; }
+    public IReadOnlyList<TaskPhase> Phases { get; }
     public int Priority { get; protected set; }
     public float CreatedTime { get; }
     public Customer AssociatedCustomer { get; protected set; }
@@ -18,17 +20,18 @@ public abstract class StaffTaskBase : IStaffTask
     public bool IsCompleted { get; protected set; }
     public bool IsCancelled { get; protected set; }
 
-    protected StaffTaskBase(Transform targetPosition, int priority = 0)
+    protected StaffTaskBase(int priority = 0)
     {
         TaskId = nextTaskId++;
-        TargetPosition = targetPosition;
         Priority = priority;
         CreatedTime = Time.time;
         IsCompleted = false;
         IsCancelled = false;
+        Phases = BuildPhases();
     }
 
-    public abstract void Execute(Staff staff);
+    /// <summary>작업의 실행 단계를 정의. 하위 클래스에서 오버라이드</summary>
+    protected abstract List<TaskPhase> BuildPhases();
 
     public virtual void Complete()
     {
@@ -44,121 +47,189 @@ public abstract class StaffTaskBase : IStaffTask
 }
 
 /// <summary>
-/// 주문 받기 작업
+/// 주문 받기 작업 (1 Phase)
+/// 손님 테이블로 이동 → 주문 접수
 /// </summary>
 public class TakeOrderTask : StaffTaskBase
 {
     public override TaskType Type => TaskType.TakeOrder;
 
+    private readonly Customer customer;
+    private readonly Transform seatPosition;
+    private readonly OrderData order;
+
     public TakeOrderTask(Customer customer, Transform seatPosition, OrderData order, int priority = 10)
-        : base(seatPosition, priority)
+        : base(priority)
     {
+        this.customer = customer;
+        this.seatPosition = seatPosition;
+        this.order = order;
         AssociatedCustomer = customer;
         AssociatedOrder = order;
     }
 
-    public override void Execute(Staff staff)
+    protected override List<TaskPhase> BuildPhases() => new()
     {
-        GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} taking order");
-
-        // 주문 접수 이벤트 발행
-        App.EventBus.Publish(new OrderTakenEvent(AssociatedCustomer, AssociatedOrder));
-    }
+        new TaskPhase(
+            moveTarget: seatPosition,
+            duration: 2f,
+            onExecute: staff =>
+            {
+                GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} taking order");
+                App.EventBus.Publish(new OrderTakenEvent(customer, order));
+            },
+            animationTrigger: "TakeOrder"
+        )
+    };
 }
 
 /// <summary>
-/// 음료 서빙 작업
+/// 음료 서빙 작업 (1 Phase)
+/// 손님 테이블로 이동 → 음료 서빙
 /// </summary>
 public class ServeDrinkTask : StaffTaskBase
 {
     public override TaskType Type => TaskType.ServeDrink;
 
+    private readonly Customer customer;
+    private readonly Transform seatPosition;
+    private readonly OrderData order;
+
     public ServeDrinkTask(Customer customer, Transform seatPosition, OrderData order, int priority = 8)
-        : base(seatPosition, priority)
+        : base(priority)
     {
+        this.customer = customer;
+        this.seatPosition = seatPosition;
+        this.order = order;
         AssociatedCustomer = customer;
         AssociatedOrder = order;
     }
 
-    public override void Execute(Staff staff)
+    protected override List<TaskPhase> BuildPhases() => new()
     {
-        GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} serving drink");
-
-        // 서빙 완료 이벤트 발행
-        App.EventBus.Publish(new OrderServedEvent(AssociatedCustomer, AssociatedOrder));
-    }
+        new TaskPhase(
+            moveTarget: seatPosition,
+            duration: 1.5f,
+            onExecute: staff =>
+            {
+                GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} serving drink");
+                App.EventBus.Publish(new OrderServedEvent(customer, order));
+            },
+            animationTrigger: "ServeDrink"
+        )
+    };
 }
 
 /// <summary>
-/// 음식 서빙 작업
+/// 음식 서빙 작업 (1 Phase)
+/// 손님 테이블로 이동 → 음식 서빙
 /// </summary>
 public class ServeFoodTask : StaffTaskBase
 {
     public override TaskType Type => TaskType.ServeFood;
 
+    private readonly Customer customer;
+    private readonly Transform seatPosition;
+    private readonly OrderData order;
+
     public ServeFoodTask(Customer customer, Transform seatPosition, OrderData order, int priority = 8)
-        : base(seatPosition, priority)
+        : base(priority)
     {
+        this.customer = customer;
+        this.seatPosition = seatPosition;
+        this.order = order;
         AssociatedCustomer = customer;
         AssociatedOrder = order;
     }
 
-    public override void Execute(Staff staff)
+    protected override List<TaskPhase> BuildPhases() => new()
     {
-        GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} serving food");
-
-        // 서빙 완료 이벤트 발행
-        App.EventBus.Publish(new OrderServedEvent(AssociatedCustomer, AssociatedOrder));
-    }
+        new TaskPhase(
+            moveTarget: seatPosition,
+            duration: 2f,
+            onExecute: staff =>
+            {
+                GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} serving food");
+                App.EventBus.Publish(new OrderServedEvent(customer, order));
+            },
+            animationTrigger: "ServeFood"
+        )
+    };
 }
 
 /// <summary>
-/// 테이블 청소 작업
+/// 테이블 청소 작업 (1 Phase)
+/// 테이블로 이동 → 청소
 /// </summary>
 public class CleanTableTask : StaffTaskBase
 {
     public override TaskType Type => TaskType.CleanTable;
 
+    private readonly Transform tablePosition;
+
     public CleanTableTask(Transform tablePosition, int priority = 5)
-        : base(tablePosition, priority)
+        : base(priority)
     {
+        this.tablePosition = tablePosition;
     }
 
-    public override void Execute(Staff staff)
+    protected override List<TaskPhase> BuildPhases() => new()
     {
-        GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} cleaning table");
-    }
+        new TaskPhase(
+            moveTarget: tablePosition,
+            duration: 3f,
+            onExecute: staff =>
+            {
+                GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} cleaning table");
+            },
+            animationTrigger: "CleanTable"
+        )
+    };
 }
 
 /// <summary>
-/// 계산 작업
+/// 계산 작업 (1 Phase)
+/// 계산대로 이동 → 계산 처리
 /// </summary>
 public class CheckoutTask : StaffTaskBase
 {
     public override TaskType Type => TaskType.Checkout;
 
+    private readonly Customer customer;
+    private readonly Transform position;
+    private readonly OrderData order;
+
     public CheckoutTask(Customer customer, Transform position, OrderData order, int priority = 6)
-        : base(position, priority)
+        : base(priority)
     {
+        this.customer = customer;
+        this.position = position;
+        this.order = order;
         AssociatedCustomer = customer;
         AssociatedOrder = order;
     }
 
-    public override void Execute(Staff staff)
+    protected override List<TaskPhase> BuildPhases() => new()
     {
-        GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} processing checkout");
-
-        // 경제 시스템에 수익 추가
-        if (AssociatedOrder != null)
-        {
-            App.EconomyService.AddIncome(AssociatedOrder.Price);
-        }
-    }
+        new TaskPhase(
+            moveTarget: position,
+            duration: 2f,
+            onExecute: staff =>
+            {
+                GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} processing checkout");
+                if (order != null)
+                {
+                    App.EconomyService.AddIncome(order.Price);
+                }
+            },
+            animationTrigger: "Checkout"
+        )
+    };
 }
 
 /// <summary>
-/// 자원 수집 작업
-/// Staff가 자원 시설(우물/장작더미)로 이동 → 수집 모션 → 자원을 들고 있는 상태
+/// 자원 수집 작업 (1 Phase)
+/// 자원 시설(우물/장작더미)로 이동 → 수집 모션 → 자원을 들고 있는 상태
 /// </summary>
 public class CollectResourceTask : StaffTaskBase
 {
@@ -166,24 +237,26 @@ public class CollectResourceTask : StaffTaskBase
 
     public ResourceFacilityBase SourceFacility { get; }
     public FacilityResourceType ResourceType { get; }
-    public float CollectDuration { get; }
 
     public CollectResourceTask(ResourceFacilityBase facility, float collectDuration, int priority = 7)
-        : base(facility.transform, priority)
+        : base(priority)
     {
         SourceFacility = facility;
         ResourceType = facility.ProvidedResourceType;
-        CollectDuration = collectDuration;
     }
 
-    public override void Execute(Staff staff)
+    protected override List<TaskPhase> BuildPhases() => new()
     {
-        // 시설에서 자원 수집
-        int amount = SourceFacility.CollectResource();
-
-        // Staff에게 자원 할당
-        staff.PickUpResource(ResourceType, amount);
-
-        GameLogger.Log(LogCategory.Task, $"{staff.name}: {ResourceType} x{amount} collected");
-    }
+        new TaskPhase(
+            moveTarget: SourceFacility.transform,
+            duration: SourceFacility.CollectDuration,
+            onExecute: staff =>
+            {
+                int amount = SourceFacility.CollectResource();
+                staff.PickUpResource(ResourceType, amount);
+                GameLogger.Log(LogCategory.Task, $"{staff.name}: {ResourceType} x{amount} collected");
+            },
+            animationTrigger: "Collect"
+        )
+    };
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -15,7 +16,8 @@ public enum TaskType
 
 /// <summary>
 /// Staff 작업 인터페이스
-/// 각 작업은 이 인터페이스를 구현하여 TaskQueue에서 관리됨
+/// 각 작업은 이 인터페이스를 구현하여 TaskQueue에서 관리됨.
+/// 하나의 Task는 1개 이상의 TaskPhase로 구성됨.
 /// </summary>
 public interface IStaffTask
 {
@@ -25,8 +27,8 @@ public interface IStaffTask
     /// <summary> 작업 타입 </summary>
     TaskType Type { get; }
 
-    /// <summary> 작업 대상 위치 </summary>
-    Transform TargetPosition { get; }
+    /// <summary> 작업 실행 단계 목록 </summary>
+    IReadOnlyList<TaskPhase> Phases { get; }
 
     /// <summary> 작업 우선순위 (높을수록 먼저 처리) </summary>
     int Priority { get; }
@@ -39,10 +41,6 @@ public interface IStaffTask
 
     /// <summary> 연관된 주문 데이터 (없으면 null) </summary>
     OrderData AssociatedOrder { get; }
-
-    /// <summary> 작업 실행 (Staff가 도착 후 호출) </summary>
-    /// <param name="staff">작업을 수행하는 Staff</param>
-    void Execute(Staff staff);
 
     /// <summary> 작업 완료 처리 </summary>
     void Complete();

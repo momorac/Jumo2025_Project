@@ -2,7 +2,7 @@ using UnityEngine;
 
 /// <summary>
 /// Staff 작업 수행 상태
-/// 도착 후 작업 실행
+/// 현재 Phase의 Duration 동안 대기하며, 중간 지점에서 OnExecute 호출
 /// </summary>
 public class StaffExecutingTaskState : IStaffState
 {
@@ -11,7 +11,8 @@ public class StaffExecutingTaskState : IStaffState
     private readonly StaffController controller;
     private float executionTime;
     private float elapsedTime;
-    private bool taskExecuted;
+    private bool phaseExecuted;
+    private TaskPhase currentPhase;
 
     public StaffExecutingTaskState(StaffController controller)
     {
@@ -21,22 +22,22 @@ public class StaffExecutingTaskState : IStaffState
     public void Enter()
     {
         elapsedTime = 0f;
-        taskExecuted = false;
+        phaseExecuted = false;
+        currentPhase = controller.CurrentPhase;
 
-        var task = controller.CurrentTask;
-        if (task != null)
+        if (currentPhase != null)
         {
-            // 작업 타입에 따른 실행 시간 설정
-            executionTime = GetExecutionTime(task.Type);
-            GameLogger.LogVerbose(LogCategory.Staff, $"{controller.name}: executing {task.Type} ({executionTime}s)");
+            executionTime = currentPhase.Duration;
+            GameLogger.LogVerbose(LogCategory.Staff,
+                $"{controller.name}: executing phase {controller.CurrentPhaseIndex + 1} ({executionTime}s)");
 
-            // 작업 시작 애니메이션
-            PlayTaskAnimation(task.Type);
+            // Phase별 애니메이션 재생
+            PlayPhaseAnimation(currentPhase);
         }
         else
         {
-            // 작업이 없으면 바로 Idle로
-            controller.ChangeState(StaffStateId.Idle);
+            // Phase가 없으면 바로 Phase 완료 처리
+            controller.OnPhaseCompleted();
         }
     }
 
@@ -44,18 +45,17 @@ public class StaffExecutingTaskState : IStaffState
     {
         elapsedTime += deltaTime;
 
-        // 실행 시간 중간에 작업 로직 실행
-        if (!taskExecuted && elapsedTime >= executionTime * 0.5f)
+        // 실행 시간 중간 지점에서 Phase 로직 실행
+        if (!phaseExecuted && elapsedTime >= executionTime * 0.5f)
         {
-            var task = controller.CurrentTask;
-            task?.Execute(controller.Staff);
-            taskExecuted = true;
+            currentPhase?.OnExecute?.Invoke(controller.Staff);
+            phaseExecuted = true;
         }
 
-        // 작업 완료
+        // Phase 실행 완료
         if (elapsedTime >= executionTime)
         {
-            CompleteTask();
+            controller.OnPhaseCompleted();
         }
     }
 
@@ -65,44 +65,13 @@ public class StaffExecutingTaskState : IStaffState
         controller.SetAnimation("IsWorking", false);
     }
 
-    private void CompleteTask()
+    private void PlayPhaseAnimation(TaskPhase phase)
     {
-        var task = controller.CurrentTask;
-        if (task != null)
+        if (!string.IsNullOrEmpty(phase.AnimationTrigger))
         {
-            App.TaskQueue.CompleteTask(task);
-            App.EventBus.Publish(new TaskCompletedEvent(task, controller.Staff));
+            controller.TriggerAnimation(phase.AnimationTrigger);
         }
 
-        controller.ClearCurrentTask();
-        controller.ChangeState(StaffStateId.Idle);
-    }
-
-    private float GetExecutionTime(TaskType taskType)
-    {
-        return taskType switch
-        {
-            TaskType.TakeOrder => 2f,
-            TaskType.ServeDrink => 1.5f,
-            TaskType.ServeFood => 2f,
-            TaskType.CleanTable => 3f,
-            TaskType.Checkout => 2f,
-            TaskType.CollectResource => GetCollectResourceTime(),
-            _ => 1f
-        };
-    }
-
-    private float GetCollectResourceTime()
-    {
-        if (controller.CurrentTask is CollectResourceTask collectTask)
-            return collectTask.CollectDuration;
-        return 3f;
-    }
-
-    private void PlayTaskAnimation(TaskType taskType)
-    {
-        // 작업 타입에 따른 애니메이션 재생
-        // TODO: 각 작업별 세부 애니메이션 추가
         controller.SetAnimation("IsWorking", true);
     }
 }

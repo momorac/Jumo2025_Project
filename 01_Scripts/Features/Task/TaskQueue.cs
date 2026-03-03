@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
 /// <summary>
 /// Staff 작업 대기열
 /// 우선순위 및 생성 시간 기반으로 작업 관리
@@ -59,7 +58,9 @@ public class TaskQueue
         var samePriorityTasks = pendingTasks.Where(t => t.Priority == highestPriority).ToList();
 
         IStaffTask closest = samePriorityTasks
-            .OrderBy(t => Vector3.Distance(position, t.TargetPosition.position))
+            .OrderBy(t => t.Phases.Count > 0 && t.Phases[0].MoveTarget != null
+                ? Vector3.Distance(position, t.Phases[0].MoveTarget.position)
+                : float.MaxValue)
             .FirstOrDefault();
 
         if (closest != null)

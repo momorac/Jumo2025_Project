@@ -115,11 +115,11 @@ public class TaskAssigner
     }
 
     /// <summary>특정 Staff에게 작업 배정</summary>
-    public void AssignTaskToStaff(IStaffTask task, Staff staff, bool hasSetDestination = false)
+    public void AssignTaskToStaff(IStaffTask task, Staff staff)
     {
         staff.AssignTask(task);
 
-        App.EventBus.Publish(new TaskAssignedEvent(task, staff, hasSetDestination));
+        App.EventBus.Publish(new TaskAssignedEvent(task, staff));
 
         GameLogger.Log(LogCategory.Task, $"Task {task.TaskId} ({task.Type}) assigned to {staff.name}");
     }
@@ -139,6 +139,6 @@ public class TaskAssigner
             }
         }
 
-        AssignTaskToStaff(task, staff, hasSetDestination: false);
+        AssignTaskToStaff(task, staff);
     }
 }
