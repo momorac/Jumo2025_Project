@@ -230,7 +230,7 @@ public class CheckoutTask : StaffTaskBase
 }
 
 /// <summary>
-/// 자원 수집 작업 (1 Phase)
+/// 자원 수집 작업 (3 Phase)
 /// 자원 시설(우물/장작더미)로 이동 → 수집 모션 → 자원을 들고 있는 상태
 /// </summary>
 public class CollectResourceTask : StaffTaskBase
@@ -258,7 +258,7 @@ public class CollectResourceTask : StaffTaskBase
                 staff.PickUpResource(ResourceType, amount);
                 GameLogger.Log(LogCategory.Task, $"{staff.name}: {ResourceType} x{amount} collected");
             },
-            animationTrigger: "Collect"
+            animationTrigger: SourceFacility.FacilityType == FacilityType.Well ? "CollectWater" : "CollectFirewood"
         )
     };
 }

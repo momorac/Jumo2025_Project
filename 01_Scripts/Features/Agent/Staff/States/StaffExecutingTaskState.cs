@@ -31,6 +31,8 @@ public class StaffExecutingTaskState : IStaffState
             executionTime = currentPhase.Duration;
             GameLogger.LogVerbose(LogCategory.Staff,
                 $"{controller.name}: executing phase {controller.CurrentPhaseIndex + 1} ({executionTime}s)");
+
+            controller.PlayPhaseAnimation(currentPhase);
         }
         else
         {
@@ -43,16 +45,11 @@ public class StaffExecutingTaskState : IStaffState
     {
         elapsedTime += deltaTime;
 
-        // 실행 시간 중간 지점에서 Phase 로직 실행
-        if (!phaseExecuted && elapsedTime >= executionTime * 0.5f)
+        // ExecutionTime 시간 이후 Phase 실행 완료
+        if (!phaseExecuted && elapsedTime >= executionTime)
         {
             currentPhase?.OnExecute?.Invoke(controller.Staff);
             phaseExecuted = true;
-        }
-
-        // Phase 실행 완료
-        if (elapsedTime >= executionTime)
-        {
             controller.OnPhaseCompleted();
         }
     }

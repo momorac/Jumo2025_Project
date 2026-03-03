@@ -10,7 +10,10 @@ public class TaskPhase
     /// <summary>이동할 위치 (null이면 이동 없이 즉시 실행)</summary>
     public Transform MoveTarget;
 
-    /// <summary>도착 후 재생할 애니메이션 트리거 (null이면 기본 "IsWorking")</summary>
+    /// <summary>이 Phase가 이동을 먼저 수행하는지 여부</summary>
+    public bool WillMoveFirst => MoveTarget != null;
+
+    /// <summary>도착 후 재생할 애니메이션 트리거</summary>
     public string AnimationTrigger;
 
     /// <summary>실행 시간 (초)</summary>

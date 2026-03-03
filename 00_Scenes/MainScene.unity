@@ -1807,7 +1807,7 @@ GameObject:
   - component: {fileID: 1055450394}
   - component: {fileID: 1055450393}
   - component: {fileID: 1055450392}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2050,7 +2050,7 @@ TerrainCollider:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_TerrainData: {fileID: 15600000, guid: 922341c079a39404694decb161303b7f, type: 2}
   m_EnableTreeColliders: 1
@@ -2175,7 +2175,7 @@ GameObject:
   - component: {fileID: 1339730964}
   - component: {fileID: 1339730963}
   - component: {fileID: 1339730962}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2357,7 +2357,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   rayMaxDistance: 100
-  showDebugRay: 1
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &1501847808
 GameObject:
   m_ObjectHideFlags: 0

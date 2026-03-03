@@ -117,10 +117,7 @@ public class StaffController : MonoBehaviour
         GameLogger.LogVerbose(LogCategory.Staff,
             $"{name}: Phase {currentPhaseIndex + 1}/{currentTask.Phases.Count} of {currentTask.Type}");
 
-        // Phase별 애니메이션 재생
-        PlayPhaseAnimation(phase);
-
-        if (phase.MoveTarget != null)
+        if (phase.WillMoveFirst)
         {
             movingState.SetTarget(phase.MoveTarget.position, withTask: true);
             ChangeState(StaffStateId.MovingToTarget);
@@ -219,8 +216,8 @@ public class StaffController : MonoBehaviour
         }
     }
 
-    /// <summary>Phase 애니메이션 재생</summary>
-    private void PlayPhaseAnimation(TaskPhase phase)
+    /// <summary>Phase 실행 애니메이션 재생 (도착 후 Executing 진입 시 호출)</summary>
+    public void PlayPhaseAnimation(TaskPhase phase)
     {
         if (!string.IsNullOrEmpty(phase.AnimationTrigger))
         {
