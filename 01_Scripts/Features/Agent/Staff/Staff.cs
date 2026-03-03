@@ -21,6 +21,9 @@ public class Staff : MonoBehaviour, IClickable
     public bool IsClickable => true;
     public int ClickPriority => clickPriority;
 
+    // 컨트롤러 접근자
+    public StaffController Controller => controller;
+
     // 상태 접근자
     public bool IsIdle => controller?.IsIdle ?? false;
     public IStaffTask CurrentTask => controller?.CurrentTask;

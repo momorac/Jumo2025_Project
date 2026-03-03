@@ -26,7 +26,7 @@ public class StaffMovingToTargetState : IStaffState
 
     public void Enter()
     {
-        controller.SetAnimation("IsWalking", true);
+        controller.SetAnimatorBool("IsWalking", true);
         controller.SetDestination(targetPosition);
         GameLogger.LogVerbose(LogCategory.Staff, $"{controller.name}: moving to {targetPosition}");
     }
@@ -51,7 +51,7 @@ public class StaffMovingToTargetState : IStaffState
 
     public void Exit()
     {
-        controller.SetAnimation("IsWalking", false);
+        controller.SetAnimatorBool("IsWalking", false);
         GameLogger.LogVerbose(LogCategory.Staff, $"{controller.name}: exited MovingToTarget");
     }
 }

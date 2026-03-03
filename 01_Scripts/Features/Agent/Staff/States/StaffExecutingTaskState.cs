@@ -33,6 +33,7 @@ public class StaffExecutingTaskState : IStaffState
                 $"{controller.name}: executing phase {controller.CurrentPhaseIndex + 1} ({executionTime}s)");
 
             controller.PlayPhaseAnimation(currentPhase);
+            currentPhase.OnStart?.Invoke(controller.Staff);
         }
         else
         {
@@ -49,6 +50,7 @@ public class StaffExecutingTaskState : IStaffState
         if (!phaseExecuted && elapsedTime >= executionTime)
         {
             currentPhase?.OnExecute?.Invoke(controller.Staff);
+            currentPhase?.OnEnd?.Invoke(controller.Staff);
             phaseExecuted = true;
             controller.OnPhaseCompleted();
         }

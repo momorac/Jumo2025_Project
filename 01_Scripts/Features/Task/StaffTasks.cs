@@ -80,7 +80,7 @@ public class TakeOrderTask : StaffTaskBase
                 GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} taking order");
                 App.EventBus.Publish(new OrderTakenEvent(customer, order));
             },
-            animationTrigger: "TakeOrder"
+            onStart: staff => staff.Controller.SetAnimatorTrigger("TakeOrder")
         )
     };
 }
@@ -117,7 +117,7 @@ public class ServeDrinkTask : StaffTaskBase
                 GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} serving drink");
                 App.EventBus.Publish(new OrderServedEvent(customer, order));
             },
-            animationTrigger: "ServeDrink"
+            onStart: staff => staff.Controller.SetAnimatorTrigger("ServeDrink")
         )
     };
 }
@@ -154,7 +154,7 @@ public class ServeFoodTask : StaffTaskBase
                 GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} serving food");
                 App.EventBus.Publish(new OrderServedEvent(customer, order));
             },
-            animationTrigger: "ServeFood"
+            onStart: staff => staff.Controller.SetAnimatorTrigger("ServeFood")
         )
     };
 }
@@ -184,7 +184,7 @@ public class CleanTableTask : StaffTaskBase
             {
                 GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} cleaning table");
             },
-            animationTrigger: "CleanTable"
+            onStart: staff => staff.Controller.SetAnimatorTrigger("CleanTable")
         )
     };
 }
@@ -224,7 +224,7 @@ public class CheckoutTask : StaffTaskBase
                     App.EconomyService.AddIncome(order.Price);
                 }
             },
-            animationTrigger: "Checkout"
+            onStart: staff => staff.Controller.SetAnimatorTrigger("Checkout")
         )
     };
 }
@@ -252,13 +252,27 @@ public class CollectResourceTask : StaffTaskBase
         new TaskPhase(
             moveTarget: SourceFacility.transform,
             duration: SourceFacility.CollectDuration,
-            onExecute: staff =>
+            onStart: (staff) =>
+            {
+                staff.Controller.SetCharacterDirection(SourceFacility.transform);
+                if (SourceFacility.FacilityType == FacilityType.Stump)
+                {
+                    staff.Controller.ActivateProp(StaffPropId.Axe);
+                }
+                staff.Controller.SetAnimatorBool("IsWorking", true);
+                staff.Controller.SetAnimatorTrigger(SourceFacility.FacilityType == FacilityType.Well ? "CollectWater" : "CollectFirewood");
+            },
+            onExecute: (staff) =>
             {
                 int amount = SourceFacility.CollectResource();
                 staff.PickUpResource(ResourceType, amount);
                 GameLogger.Log(LogCategory.Task, $"{staff.name}: {ResourceType} x{amount} collected");
             },
-            animationTrigger: SourceFacility.FacilityType == FacilityType.Well ? "CollectWater" : "CollectFirewood"
+            onEnd: (staff) =>
+            {
+                staff.Controller.SetAnimatorBool("IsWorking", false);
+                staff.Controller.DeactivateAllProps();
+            }
         )
     };
 }

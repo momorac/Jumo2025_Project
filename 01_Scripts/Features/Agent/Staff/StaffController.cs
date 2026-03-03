@@ -79,10 +79,7 @@ public class StaffController : MonoBehaviour
         App.StaffRegistry.Register(staff);
 
         // 초기 Prop 비활성화
-        foreach (var prop in props)
-        {
-            prop.GameObject.SetActive(false);
-        }
+        DeactivateAllProps();
     }
 
     private void OnDestroy()
@@ -201,10 +198,8 @@ public class StaffController : MonoBehaviour
     /// <summary>NavMesh 목적지 설정</summary>
     public void SetDestination(Vector3 position)
     {
-        if (agent != null && agent.enabled)
-        {
-            agent.SetDestination(position);
-        }
+        agent.updateRotation = true;
+        agent.SetDestination(position);
     }
 
     /// <summary>이동 정지</summary>
@@ -225,8 +220,21 @@ public class StaffController : MonoBehaviour
         return !agent.pathPending && agent.remainingDistance <= stoppingDistance;
     }
 
+    /// <summary>캐릭터 방향 설정</summary>
+    public void SetCharacterDirection(Transform target)
+    {
+        Vector3 direction = (target.position - transform.position).normalized;
+        if (direction != Vector3.zero)
+        {
+            agent.updateRotation = false;
+
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Euler(0, lookRotation.eulerAngles.y, 0);
+        }
+    }
+
     /// <summary>애니메이션 파라미터 설정</summary>
-    public void SetAnimation(string paramName, bool value)
+    public void SetAnimatorBool(string paramName, bool value)
     {
         if (animator != null)
         {
@@ -235,7 +243,7 @@ public class StaffController : MonoBehaviour
     }
 
     /// <summary>애니메이션 트리거 설정</summary>
-    public void TriggerAnimation(string triggerName)
+    public void SetAnimatorTrigger(string triggerName)
     {
         if (animator != null)
         {
@@ -246,16 +254,37 @@ public class StaffController : MonoBehaviour
     /// <summary>Phase 실행 애니메이션 재생 (도착 후 Executing 진입 시 호출)</summary>
     public void PlayPhaseAnimation(TaskPhase phase)
     {
-        SetAnimation("IsWorking", true);
-        if (!string.IsNullOrEmpty(phase.AnimationTrigger))
-        {
-            TriggerAnimation(phase.AnimationTrigger);
-        }
+        SetAnimatorBool("IsWorking", true);
     }
 
     /// <summary>Phase 애니메이션 정리</summary>
     private void StopPhaseAnimation()
     {
-        SetAnimation("IsWorking", false);
+        SetAnimatorBool("IsWorking", false);
+    }
+
+    /// <summary>모든 Prop 비활성화</summary>
+    public void DeactivateAllProps()
+    {
+        foreach (var prop in props)
+        {
+            prop.GameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>특정 Prop 활성화</summary>
+    public void ActivateProp(StaffPropId propId)
+    {
+        foreach (var prop in props)
+        {
+            if (prop.Id == propId)
+            {
+                prop.GameObject.SetActive(true);
+            }
+            else
+            {
+                prop.GameObject.SetActive(false);
+            }
+        }
     }
 }

@@ -17,7 +17,7 @@ public class StaffIdleState : IStaffState
     public void Enter()
     {
         controller.StopMoving();
-        controller.SetAnimation("IsWalking", false);
+        controller.SetAnimatorBool("IsWalking", false);
         GameLogger.LogVerbose(LogCategory.Staff, $"{controller.name}: entered Idle");
     }
 
