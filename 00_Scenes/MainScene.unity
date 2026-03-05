@@ -470,6 +470,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2531186538511378098, guid: 2757a61b9b355ad41bbacce1fedefc92, type: 3}
+      propertyPath: m_ProvidesContacts
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2772027616876920637, guid: 2757a61b9b355ad41bbacce1fedefc92, type: 3}
+      propertyPath: m_AutoBraking
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2772027616876920637, guid: 2757a61b9b355ad41bbacce1fedefc92, type: 3}
+      propertyPath: m_AngularSpeed
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 2772027616876920637, guid: 2757a61b9b355ad41bbacce1fedefc92, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 4666307598237486939, guid: 2757a61b9b355ad41bbacce1fedefc92, type: 3}
+      propertyPath: m_Name
+      value: Model
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

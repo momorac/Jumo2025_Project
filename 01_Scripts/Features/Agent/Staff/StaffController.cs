@@ -29,9 +29,6 @@ public class StaffController : MonoBehaviour
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Animator animator;
 
-    [Header("Settings")]
-    [SerializeField] private float stoppingDistance;
-
     [Header("Props")]
     [SerializeField] private List<StaffProp> props;
 
@@ -194,7 +191,7 @@ public class StaffController : MonoBehaviour
         if (agent == null || !agent.enabled)
             return true;
 
-        return !agent.pathPending && agent.remainingDistance <= stoppingDistance;
+        return !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance;
     }
 
 
