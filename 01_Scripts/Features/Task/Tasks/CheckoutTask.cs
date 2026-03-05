@@ -1,0 +1,42 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+/// <summary>
+/// 계산 작업 (1 Phase)
+/// 계산대로 이동 → 계산 처리
+/// </summary>
+public class CheckoutTask : StaffTaskBase
+{
+    public override TaskType Type => TaskType.Checkout;
+
+    private readonly Customer customer;
+    private readonly Transform position;
+    private readonly OrderData order;
+
+    public CheckoutTask(Customer customer, Transform position, OrderData order, int priority = 6)
+        : base(priority)
+    {
+        this.customer = customer;
+        this.position = position;
+        this.order = order;
+        AssociatedCustomer = customer;
+        AssociatedOrder = order;
+    }
+
+    protected override List<TaskPhase> BuildPhases() => new()
+    {
+        new TaskPhase(
+            moveTarget: position,
+            duration: 2f,
+            onStart: staff => staff.Controller.SetAnimatorTrigger("Checkout"),
+            onExecute: staff =>
+            {
+                GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} processing checkout");
+                if (order != null)
+                {
+                    App.EconomyService.AddIncome(order.Price);
+                }
+            }
+        )
+    };
+}
