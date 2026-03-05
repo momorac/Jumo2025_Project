@@ -22,7 +22,7 @@ public class CleanTableTask : StaffTaskBase
         new TaskPhase(
             moveTarget: tablePosition,
             duration: 3f,
-            onStart: staff => staff.Controller.SetAnimatorTrigger("CleanTable"),
+            onStart: staff => staff.SetAnimatorTrigger("CleanTable"),
             onExecute: staff =>
             {
                 GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} cleaning table");

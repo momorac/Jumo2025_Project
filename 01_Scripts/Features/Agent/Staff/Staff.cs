@@ -12,6 +12,7 @@ public class Staff : MonoBehaviour, IClickable
     [SerializeField] private int clickPriority = 5;
 
     private StaffController controller;
+    internal StaffController Controller => controller;
 
     // 자원 운반 상태
     private FacilityResourceType carryingResourceType = FacilityResourceType.None;
@@ -20,9 +21,6 @@ public class Staff : MonoBehaviour, IClickable
     // IClickable 구현
     public bool IsClickable => true;
     public int ClickPriority => clickPriority;
-
-    // 컨트롤러 접근자
-    public StaffController Controller => controller;
 
     // 상태 접근자
     public bool IsIdle => controller?.IsIdle ?? false;
@@ -72,4 +70,26 @@ public class Staff : MonoBehaviour, IClickable
         carryingAmount = 0;
         // TODO: 운반 비주얼 비활성화
     }
+
+    // ── 애니메이션 / 비주얼 파사드 (Task Phase에서 사용) ──
+
+    /// <summary>애니메이션 Bool 파라미터 설정</summary>
+    public void SetAnimatorBool(string paramName, bool value)
+        => controller.SetAnimatorBool(paramName, value);
+
+    /// <summary>애니메이션 트리거 설정</summary>
+    public void SetAnimatorTrigger(string triggerName)
+        => controller.SetAnimatorTrigger(triggerName);
+
+    /// <summary>위치 및 회전 설정</summary>
+    public void SetPositionAndRotation(Vector3 position, Quaternion rotation)
+        => controller.SetCharacterPositionAndRotation(position, rotation);
+
+    /// <summary>특정 Prop 활성화</summary>
+    public void ActivateProp(StaffPropId propId)
+        => controller.ActivateProp(propId);
+
+    /// <summary>모든 Prop 비활성화</summary>
+    public void DeactivateAllProps()
+        => controller.DeactivateAllProps();
 }

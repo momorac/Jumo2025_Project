@@ -28,7 +28,7 @@ public class CheckoutTask : StaffTaskBase
         new TaskPhase(
             moveTarget: position,
             duration: 2f,
-            onStart: staff => staff.Controller.SetAnimatorTrigger("Checkout"),
+            onStart: staff => staff.SetAnimatorTrigger("Checkout"),
             onExecute: staff =>
             {
                 GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} processing checkout");

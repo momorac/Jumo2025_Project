@@ -28,7 +28,7 @@ public class TakeOrderTask : StaffTaskBase
         new TaskPhase(
             moveTarget: seatPosition,
             duration: 2f,
-            onStart: staff => staff.Controller.SetAnimatorTrigger("TakeOrder"),
+            onStart: staff => staff.SetAnimatorTrigger("TakeOrder"),
             onExecute: staff =>
             {
                 GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} taking order");

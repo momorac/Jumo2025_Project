@@ -28,7 +28,7 @@ public class ServeFoodTask : StaffTaskBase
         new TaskPhase(
             moveTarget: seatPosition,
             duration: 2f,
-            onStart: staff => staff.Controller.SetAnimatorTrigger("ServeFood"),
+            onStart: staff => staff.SetAnimatorTrigger("ServeFood"),
             onExecute: staff =>
             {
                 GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} serving food");

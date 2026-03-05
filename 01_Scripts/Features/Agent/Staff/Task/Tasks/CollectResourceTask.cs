@@ -28,13 +28,13 @@ public class CollectResourceTask : StaffTaskBase
             {
                 Quaternion targetRotation = Quaternion.LookRotation(SourceFacility.transform.position - staff.transform.position);
                 targetRotation *= Quaternion.Euler(0, 100, 0);
-                staff.Controller.SetCharacterPositionAndRotation(staff.transform.position, targetRotation);
+                staff.SetPositionAndRotation(staff.transform.position, targetRotation);
 
                 if (SourceFacility.FacilityType == FacilityType.Stump)
-                    staff.Controller.ActivateProp(StaffPropId.Axe);
+                    staff.ActivateProp(StaffPropId.Axe);
 
-                staff.Controller.SetAnimatorBool("IsWorking", true);
-                staff.Controller.SetAnimatorTrigger(
+                staff.SetAnimatorBool("IsWorking", true);
+                staff.SetAnimatorTrigger(
                     SourceFacility.FacilityType == FacilityType.Well ? "CollectWater" : "CollectFirewood");
             },
             onExecute: (staff) =>
@@ -45,8 +45,8 @@ public class CollectResourceTask : StaffTaskBase
             },
             onEnd: (staff) =>
             {
-                staff.Controller.SetAnimatorBool("IsWorking", false);
-                staff.Controller.DeactivateAllProps();
+                staff.SetAnimatorBool("IsWorking", false);
+                staff.DeactivateAllProps();
             }
         )
     };
