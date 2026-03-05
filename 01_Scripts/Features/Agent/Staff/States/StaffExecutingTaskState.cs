@@ -108,11 +108,20 @@ public class StaffExecutingTaskState : IStaffState
         executionTime = currentPhase.Duration;
 
         controller.SetAnimatorBool("IsWalking", false);
+
+        // 비주얼 데이터 처리 (Phase가 선언한 데이터를 State가 실행)
+        if (currentPhase.PropId != StaffPropId.None)
+            controller.ActivateProp(currentPhase.PropId);
+
         controller.SetAnimatorBool("IsWorking", true);
+
+        if (!string.IsNullOrEmpty(currentPhase.AnimationTrigger))
+            controller.SetAnimatorTrigger(currentPhase.AnimationTrigger);
 
         GameLogger.LogVerbose(LogCategory.Staff,
             $"{controller.name}: executing phase {task.CurrentPhaseIndex + 1} ({executionTime}s)");
 
+        // 커스텀 로직 콜백 (필요한 경우만)
         currentPhase.OnStart?.Invoke(controller.Staff);
     }
 
@@ -123,7 +132,9 @@ public class StaffExecutingTaskState : IStaffState
         currentPhase.OnEnd?.Invoke(controller.Staff);
         phaseExecuted = true;
 
+        // 비주얼 정리 (데이터 기반 일괄 처리)
         controller.SetAnimatorBool("IsWorking", false);
+        controller.DeactivateAllProps();
 
         if (task.AdvancePhase())
         {

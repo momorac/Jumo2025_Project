@@ -24,29 +24,20 @@ public class CollectResourceTask : StaffTaskBase
         new TaskPhase(
             moveTarget: SourceFacility.transform,
             duration: SourceFacility.CollectDuration,
+            animationTrigger: SourceFacility.FacilityType == FacilityType.Well? "CollectWater" : "CollectFirewood",
+            propId: SourceFacility.FacilityType == FacilityType.Stump ? StaffPropId.Axe : StaffPropId.None,
             onStart: (staff) =>
             {
+                // 회전 설정 (데이터 필드로 표현하기 어려운 커스텀 로직)
                 Quaternion targetRotation = Quaternion.LookRotation(SourceFacility.transform.position - staff.transform.position);
                 targetRotation *= Quaternion.Euler(0, 100, 0);
                 staff.SetPositionAndRotation(staff.transform.position, targetRotation);
-
-                if (SourceFacility.FacilityType == FacilityType.Stump)
-                    staff.ActivateProp(StaffPropId.Axe);
-
-                staff.SetAnimatorBool("IsWorking", true);
-                staff.SetAnimatorTrigger(
-                    SourceFacility.FacilityType == FacilityType.Well ? "CollectWater" : "CollectFirewood");
             },
             onExecute: (staff) =>
             {
                 int amount = SourceFacility.CollectResource();
                 staff.PickUpResource(ResourceType, amount);
                 GameLogger.Log(LogCategory.Task, $"{staff.name}: {ResourceType} x{amount} collected");
-            },
-            onEnd: (staff) =>
-            {
-                staff.SetAnimatorBool("IsWorking", false);
-                staff.DeactivateAllProps();
             }
         )
     };
