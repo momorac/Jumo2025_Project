@@ -10,7 +10,6 @@ public class StaffMovingToTargetState : IStaffState
 
     private readonly StaffController controller;
     private Vector3 targetPosition;
-    private bool hasTask;
 
     public StaffMovingToTargetState(StaffController controller)
     {
@@ -18,10 +17,9 @@ public class StaffMovingToTargetState : IStaffState
     }
 
     /// <summary>이동 목표 설정</summary>
-    public void SetTarget(Vector3 position, bool withTask = false)
+    public void SetTarget(Vector3 position)
     {
         targetPosition = position;
-        hasTask = withTask;
     }
 
     public void Enter()
@@ -33,19 +31,9 @@ public class StaffMovingToTargetState : IStaffState
 
     public void Tick(float deltaTime)
     {
-        // 도착 확인
         if (controller.HasReachedDestination())
         {
-            if (hasTask && controller.CurrentTask != null)
-            {
-                // 작업 수행 상태로 전환
-                controller.ChangeState(StaffStateId.ExecutingTask);
-            }
-            else
-            {
-                // 작업 없이 이동만 했으면 Idle로
-                controller.ChangeState(StaffStateId.Idle);
-            }
+            controller.OnMovementCompleted();
         }
     }
 

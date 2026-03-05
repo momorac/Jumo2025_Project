@@ -43,16 +43,13 @@ public class StaffController : MonoBehaviour
     // 참조
     private Staff staff;
     private IStaffTask currentTask;
-    private int currentPhaseIndex;
+    private bool isMovingForTask;
 
     // MovingState 참조 (목표 설정용)
     private StaffMovingToTargetState movingState;
 
     public Staff Staff => staff;
     public IStaffTask CurrentTask => currentTask;
-    public int CurrentPhaseIndex => currentPhaseIndex;
-    public TaskPhase CurrentPhase => currentTask?.Phases != null && currentPhaseIndex < currentTask.Phases.Count
-        ? currentTask.Phases[currentPhaseIndex] : null;
     public StaffStateId CurrentStateId => currentState?.Id ?? StaffStateId.Idle;
     public bool IsIdle => CurrentStateId == StaffStateId.Idle;
 
@@ -123,14 +120,14 @@ public class StaffController : MonoBehaviour
     public void AssignTask(IStaffTask task)
     {
         currentTask = task;
-        currentPhaseIndex = 0;
+        currentTask.ResetPhaseProgress();
         ExecuteCurrentPhase();
     }
 
     /// <summary>현재 Phase의 이동/실행 시작</summary>
     private void ExecuteCurrentPhase()
     {
-        var phase = CurrentPhase;
+        var phase = currentTask.CurrentPhase;
         if (phase == null)
         {
             // Phase가 없으면 즉시 완료
@@ -139,11 +136,12 @@ public class StaffController : MonoBehaviour
         }
 
         GameLogger.LogVerbose(LogCategory.Staff,
-            $"{name}: Phase {currentPhaseIndex + 1}/{currentTask.Phases.Count} of {currentTask.Type}");
+            $"{name}: Phase {currentTask.CurrentPhaseIndex + 1}/{currentTask.Phases.Count} of {currentTask.Type}");
 
         if (phase.WillMoveFirst)
         {
-            movingState.SetTarget(phase.MoveTarget.position, withTask: true);
+            isMovingForTask = true;
+            movingState.SetTarget(phase.MoveTarget.position);
             ChangeState(StaffStateId.MovingToTarget);
         }
         else
@@ -153,15 +151,26 @@ public class StaffController : MonoBehaviour
         }
     }
 
-    /// <summary>현재 Phase 완료 시 호출. 다음 Phase 또는 Task 완료 처리</summary>
-    public void OnPhaseCompleted()
+    /// <summary>이동 완료 시 State가 호출. Controller가 다음 상태 결정</summary>
+    public void OnMovementCompleted()
+    {
+        if (isMovingForTask && currentTask != null)
+        {
+            ChangeState(StaffStateId.ExecutingTask);
+        }
+        else
+        {
+            ChangeState(StaffStateId.Idle);
+        }
+    }
+
+    /// <summary>Phase 실행 완료 시 State가 호출. 다음 Phase 또는 Task 완료 처리</summary>
+    public void OnPhaseExecutionCompleted()
     {
         // 현재 Phase 애니메이션 정리
         StopPhaseAnimation();
 
-        currentPhaseIndex++;
-
-        if (currentTask != null && currentPhaseIndex < currentTask.Phases.Count)
+        if (currentTask != null && currentTask.AdvancePhase())
         {
             // 다음 Phase 실행
             ExecuteCurrentPhase();
@@ -184,7 +193,6 @@ public class StaffController : MonoBehaviour
         }
 
         currentTask = null;
-        currentPhaseIndex = 0;
         ChangeState(StaffStateId.Idle);
     }
 
@@ -204,7 +212,8 @@ public class StaffController : MonoBehaviour
     /// <summary> 특정 위치로 이동 (작업 없음)</summary>
     public void MoveTo(Vector3 position)
     {
-        movingState.SetTarget(position, withTask: false);
+        isMovingForTask = false;
+        movingState.SetTarget(position);
         ChangeState(StaffStateId.MovingToTarget);
     }
 

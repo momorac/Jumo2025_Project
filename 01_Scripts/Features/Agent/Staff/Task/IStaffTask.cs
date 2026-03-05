@@ -30,6 +30,21 @@ public interface IStaffTask
     /// <summary> 작업 실행 단계 목록 </summary>
     IReadOnlyList<TaskPhase> Phases { get; }
 
+    /// <summary> 현재 실행 중인 Phase </summary>
+    TaskPhase CurrentPhase { get; }
+
+    /// <summary> 현재 Phase 인덱스 </summary>
+    int CurrentPhaseIndex { get; }
+
+    /// <summary> 모든 Phase가 완료되었는지 여부 </summary>
+    bool IsAllPhasesCompleted { get; }
+
+    /// <summary> 다음 Phase로 진행. 다음 Phase가 있으면 true 반환 </summary>
+    bool AdvancePhase();
+
+    /// <summary> Phase 진행 상태 초기화 (Task 배정 시 호출) </summary>
+    void ResetPhaseProgress();
+
     /// <summary> 작업 우선순위 (높을수록 먼저 처리) </summary>
     int Priority { get; }
 

@@ -23,6 +23,24 @@ public abstract class StaffTaskBase : IStaffTask
     private IReadOnlyList<TaskPhase> _phases;
     public IReadOnlyList<TaskPhase> Phases => _phases ??= BuildPhases();
 
+    // Phase 진행 상태
+    private int _currentPhaseIndex;
+    public int CurrentPhaseIndex => _currentPhaseIndex;
+    public TaskPhase CurrentPhase => Phases != null && _currentPhaseIndex < Phases.Count
+        ? Phases[_currentPhaseIndex] : null;
+    public bool IsAllPhasesCompleted => Phases == null || _currentPhaseIndex >= Phases.Count;
+
+    public bool AdvancePhase()
+    {
+        _currentPhaseIndex++;
+        return !IsAllPhasesCompleted;
+    }
+
+    public void ResetPhaseProgress()
+    {
+        _currentPhaseIndex = 0;
+    }
+
     protected StaffTaskBase(int priority = 0)
     {
         TaskId = nextTaskId++;

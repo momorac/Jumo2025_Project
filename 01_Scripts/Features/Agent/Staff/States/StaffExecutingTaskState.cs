@@ -24,21 +24,23 @@ public class StaffExecutingTaskState : IStaffState
     {
         elapsedTime = 0f;
         phaseExecuted = false;
-        currentPhase = controller.CurrentPhase;
+        currentPhase = controller.CurrentTask?.CurrentPhase;
 
         if (currentPhase != null)
         {
             executionTime = currentPhase.Duration;
             GameLogger.LogVerbose(LogCategory.Staff,
-                $"{controller.name}: executing phase {controller.CurrentPhaseIndex + 1} ({executionTime}s)");
+                $"{controller.name}: executing phase {controller.CurrentTask.CurrentPhaseIndex + 1} ({executionTime}s)");
 
             controller.PlayPhaseAnimation(currentPhase);
             currentPhase.OnStart?.Invoke(controller.Staff);
         }
         else
         {
-            // Phase가 없으면 바로 Phase 완료 처리
-            controller.OnPhaseCompleted();
+            // Phase가 없으면 즉시 완료되도록 설정 (다음 Tick에서 처리)
+            executionTime = 0f;
+            GameLogger.LogWarning(LogCategory.Staff,
+                $"{controller.name}: entered ExecutingTask with null phase");
         }
     }
 
@@ -52,7 +54,7 @@ public class StaffExecutingTaskState : IStaffState
             currentPhase?.OnExecute?.Invoke(controller.Staff);
             currentPhase?.OnEnd?.Invoke(controller.Staff);
             phaseExecuted = true;
-            controller.OnPhaseCompleted();
+            controller.OnPhaseExecutionCompleted();
         }
     }
 
