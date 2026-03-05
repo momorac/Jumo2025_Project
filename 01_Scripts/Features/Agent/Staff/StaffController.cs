@@ -188,6 +188,19 @@ public class StaffController : MonoBehaviour
         ChangeState(StaffStateId.Idle);
     }
 
+    /// <summary>NavMeshAgent 활성화 설정</summary>
+    public void EnableNavMeshAgent(bool enable)
+    {
+        if (agent != null)
+        {
+            if (agent.enabled)
+            {
+                agent.ResetPath();
+            }
+            agent.enabled = enable;
+        }
+    }
+
     /// <summary> 특정 위치로 이동 (작업 없음)</summary>
     public void MoveTo(Vector3 position)
     {
@@ -220,17 +233,11 @@ public class StaffController : MonoBehaviour
         return !agent.pathPending && agent.remainingDistance <= stoppingDistance;
     }
 
-    /// <summary>캐릭터 방향 설정</summary>
-    public void SetCharacterDirection(Transform target)
-    {
-        Vector3 direction = (target.position - transform.position).normalized;
-        if (direction != Vector3.zero)
-        {
-            agent.updateRotation = false;
 
-            Quaternion lookRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Euler(0, lookRotation.eulerAngles.y, 0);
-        }
+    /// <summary>캐릭터 위치 및 방향 설정</summary>
+    public void SetCharacterPositionAndRotation(Vector3 vector3, Quaternion rotation)
+    {
+        transform.SetPositionAndRotation(vector3, rotation);
     }
 
     /// <summary>애니메이션 파라미터 설정</summary>
