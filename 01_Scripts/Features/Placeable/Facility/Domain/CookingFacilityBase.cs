@@ -14,6 +14,8 @@ public abstract class CookingFacilityBase : MonoBehaviour, ICookingFacility, ICl
     [SerializeField] protected int maxWood = 10;
     [SerializeField] protected int waterPerCook = 1;
     [SerializeField] protected int woodPerCook = 1;
+    [SerializeField] private Transform targetTransform; // 클릭 시 이동 목표 지점 (예: 조리대 위치)
+
 
     [Header("Current State")]
     [SerializeField] protected int currentWater;
@@ -23,6 +25,7 @@ public abstract class CookingFacilityBase : MonoBehaviour, ICookingFacility, ICl
     public FacilityType FacilityType => facilityType;
     public CookingFacilityType CookingType => facilityType.ToCookingType();
     public Transform Transform => transform;
+    public Transform TargetTransform => targetTransform;
 
     public virtual bool RequiresResources => facilityType.RequiresResources();
     public int CurrentWater => currentWater;

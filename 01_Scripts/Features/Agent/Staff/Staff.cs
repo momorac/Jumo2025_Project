@@ -11,6 +11,9 @@ public class Staff : MonoBehaviour, IClickable
 {
     [Header("Settings")]
     [SerializeField] private int clickPriority = 5;
+    [SerializeField] private float rotationSpeed = 720f; // 회전 속도 (도/초)
+    [SerializeField] private Transform targetTransform;
+    public Transform TargetTransform => targetTransform;
 
     [Header("Components")]
     [SerializeField] private NavMeshAgent agent;
@@ -36,6 +39,29 @@ public class Staff : MonoBehaviour, IClickable
     private void Start()
     {
         agent.updateRotation = false; // 회전은 애니메이션과 커스텀 로직으로 제어
+    }
+
+    private void Update()
+    {
+        if (agent.pathPending || !agent.hasPath)
+            return;
+
+        if (agent.remainingDistance <= agent.stoppingDistance * 2)
+        {
+            agent.ResetPath();
+            return;
+        }
+
+        Vector3 dir = agent.desiredVelocity;
+        dir.y = 0f;
+
+        Quaternion targetRot = Quaternion.LookRotation(dir);
+
+        transform.rotation = Quaternion.Slerp(
+            transform.rotation,
+            targetRot,
+            rotationSpeed * Time.deltaTime
+        );
     }
 
     /// <summary>클릭 시 Staff 선택</summary>

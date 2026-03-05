@@ -107,6 +107,7 @@ MonoBehaviour:
   providedResourceType: 1
   amountPerCollect: 10
   collectDuration: 3
+  targetTransform: {fileID: 4611227455721665916}
   placeable:
     PlaceableType: 1
 --- !u!114 &9049550832915679731

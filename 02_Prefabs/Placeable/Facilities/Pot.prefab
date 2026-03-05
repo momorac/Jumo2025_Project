@@ -164,6 +164,7 @@ MonoBehaviour:
   maxWood: 10
   waterPerCook: 1
   woodPerCook: 1
+  targetTransform: {fileID: 7926156309034398864}
   currentWater: 0
   currentWood: 0
 --- !u!114 &3713585594503170871

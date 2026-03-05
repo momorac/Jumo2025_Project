@@ -13,7 +13,10 @@ public abstract class ResourceFacilityBase : MonoBehaviour, IClickable
     [SerializeField] protected float collectDuration = 3f;  // 수집 모션 재생 시간
 
     [Header("Links")]
+    [SerializeField] private Transform targetTransform; // 클릭 시 이동 목표 지점 (예: 자원 위치)
     [SerializeField] protected Placeable placeable;
+
+    public Transform TargetTransform => targetTransform;
 
     public FacilityType FacilityType => facilityType;
     public FacilityResourceType ProvidedResourceType => providedResourceType;

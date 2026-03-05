@@ -22,14 +22,16 @@ public class CollectResourceTask : StaffTaskBase
     protected override List<TaskPhase> BuildPhases() => new()
     {
         new TaskPhase(
-            moveTarget: SourceFacility.transform,
+            moveTarget: SourceFacility.TargetTransform,
             duration: SourceFacility.CollectDuration,
             animationTrigger: SourceFacility.FacilityType == FacilityType.Well? "CollectWater" : "CollectFirewood",
             propId: SourceFacility.FacilityType == FacilityType.Stump ? StaffPropId.Axe : StaffPropId.None,
             onStart: (controller) =>
             {
-                // 회전 설정 (데이터 필드로 표현하기 어려운 커스텀 로직)
+                // 회전 설정 (수집 위치를 바라보도록)
+                controller.StopMoving();
                 Quaternion targetRotation = Quaternion.LookRotation(SourceFacility.transform.position - controller.transform.position);
+                targetRotation *= Quaternion.Euler(0f, -90f, 0f);
                 controller.SetPositionAndRotation(controller.transform.position, targetRotation);
             },
             onExecute: (controller) =>

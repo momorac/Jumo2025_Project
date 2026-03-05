@@ -10,9 +10,13 @@ public interface IClickable
     /// <param name="hitPoint">클릭된 월드 좌표</param>
     void OnClicked(Vector3 hitPoint);
 
+    /// <summary> 실제 이동 대상이 될 Transform </summary>
+    Transform TargetTransform { get; }
+
     /// <summary> 현재 클릭 가능한 상태인지 반환합니다 </summary>
     bool IsClickable { get; }
 
     /// <summary> 클릭 우선순위 (높을수록 우선) / 동일 위치에 여러 IClickable이 있을 때 사용 </summary>
     int ClickPriority { get; }
+
 }
