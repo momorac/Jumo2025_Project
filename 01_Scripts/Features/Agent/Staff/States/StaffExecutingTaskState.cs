@@ -111,7 +111,7 @@ public class StaffExecutingTaskState : IStaffState
 
         // 비주얼 데이터 처리 (Phase가 선언한 데이터를 State가 실행)
         if (currentPhase.PropId != StaffPropId.None)
-            controller.ActivateProp(currentPhase.PropId);
+            controller.EnableProp(currentPhase.PropId);
 
         controller.SetAnimatorBool("IsWorking", true);
 
@@ -134,7 +134,7 @@ public class StaffExecutingTaskState : IStaffState
 
         // 비주얼 정리 (데이터 기반 일괄 처리)
         controller.SetAnimatorBool("IsWorking", false);
-        controller.DeactivateAllProps();
+        controller.DisableAllProps();
 
         if (task.AdvancePhase())
         {

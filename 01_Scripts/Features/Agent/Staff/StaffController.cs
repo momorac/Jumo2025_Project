@@ -75,7 +75,7 @@ public class StaffController : MonoBehaviour
         App.StaffRegistry.Register(staff);
 
         // 초기 Prop 비활성화
-        DeactivateAllProps();
+        DisableAllProps();
     }
 
     private void OnDestroy()
@@ -99,7 +99,8 @@ public class StaffController : MonoBehaviour
         {
             { StaffStateId.Idle, new StaffIdleState(this) },
             { StaffStateId.MovingToTarget, movingState },
-            { StaffStateId.ExecutingTask, new StaffExecutingTaskState(this) }
+            { StaffStateId.ExecutingTask, new StaffExecutingTaskState(this) },
+            { StaffStateId.CarryingResource, new StaffCarryingResourceState(this) }
         };
     }
 
@@ -132,15 +133,23 @@ public class StaffController : MonoBehaviour
     /// <summary>Task 완료 시 ExecutingTaskState가 호출</summary>
     public void OnTaskCompleted()
     {
-        var task = currentTask;
-        if (task != null)
+        IStaffTask completedTask = currentTask;
+
+        if (completedTask != null)
         {
-            App.TaskQueue.CompleteTask(task);
-            App.EventBus.Publish(new TaskCompletedEvent(task, staff));
+            App.TaskQueue.CompleteTask(completedTask);
+            App.EventBus.Publish(new TaskCompletedEvent(completedTask, staff));
         }
 
-        currentTask = null;
-        ChangeState(StaffStateId.Idle);
+        if (completedTask.Type == TaskType.CollectResource && completedTask is CollectResourceTask collectResourceTask)
+        {
+            if (states[StaffStateId.CarryingResource] is StaffCarryingResourceState carryingResourceState)
+            {
+                carryingResourceState.SetResourceType(collectResourceTask.ResourceType);
+            }
+
+            ChangeState(StaffStateId.CarryingResource);
+        }
     }
 
     /// <summary>NavMeshAgent 활성화 설정</summary>
@@ -214,7 +223,7 @@ public class StaffController : MonoBehaviour
     }
 
     /// <summary>모든 Prop 비활성화</summary>
-    public void DeactivateAllProps()
+    public void DisableAllProps()
     {
         foreach (var prop in props)
         {
@@ -223,7 +232,7 @@ public class StaffController : MonoBehaviour
     }
 
     /// <summary>특정 Prop 활성화</summary>
-    public void ActivateProp(StaffPropId propId)
+    public void EnableProp(StaffPropId propId)
     {
         foreach (var prop in props)
         {
