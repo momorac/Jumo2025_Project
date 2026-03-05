@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 /// <summary>
-/// Staff 에이전트
-/// StaffController를 통해 FSM 관리
-/// IClickable 구현으로 수동 선택 지원
+/// Staff 에이전트 — 물리/이동 제어 + 외부 퍼블릭 파사드
+/// NavMeshAgent 등 물리 컴포넌트를 직접 소유
+/// FSM·데이터는 StaffController에 위임
 /// </summary>
 [RequireComponent(typeof(StaffController))]
 public class Staff : MonoBehaviour, IClickable
@@ -11,12 +12,11 @@ public class Staff : MonoBehaviour, IClickable
     [Header("Settings")]
     [SerializeField] private int clickPriority = 5;
 
+    [Header("Components")]
+    [SerializeField] private NavMeshAgent agent;
+
     private StaffController controller;
     internal StaffController Controller => controller;
-
-    // 자원 운반 상태
-    private FacilityResourceType carryingResourceType = FacilityResourceType.None;
-    private int carryingAmount = 0;
 
     // IClickable 구현
     public bool IsClickable => true;
@@ -24,17 +24,21 @@ public class Staff : MonoBehaviour, IClickable
 
     // 상태 접근자
     public bool IsIdle => controller?.IsIdle ?? false;
-    public IStaffTask CurrentTask => controller?.CurrentTask;
-    public bool IsCarrying => carryingResourceType != FacilityResourceType.None;
-    public FacilityResourceType CarryingResourceType => carryingResourceType;
-    public int CarryingAmount => carryingAmount;
 
     private void Awake()
     {
         controller = GetComponent<StaffController>();
+
+        if (agent == null)
+            agent = GetComponent<NavMeshAgent>();
     }
 
-    /// <summary> 클릭 시 Staff 선택</summary>
+    private void Start()
+    {
+        agent.updateRotation = false; // 회전은 애니메이션과 커스텀 로직으로 제어
+    }
+
+    /// <summary>클릭 시 Staff 선택</summary>
     public void OnClicked(Vector3 hitPoint)
     {
         App.StaffRegistry.SelectStaff(this);
@@ -47,33 +51,54 @@ public class Staff : MonoBehaviour, IClickable
         controller?.AssignTask(task);
     }
 
-    /// <summary> 특정 위치로 이동 (StaffController에 위임)</summary>
+    /// <summary>특정 위치로 이동 (StaffController에 위임)</summary>
     public void MoveTo(Vector3 position)
     {
-        controller?.MoveTo(position);
+        controller?.BeginMoveToTarget(position);
     }
 
-    /// <summary>자원을 들기</summary>
-    public void PickUpResource(FacilityResourceType resourceType, int amount)
+    // ── NavMesh 이동 제어 (StaffController가 위임 래퍼를 통해 호출) ──
+
+    /// <summary>NavMesh 목적지 설정</summary>
+    public void SetDestination(Vector3 position)
     {
-        carryingResourceType = resourceType;
-        carryingAmount = amount;
-        GameLogger.Log(LogCategory.Staff, $"{name}: carrying {resourceType} x{amount}");
-        // TODO: 운반 비주얼 활성화
+        if (agent == null || !agent.enabled)
+            return;
+
+        agent.SetDestination(position);
     }
 
-    /// <summary>들고 있는 자원 내려놓기 (조리 시설에 전달 후 호출)</summary>
-    public void DropResource()
+    /// <summary>이동 정지</summary>
+    public void StopMoving()
     {
-        GameLogger.Log(LogCategory.Staff, $"{name}: delivered {carryingResourceType} x{carryingAmount}");
-        carryingResourceType = FacilityResourceType.None;
-        carryingAmount = 0;
-        // TODO: 운반 비주얼 비활성화
+        if (agent != null && agent.enabled)
+            agent.ResetPath();
     }
 
-    // ── 비주얼 파사드 (Task Phase 커스텀 로직에서 사용) ──
+    /// <summary>목적지 도착 여부 확인</summary>
+    public bool HasReachedDestination()
+    {
+        if (agent == null || !agent.enabled)
+            return true;
+
+        return !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance;
+    }
+
+    /// <summary>NavMeshAgent 활성화 설정</summary>
+    public void EnableNavMeshAgent(bool enable)
+    {
+        if (agent == null) return;
+
+        if (agent.enabled)
+            agent.ResetPath();
+
+        agent.enabled = enable;
+    }
+
 
     /// <summary>위치 및 회전 설정</summary>
     public void SetPositionAndRotation(Vector3 position, Quaternion rotation)
-        => controller.SetCharacterPositionAndRotation(position, rotation);
+    {
+        transform.SetPositionAndRotation(position, rotation);
+    }
 }

@@ -23,9 +23,9 @@ public class CleanTableTask : StaffTaskBase
             moveTarget: tablePosition,
             duration: 3f,
             animationTrigger: "CleanTable",
-            onExecute: staff =>
+            onExecute: controller =>
             {
-                GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} cleaning table");
+                GameLogger.LogVerbose(LogCategory.Task, $"{controller.name} cleaning table");
             }
         )
     };

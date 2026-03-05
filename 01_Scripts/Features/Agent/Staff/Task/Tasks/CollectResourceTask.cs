@@ -26,19 +26,17 @@ public class CollectResourceTask : StaffTaskBase
             duration: SourceFacility.CollectDuration,
             animationTrigger: SourceFacility.FacilityType == FacilityType.Well? "CollectWater" : "CollectFirewood",
             propId: SourceFacility.FacilityType == FacilityType.Stump ? StaffPropId.Axe : StaffPropId.None,
-            onStart: (staff) =>
+            onStart: (controller) =>
             {
                 // 회전 설정 (데이터 필드로 표현하기 어려운 커스텀 로직)
-                
-                Quaternion targetRotation = Quaternion.LookRotation(SourceFacility.transform.position - staff.transform.position);
-                targetRotation *= Quaternion.Euler(0, 120, 0);
-                staff.SetPositionAndRotation(staff.transform.position, targetRotation);
+                Quaternion targetRotation = Quaternion.LookRotation(SourceFacility.transform.position - controller.transform.position);
+                controller.SetPositionAndRotation(controller.transform.position, targetRotation);
             },
-            onExecute: (staff) =>
+            onExecute: (controller) =>
             {
                 int amount = SourceFacility.CollectResource();
-                staff.PickUpResource(ResourceType, amount);
-                GameLogger.Log(LogCategory.Task, $"{staff.name}: {ResourceType} x{amount} collected");
+                controller.PickUpResource(ResourceType, amount);
+                GameLogger.Log(LogCategory.Task, $"{controller.name}: {ResourceType} x{amount} collected");
             }
         )
     };

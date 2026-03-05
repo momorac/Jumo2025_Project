@@ -29,9 +29,9 @@ public class CheckoutTask : StaffTaskBase
             moveTarget: position,
             duration: 2f,
             animationTrigger: "Checkout",
-            onExecute: staff =>
+            onExecute: controller =>
             {
-                GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} processing checkout");
+                GameLogger.LogVerbose(LogCategory.Task, $"{controller.name} processing checkout");
                 if (order != null)
                 {
                     App.EconomyService.AddIncome(order.Price);

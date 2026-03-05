@@ -29,9 +29,9 @@ public class ServeFoodTask : StaffTaskBase
             moveTarget: seatPosition,
             duration: 2f,
             animationTrigger: "ServeFood",
-            onExecute: staff =>
+            onExecute: controller =>
             {
-                GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} serving food");
+                GameLogger.LogVerbose(LogCategory.Task, $"{controller.name} serving food");
                 App.EventBus.Publish(new OrderServedEvent(customer, order));
             }
         )

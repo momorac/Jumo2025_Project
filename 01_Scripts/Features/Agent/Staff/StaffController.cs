@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public enum StaffPropId
 {
@@ -26,7 +25,6 @@ public class StaffProp
 public class StaffController : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Animator animator;
 
     [Header("Props")]
@@ -41,23 +39,26 @@ public class StaffController : MonoBehaviour
     private Staff staff;
     private IStaffTask currentTask;
 
+    // 자원 운반 상태
+    private FacilityResourceType carryingResourceType = FacilityResourceType.None;
+    private int carryingAmount = 0;
+
     // MovingState 참조 (목표 설정용)
     private StaffMovingToTargetState movingState;
 
-    public Staff Staff => staff;
     public IStaffTask CurrentTask => currentTask;
     public StaffStateId CurrentStateId => currentState?.Id ?? StaffStateId.Idle;
     public bool IsIdle => CurrentStateId == StaffStateId.Idle;
+
+    // 자원 운반 상태 관련
+    public bool IsCarrying => carryingResourceType != FacilityResourceType.None;
+    public FacilityResourceType CarryingResourceType => carryingResourceType;
+    public int CarryingAmount => carryingAmount;
 
     private void Awake()
     {
         staff = GetComponent<Staff>();
 
-        if (agent == null)
-            agent = GetComponent<NavMeshAgent>();
-
-        if (animator == null)
-            animator = GetComponent<Animator>();
 
         InitializeStates();
         ChangeState(StaffStateId.Idle);
@@ -149,56 +150,47 @@ public class StaffController : MonoBehaviour
         }
     }
 
-    /// <summary>NavMeshAgent 활성화 설정</summary>
-    public void EnableNavMeshAgent(bool enable)
-    {
-        if (agent != null)
-        {
-            if (agent.enabled)
-            {
-                agent.ResetPath();
-            }
-            agent.enabled = enable;
-        }
-    }
-
-    /// <summary> 특정 위치로 이동 (작업 없음)</summary>
-    public void MoveTo(Vector3 position)
+    /// <summary>특정 위치로 이동 (작업 없음)</summary>
+    internal void BeginMoveToTarget(Vector3 position)
     {
         movingState.SetTarget(position);
         ChangeState(StaffStateId.MovingToTarget);
     }
 
+    // ── NavMesh 위임 래퍼 (상태 클래스는 controller만 바라봄) ──
+
+    /// <summary>위치 및 회전 설정</summary>
+    public void SetPositionAndRotation(Vector3 position, Quaternion rotation)
+        => transform.SetPositionAndRotation(position, rotation);
+
     /// <summary>NavMesh 목적지 설정</summary>
-    public void SetDestination(Vector3 position)
-    {
-        agent.updateRotation = true;
-        agent.SetDestination(position);
-    }
+    public void SetDestination(Vector3 position) => staff.SetDestination(position);
 
     /// <summary>이동 정지</summary>
-    public void StopMoving()
-    {
-        if (agent != null && agent.enabled)
-        {
-            agent.ResetPath();
-        }
-    }
+    public void StopMoving() => staff.StopMoving();
 
     /// <summary>목적지 도착 여부 확인</summary>
-    public bool HasReachedDestination()
-    {
-        if (agent == null || !agent.enabled)
-            return true;
+    public bool HasReachedDestination() => staff.HasReachedDestination();
 
-        return !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance;
+    /// <summary>NavMeshAgent 활성화 설정</summary>
+    public void EnableNavMeshAgent(bool enable) => staff.EnableNavMeshAgent(enable);
+
+    /// <summary>자원을 들기</summary>
+    public void PickUpResource(FacilityResourceType resourceType, int amount)
+    {
+        carryingResourceType = resourceType;
+        carryingAmount = amount;
+        GameLogger.Log(LogCategory.Staff, $"{name}: carrying {resourceType} x{amount}");
+        // TODO: 운반 비주얼 활성화
     }
 
-
-    /// <summary>캐릭터 위치 및 방향 설정</summary>
-    public void SetCharacterPositionAndRotation(Vector3 vector3, Quaternion rotation)
+    /// <summary>들고 있는 자원 내려놓기 (조리 시설에 전달 후 호출)</summary>
+    public void DropResource()
     {
-        transform.SetPositionAndRotation(vector3, rotation);
+        GameLogger.Log(LogCategory.Staff, $"{name}: delivered {carryingResourceType} x{carryingAmount}");
+        carryingResourceType = FacilityResourceType.None;
+        carryingAmount = 0;
+        // TODO: 운반 비주얼 비활성화
     }
 
     /// <summary>애니메이션 파라미터 설정</summary>

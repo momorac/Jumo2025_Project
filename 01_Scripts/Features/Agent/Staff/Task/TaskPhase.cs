@@ -28,22 +28,22 @@ public class TaskPhase
     // ── 비즈니스 로직 콜백 ──
 
     /// <summary>Phase 실행 시작 시 호출 (커스텀 로직이 필요한 경우만)</summary>
-    public System.Action<Staff> OnStart;
+    public System.Action<StaffController> OnStart;
 
     /// <summary>Phase 실행 로직. Duration 경과 후 호출</summary>
-    public System.Action<Staff> OnExecute;
+    public System.Action<StaffController> OnExecute;
 
     /// <summary>Phase 종료 직전 호출 (다음 Phase 또는 Task 완료로 넘어가기 전)</summary>
-    public System.Action<Staff> OnEnd;
+    public System.Action<StaffController> OnEnd;
 
     public TaskPhase(
         Transform moveTarget,
         float duration,
         string animationTrigger = null,
         StaffPropId propId = StaffPropId.None,
-        System.Action<Staff> onStart = null,
-        System.Action<Staff> onExecute = null,
-        System.Action<Staff> onEnd = null)
+        System.Action<StaffController> onStart = null,
+        System.Action<StaffController> onExecute = null,
+        System.Action<StaffController> onEnd = null)
     {
         MoveTarget = moveTarget;
         Duration = duration;

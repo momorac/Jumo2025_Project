@@ -122,14 +122,14 @@ public class StaffExecutingTaskState : IStaffState
             $"{controller.name}: executing phase {task.CurrentPhaseIndex + 1} ({executionTime}s)");
 
         // 커스텀 로직 콜백 (필요한 경우만)
-        currentPhase.OnStart?.Invoke(controller.Staff);
+        currentPhase.OnStart?.Invoke(controller);
     }
 
     /// <summary>현재 Phase 실행 완료. 다음 Phase로 진행하거나 Task 완료</summary>
     private void CompleteCurrentPhase()
     {
-        currentPhase.OnExecute?.Invoke(controller.Staff);
-        currentPhase.OnEnd?.Invoke(controller.Staff);
+        currentPhase.OnExecute?.Invoke(controller);
+        currentPhase.OnEnd?.Invoke(controller);
         phaseExecuted = true;
 
         // 비주얼 정리 (데이터 기반 일괄 처리)

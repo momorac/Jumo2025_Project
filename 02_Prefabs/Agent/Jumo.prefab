@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2090550505654121431}
   - component: {fileID: 8673768882740894397}
-  - component: {fileID: 471721148007969347}
   - component: {fileID: 7548863657591257451}
+  - component: {fileID: 471721148007969347}
   - component: {fileID: 2772027616876920637}
   - component: {fileID: 2531186538511378098}
   m_Layer: 0
@@ -49,9 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c88da2bb4b45cf4da9c5f3a41434fe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StaffController
-  agent: {fileID: 2772027616876920637}
   animator: {fileID: 2119491669122043803}
-  stoppingDistance: 0.2
   props:
   - Id: 3
     GameObject: {fileID: 2388547378251091656}
@@ -59,18 +57,6 @@ MonoBehaviour:
     GameObject: {fileID: 1018388167120053454}
   - Id: 5
     GameObject: {fileID: 1205826276529126208}
---- !u!114 &471721148007969347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 871284014466754535}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0883ea8f795ecea4992a219961a96762, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Jumo
 --- !u!114 &7548863657591257451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,6 +70,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Staff
   clickPriority: 5
+  agent: {fileID: 2772027616876920637}
+--- !u!114 &471721148007969347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871284014466754535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0883ea8f795ecea4992a219961a96762, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Jumo
 --- !u!195 &2772027616876920637
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -105,7 +104,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 3
+  m_ObstacleAvoidanceType: 2
 --- !u!136 &2531186538511378098
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -208,6 +207,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 6cc1a525c97ec0a488756590842c6f46, type: 2}
+    - target: {fileID: 2311838571483922270, guid: fbe2dfcaabb7315489550647a3835968, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7084512060903732349, guid: fbe2dfcaabb7315489550647a3835968, type: 3}
       propertyPath: serializeData2.initData.localHash
       value: 27286

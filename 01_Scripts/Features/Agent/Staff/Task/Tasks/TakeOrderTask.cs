@@ -29,9 +29,9 @@ public class TakeOrderTask : StaffTaskBase
             moveTarget: seatPosition,
             duration: 2f,
             animationTrigger: "TakeOrder",
-            onExecute: staff =>
+            onExecute: controller =>
             {
-                GameLogger.LogVerbose(LogCategory.Task, $"{staff.name} taking order");
+                GameLogger.LogVerbose(LogCategory.Task, $"{controller.name} taking order");
                 App.EventBus.Publish(new OrderTakenEvent(customer, order));
             }
         )
