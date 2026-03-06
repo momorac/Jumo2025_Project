@@ -105,6 +105,17 @@ public class StaffController : MonoBehaviour
         return currentState;
     }
 
+    public void ForceChangeToIdle()
+    {
+        currentTask = null;
+        ChangeState(StaffStateId.Idle);
+    }
+
+    public bool IsSameStaff(Staff staff)
+    {
+        return this.staff == staff;
+    }
+
     public void AssignTask(IStaffTask task)
     {
         currentTask = task;

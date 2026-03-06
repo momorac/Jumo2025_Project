@@ -33,6 +33,8 @@ public class StaffCarryingResourceState : IStaffState
 
     public void Enter()
     {
+        App.EventBus.Subscribe<StaffSelectedEvent>(OnStaffSelected);
+
         controller.StopMoving();
         controller.SetAnimatorBool("IsCarrying", true);
 
@@ -64,5 +66,15 @@ public class StaffCarryingResourceState : IStaffState
 
         controller.SetAnimatorBool("IsCarrying", false);
         controller.DisableAllProps();
+    }
+
+    private void OnStaffSelected(StaffSelectedEvent e)
+    {
+        if (controller.IsSameStaff(e.Staff))
+        {
+            // 자원 운반 상태에서 선택된 경우, 강제로 Idle상태로 전환 (선택 시 작업 취소)
+            controller.ForceChangeToIdle();
+            GameLogger.LogVerbose(LogCategory.Staff, $"{controller.name}: was selected while carrying resource, forcing idle state");
+        }
     }
 }
