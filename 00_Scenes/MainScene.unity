@@ -430,10 +430,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Jumo
       objectReference: {fileID: 0}
-    - target: {fileID: 871284014466754535, guid: 2757a61b9b355ad41bbacce1fedefc92, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2090550505654121431, guid: 2757a61b9b355ad41bbacce1fedefc92, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -633,9 +629,9 @@ MonoBehaviour:
   SubcameraExcludedLayers:
     serializedVersion: 2
     m_Bits: 34
-  FixedTargetResolution: 640
+  FixedTargetResolution: 400
   ClampCameraOrthoSize: 1
-  Mode: 0
+  Mode: 2
   PixelSize: 0.05
   overrideUsePixelExpansion: 0
   UsePixelExpansion: 1
