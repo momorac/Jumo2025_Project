@@ -6,7 +6,7 @@ public class CauldronFacility : CookingFacilityBase
 
     private void Awake()
     {
-        facilityType = FacilityType.Cauldron;
+        facilityType = FacilityType.Agungi;
     }
 
     public override void OnClicked(Vector3 hitPoint)

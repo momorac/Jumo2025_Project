@@ -19,8 +19,8 @@ public enum FacilityType
     Table = 2,
 
     // === 조리 시설 (100번대) ===
-    Pot = 100,           // 솥 - 밥, 국
-    Cauldron = 101,      // 가마솥 - 반찬, 국밥/찌개
+    Sot = 100,           // 솥 - 밥, 국
+    Agungi = 101,      // 가마솥 - 반찬, 국밥/찌개
     Brazier = 102,       // 화로 - 전, 요리
     JangdokJar = 103,    // 장독대 - 김치
 

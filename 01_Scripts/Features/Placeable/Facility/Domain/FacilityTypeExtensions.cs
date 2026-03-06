@@ -6,8 +6,8 @@ public static class FacilityTypeExtensions
     // FacilityType → CookingFacilityType
     private static readonly Dictionary<FacilityType, CookingFacilityType> ToCookingMap = new()
     {
-        { FacilityType.Pot, CookingFacilityType.Pot },
-        { FacilityType.Cauldron, CookingFacilityType.Cauldron },
+        { FacilityType.Sot, CookingFacilityType.Pot },
+        { FacilityType.Agungi, CookingFacilityType.Cauldron },
         { FacilityType.Brazier, CookingFacilityType.Brazier },
         { FacilityType.JangdokJar, CookingFacilityType.JangdokJar },
     };
@@ -15,8 +15,8 @@ public static class FacilityTypeExtensions
     // CookingFacilityType → FacilityType
     private static readonly Dictionary<CookingFacilityType, FacilityType> ToFacilityMap = new()
     {
-        { CookingFacilityType.Pot, FacilityType.Pot },
-        { CookingFacilityType.Cauldron, FacilityType.Cauldron },
+        { CookingFacilityType.Pot, FacilityType.Sot },
+        { CookingFacilityType.Cauldron, FacilityType.Agungi },
         { CookingFacilityType.Brazier, FacilityType.Brazier },
         { CookingFacilityType.JangdokJar, FacilityType.JangdokJar },
     };

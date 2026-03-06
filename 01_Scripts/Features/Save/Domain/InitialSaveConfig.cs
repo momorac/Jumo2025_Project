@@ -20,7 +20,7 @@ public class InitialSaveConfig : ScriptableObject
     {
         FacilityType.Table,
         FacilityType.JumoHouse,
-        FacilityType.Pot,
+        FacilityType.Sot,
     };
 
     [Header("Unlocked Tiles")]

@@ -5,7 +5,7 @@ public class PotFacility : CookingFacilityBase
 {
     private void Awake()
     {
-        facilityType = FacilityType.Pot;
+        facilityType = FacilityType.Sot;
     }
 
     public override void OnClicked(Vector3 hitPoint)
