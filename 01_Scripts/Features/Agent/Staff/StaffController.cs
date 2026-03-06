@@ -43,9 +43,6 @@ public class StaffController : MonoBehaviour
     private FacilityResourceType carryingResourceType = FacilityResourceType.None;
     private int carryingAmount = 0;
 
-    // MovingState 참조 (목표 설정용)
-    private StaffMovingToTargetState movingState;
-
     public IStaffTask CurrentTask => currentTask;
     public StaffStateId CurrentStateId => currentState?.Id ?? StaffStateId.Idle;
     public bool IsIdle => CurrentStateId == StaffStateId.Idle;
@@ -91,28 +88,28 @@ public class StaffController : MonoBehaviour
 
     private void InitializeStates()
     {
-        movingState = new StaffMovingToTargetState(this);
-
         states = new Dictionary<StaffStateId, IStaffState>
         {
             { StaffStateId.Idle, new StaffIdleState(this) },
-            { StaffStateId.MovingToTarget, movingState },
+            { StaffStateId.MovingToTarget, new StaffMovingToTargetState(this) },
             { StaffStateId.ExecutingTask, new StaffExecutingTaskState(this) },
             { StaffStateId.CarryingResource, new StaffCarryingResourceState(this) }
         };
     }
 
-    public void ChangeState(StaffStateId newStateId)
+    public IStaffState ChangeState(StaffStateId newStateId)
     {
         if (!states.ContainsKey(newStateId))
         {
             GameLogger.LogWarning(LogCategory.Staff, $"State {newStateId} not found");
-            return;
+            return null;
         }
 
         currentState?.Exit();
         currentState = states[newStateId];
         currentState.Enter();
+
+        return currentState;
     }
 
     public void AssignTask(IStaffTask task)
@@ -153,7 +150,10 @@ public class StaffController : MonoBehaviour
     /// <summary>특정 위치로 이동 (작업 없음)</summary>
     internal void BeginMoveToTarget(Vector3 position)
     {
-        movingState.SetTarget(position);
+        if (states[StaffStateId.MovingToTarget] is StaffMovingToTargetState movingState)
+        {
+            movingState.SetTarget(position);
+        }
         ChangeState(StaffStateId.MovingToTarget);
     }
 
