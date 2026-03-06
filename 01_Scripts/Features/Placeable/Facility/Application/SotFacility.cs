@@ -1,7 +1,7 @@
 using UnityEngine;
 
-/// <summary> 솥 - 밥, 국 조리</summary>
-public class PotFacility : CookingFacilityBase
+/// <summary> 솥 or </summary>
+public class SotFacility : CookingFacilityBase
 {
     private void Awake()
     {
@@ -10,7 +10,7 @@ public class PotFacility : CookingFacilityBase
 
     public override void OnClicked(Vector3 hitPoint)
     {
-        GameLogger.Log(LogCategory.Input, $"Pot clicked (CanCook: {CanCook})");
+        GameLogger.Log(LogCategory.Input, $"Sot clicked (CanCook: {CanCook})");
         // TODO: 조리 메뉴 UI 표시
     }
 }

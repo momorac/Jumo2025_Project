@@ -1,0 +1,155 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6731427639401032758
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 776256900232011852}
+  - component: {fileID: 7022727205892380058}
+  - component: {fileID: 3713585594503170871}
+  - component: {fileID: 8396762559291033428}
+  m_Layer: 0
+  m_Name: Agungi
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &776256900232011852
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6731427639401032758}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6842744418942839714}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7022727205892380058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6731427639401032758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36213bdd16f3e6644b113f62659efd67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AgungiFacility
+  facilityType: 101
+  maxWater: 10
+  maxWood: 10
+  waterPerCook: 1
+  woodPerCook: 1
+  targetTransform: {fileID: 6842744418942839714}
+  currentWater: 0
+  currentWood: 0
+--- !u!114 &3713585594503170871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6731427639401032758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc571e74def0ecd44aa082876c8f31a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Placeable
+  type:
+    PlaceableType: 1
+  renderers:
+  - {fileID: 0}
+  - {fileID: 0}
+  cellSize:
+    x: 3
+    z: 2
+--- !u!208 &8396762559291033428
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6731427639401032758}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.095, y: 0.5, z: 0.4}
+  m_MoveThreshold: 0
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 1.5, y: 0, z: 1}
+  m_TimeToStationary: 0
+--- !u!1001 &5804786350629184464
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 776256900232011852}
+    m_Modifications:
+    - target: {fileID: 374679519680156360, guid: 34cd54d64a907b14690cbb1979a838bc, type: 3}
+      propertyPath: m_Name
+      value: Agungi_Model
+      objectReference: {fileID: 0}
+    - target: {fileID: 1042849005271648370, guid: 34cd54d64a907b14690cbb1979a838bc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1042849005271648370, guid: 34cd54d64a907b14690cbb1979a838bc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1042849005271648370, guid: 34cd54d64a907b14690cbb1979a838bc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1042849005271648370, guid: 34cd54d64a907b14690cbb1979a838bc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1042849005271648370, guid: 34cd54d64a907b14690cbb1979a838bc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.00000003774895
+      objectReference: {fileID: 0}
+    - target: {fileID: 1042849005271648370, guid: 34cd54d64a907b14690cbb1979a838bc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1042849005271648370, guid: 34cd54d64a907b14690cbb1979a838bc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1042849005271648370, guid: 34cd54d64a907b14690cbb1979a838bc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1042849005271648370, guid: 34cd54d64a907b14690cbb1979a838bc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1042849005271648370, guid: 34cd54d64a907b14690cbb1979a838bc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 34cd54d64a907b14690cbb1979a838bc, type: 3}
+--- !u!4 &6842744418942839714 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1042849005271648370, guid: 34cd54d64a907b14690cbb1979a838bc, type: 3}
+  m_PrefabInstance: {fileID: 5804786350629184464}
+  m_PrefabAsset: {fileID: 0}

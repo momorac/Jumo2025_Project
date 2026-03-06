@@ -38,5 +38,10 @@ MonoBehaviour:
       gameObjectPrefab: {fileID: 9135481718149081120, guid: be0c6ab4adf9d964797e0b5edc453475, type: 3}
       UiIconImage: {fileID: 21300000, guid: 44a054df1702e39458b7072b08d0f212, type: 3}
       displayName: "\uC6B0\uBB3C"
+  - type: 101
+    component:
+      gameObjectPrefab: {fileID: 6731427639401032758, guid: a867fc77f91d4b148841f667b7f66215, type: 3}
+      UiIconImage: {fileID: 21300000, guid: 44a054df1702e39458b7072b08d0f212, type: 3}
+      displayName: "\uC544\uAD81\uC774"
   tileEntries: []
   decorationEntries: []

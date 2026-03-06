@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: InitialSaveConfig
   m_EditorClassIdentifier: Assembly-CSharp::InitialSaveConfig
   startingGold: 100
-  unlockedFacilities: 020000000100000064000000c8000000c9000000
+  unlockedFacilities: 0100000002000000c8000000c90000006400000065000000
   unlockedTiles: 
   unlockedDecorations: 
   unlockedIngredients: 6700000093010000
