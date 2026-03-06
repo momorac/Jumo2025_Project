@@ -30,26 +30,23 @@ public class StaffController : MonoBehaviour
     [Header("Props")]
     [SerializeField] private List<StaffProp> props;
 
+    private Staff staff;
 
     // FSM
     private Dictionary<StaffStateId, IStaffState> states;
     private IStaffState currentState;
 
-    // 참조
-    private Staff staff;
+    private StaffMovingToTargetState movingState = new StaffMovingToTargetState(null);
+    public bool IsIdle => currentState?.Id == StaffStateId.Idle;
+
+    // Task 관련
     private IStaffTask currentTask;
-
-    // 자원 운반 상태
-    private FacilityResourceType carryingResourceType = FacilityResourceType.None;
-    private int carryingAmount = 0;
-
     public IStaffTask CurrentTask => currentTask;
-    public StaffStateId CurrentStateId => currentState?.Id ?? StaffStateId.Idle;
-    public bool IsIdle => CurrentStateId == StaffStateId.Idle;
 
     // 자원 운반 상태 관련
-    public bool IsCarrying => carryingResourceType != FacilityResourceType.None;
+    private FacilityResourceType carryingResourceType = FacilityResourceType.None;
     public FacilityResourceType CarryingResourceType => carryingResourceType;
+    private int carryingAmount = 0;
     public int CarryingAmount => carryingAmount;
 
     private void Awake()
@@ -91,7 +88,7 @@ public class StaffController : MonoBehaviour
         states = new Dictionary<StaffStateId, IStaffState>
         {
             { StaffStateId.Idle, new StaffIdleState(this) },
-            { StaffStateId.MovingToTarget, new StaffMovingToTargetState(this) },
+            { StaffStateId.MovingToTarget, movingState },
             { StaffStateId.ExecutingTask, new StaffExecutingTaskState(this) },
             { StaffStateId.CarryingResource, new StaffCarryingResourceState(this) }
         };
@@ -148,17 +145,20 @@ public class StaffController : MonoBehaviour
     }
 
     /// <summary>특정 위치로 이동 (작업 없음)</summary>
-    internal void BeginMoveToTarget(Vector3 position)
+    internal void BeginMoveTo(Vector3 position)
     {
-        if (states[StaffStateId.MovingToTarget] is StaffMovingToTargetState movingState)
+        if (IsIdle)
         {
-            movingState.SetTarget(position);
+            movingState.SetDestination(position);
+            ChangeState(StaffStateId.MovingToTarget);
         }
-        ChangeState(StaffStateId.MovingToTarget);
+        else if (currentState is StaffCarryingResourceState carryingResourceState)
+        {
+            carryingResourceState.MoveTo(position);
+        }
     }
 
     // ── NavMesh 위임 래퍼 (상태 클래스는 controller만 바라봄) ──
-
     /// <summary>위치 및 회전 설정</summary>
     public void SetPositionAndRotation(Vector3 position, Quaternion rotation)
         => transform.SetPositionAndRotation(position, rotation);

@@ -17,7 +17,7 @@ public class StaffMovingToTargetState : IStaffState
     }
 
     /// <summary>이동 목표 설정</summary>
-    public void SetTarget(Vector3 position)
+    public void SetDestination(Vector3 position)
     {
         targetPosition = position;
     }

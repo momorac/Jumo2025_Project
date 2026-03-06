@@ -8,10 +8,9 @@ using UnityEngine;
 /// </summary>
 public class StaffCarryingResourceState : IStaffState
 {
-    public StaffStateId Id => StaffStateId.CarryingResource;
-
     private readonly StaffController controller;
 
+    public StaffStateId Id => StaffStateId.CarryingResource;
     private FacilityResourceType resourceType;
 
     public StaffCarryingResourceState(StaffController controller)
@@ -24,6 +23,11 @@ public class StaffCarryingResourceState : IStaffState
         resourceType = type;
     }
 
+    public void MoveTo(Vector3 targetPosition)
+    {
+        controller.SetAnimatorBool("IsWalking", true);
+        controller.SetDestination(targetPosition);
+    }
 
     public void Enter()
     {
@@ -44,6 +48,10 @@ public class StaffCarryingResourceState : IStaffState
 
     public void Tick(float deltaTime)
     {
+        if (controller.HasReachedDestination())
+        {
+            controller.SetAnimatorBool("IsWalking", false);
+        }
     }
 
     public void Exit()

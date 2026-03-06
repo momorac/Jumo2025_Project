@@ -80,7 +80,7 @@ public class Staff : MonoBehaviour, IClickable
     /// <summary>특정 위치로 이동 (StaffController에 위임)</summary>
     public void MoveTo(Vector3 position)
     {
-        controller?.BeginMoveToTarget(position);
+        controller?.BeginMoveTo(position);
     }
 
     // ── NavMesh 이동 제어 (StaffController가 위임 래퍼를 통해 호출) ──
