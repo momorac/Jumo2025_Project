@@ -1492,16 +1492,16 @@ MonoBehaviour:
             transformArray: []
         renderMeshList: []
   gizmoSerializeData:
-    always: 1
+    always: 0
     clothDebugSettings:
       enable: 1
       ztest: 0
       position: 0
       axis: 0
-      shape: 1
+      shape: 0
       baseLine: 0
       depth: 0
-      collider: 1
+      collider: 0
       animatedPosition: 0
       animatedAxis: 0
       animatedShape: 0
