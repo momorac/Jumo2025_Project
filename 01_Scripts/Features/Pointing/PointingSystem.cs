@@ -13,27 +13,10 @@ public class PointingSystem : MonoBehaviour
     [SerializeField] private float rayMaxDistance = 100f;
     [SerializeField] private LayerMask groundMask;
 
-    private Staff selectedStaff;
-    private bool isStaffSelected;
-
     private void Awake()
     {
         if (mainCamera == null)
             mainCamera = Camera.main;
-    }
-
-    private void Start()
-    {
-        // Staff 선택 이벤트 구독
-        App.EventBus.Subscribe<StaffSelectedEvent>(OnStaffSelected);
-    }
-
-    private void OnDestroy()
-    {
-        if (App.EventBus != null)
-        {
-            App.EventBus.Unsubscribe<StaffSelectedEvent>(OnStaffSelected);
-        }
     }
 
     private void Update()
@@ -73,32 +56,8 @@ public class PointingSystem : MonoBehaviour
                 if (((1 << hit.collider.gameObject.layer) & groundMask) != 0)
                 {
                     App.EventBus.Publish(new DestinationClickedEvent(hit.point, null));
-                    ClearStaffSelection();
                 }
             }
         }
     }
-
-    private void OnStaffSelected(StaffSelectedEvent evt)
-    {
-        selectedStaff = evt.Staff;
-        isStaffSelected = true;
-        GameLogger.Log(LogCategory.Input, $"Staff selected: {evt.Staff.name}");
-    }
-
-    private void ClearStaffSelection()
-    {
-        if (isStaffSelected)
-        {
-            selectedStaff = null;
-            isStaffSelected = false;
-            GameLogger.LogVerbose(LogCategory.Input, "Staff selection cleared");
-        }
-    }
-
-    /// <summary>현재 선택된 Staff 반환 </summary>
-    public Staff GetSelectedStaff() => selectedStaff;
-
-    /// <summary> Staff가 선택된 상태인지 반환 </summary>
-    public bool IsStaffSelected() => isStaffSelected;
 }
