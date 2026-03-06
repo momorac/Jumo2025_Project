@@ -165,7 +165,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: c6804ea773f12cf4abf9400f08627b6b, type: 2}
     - target: {fileID: 919132149155446097, guid: 0235418f243c5e34f9283b8640cbb431, type: 3}
       propertyPath: m_Name
-      value: DM_Firewood_Meshy
+      value: SM_Firewood_Meshy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
