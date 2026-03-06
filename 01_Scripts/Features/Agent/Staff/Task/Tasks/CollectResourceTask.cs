@@ -11,12 +11,15 @@ public class CollectResourceTask : StaffTaskBase
 
     public ResourceFacilityBase SourceFacility { get; }
     public FacilityResourceType ResourceType { get; }
+    private int amount;
+    public int Amount => amount;
 
-    public CollectResourceTask(ResourceFacilityBase facility, float collectDuration, int priority = 7)
+    public CollectResourceTask(ResourceFacilityBase facility, int priority = 7)
         : base(priority)
     {
         SourceFacility = facility;
         ResourceType = facility.ProvidedResourceType;
+        amount = 0;
     }
 
     protected override List<TaskPhase> BuildPhases() => new()
@@ -36,9 +39,7 @@ public class CollectResourceTask : StaffTaskBase
             },
             onExecute: (controller) =>
             {
-                int amount = SourceFacility.CollectResource();
-                controller.PickUpResource(ResourceType, amount);
-                GameLogger.Log(LogCategory.Task, $"{controller.name}: {ResourceType} x{amount} collected");
+                amount = SourceFacility.CollectResource();
             }
         )
     };

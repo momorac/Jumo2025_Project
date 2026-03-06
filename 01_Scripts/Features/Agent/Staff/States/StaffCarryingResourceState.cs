@@ -8,19 +8,21 @@ using UnityEngine;
 /// </summary>
 public class StaffCarryingResourceState : IStaffState
 {
+    public StaffStateId Id => StaffStateId.CarryingResource;
     private readonly StaffController controller;
 
-    public StaffStateId Id => StaffStateId.CarryingResource;
     private FacilityResourceType resourceType;
+    private int amount;
 
     public StaffCarryingResourceState(StaffController controller)
     {
         this.controller = controller;
     }
 
-    public void SetResourceType(FacilityResourceType type)
+    public void SetResourceType(FacilityResourceType type, int amount)
     {
         resourceType = type;
+        this.amount = amount;
     }
 
     public void MoveTo(Vector3 targetPosition)
@@ -43,7 +45,7 @@ public class StaffCarryingResourceState : IStaffState
             controller.EnableProp(StaffPropId.Firewood);
         }
 
-        GameLogger.LogVerbose(LogCategory.Staff, $"{controller.name}: entered CarryingResourceState");
+        GameLogger.LogVerbose(LogCategory.Staff, $"{controller.name}: entered CarryingResourceState with {resourceType} x{amount}");
     }
 
     public void Tick(float deltaTime)
@@ -57,6 +59,9 @@ public class StaffCarryingResourceState : IStaffState
     public void Exit()
     {
         // 정리 작업
+        resourceType = FacilityResourceType.None;
+        amount = 0;
+
         controller.SetAnimatorBool("IsCarrying", false);
         controller.DisableAllProps();
     }

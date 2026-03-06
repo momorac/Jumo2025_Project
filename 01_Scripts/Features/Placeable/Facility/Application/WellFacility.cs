@@ -21,7 +21,7 @@ public class WellFacility : ResourceFacilityBase
             return;
         }
 
-        var task = new CollectResourceTask(this, collectDuration);
+        var task = new CollectResourceTask(this);
         App.TaskAssigner.AssignTaskToStaff(task, staff);
     }
 

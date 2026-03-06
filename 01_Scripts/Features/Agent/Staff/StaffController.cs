@@ -36,18 +36,12 @@ public class StaffController : MonoBehaviour
     private Dictionary<StaffStateId, IStaffState> states;
     private IStaffState currentState;
 
-    private StaffMovingToTargetState movingState = new StaffMovingToTargetState(null);
+    private StaffMovingToTargetState movingState;
     public bool IsIdle => currentState?.Id == StaffStateId.Idle;
 
     // Task 관련
     private IStaffTask currentTask;
     public IStaffTask CurrentTask => currentTask;
-
-    // 자원 운반 상태 관련
-    private FacilityResourceType carryingResourceType = FacilityResourceType.None;
-    public FacilityResourceType CarryingResourceType => carryingResourceType;
-    private int carryingAmount = 0;
-    public int CarryingAmount => carryingAmount;
 
     private void Awake()
     {
@@ -85,6 +79,8 @@ public class StaffController : MonoBehaviour
 
     private void InitializeStates()
     {
+        movingState = new StaffMovingToTargetState(this);
+
         states = new Dictionary<StaffStateId, IStaffState>
         {
             { StaffStateId.Idle, new StaffIdleState(this) },
@@ -94,7 +90,7 @@ public class StaffController : MonoBehaviour
         };
     }
 
-    public IStaffState ChangeState(StaffStateId newStateId)
+    private IStaffState ChangeState(StaffStateId newStateId)
     {
         if (!states.ContainsKey(newStateId))
         {
@@ -133,14 +129,13 @@ public class StaffController : MonoBehaviour
             App.EventBus.Publish(new TaskCompletedEvent(completedTask, staff));
         }
 
-        if (completedTask.Type == TaskType.CollectResource && completedTask is CollectResourceTask collectResourceTask)
+        if (completedTask is CollectResourceTask collectResourceTask)
         {
             if (states[StaffStateId.CarryingResource] is StaffCarryingResourceState carryingResourceState)
             {
-                carryingResourceState.SetResourceType(collectResourceTask.ResourceType);
+                carryingResourceState.SetResourceType(collectResourceTask.ResourceType, collectResourceTask.Amount);
+                ChangeState(StaffStateId.CarryingResource);
             }
-
-            ChangeState(StaffStateId.CarryingResource);
         }
     }
 
@@ -160,8 +155,7 @@ public class StaffController : MonoBehaviour
 
     // ── NavMesh 위임 래퍼 (상태 클래스는 controller만 바라봄) ──
     /// <summary>위치 및 회전 설정</summary>
-    public void SetPositionAndRotation(Vector3 position, Quaternion rotation)
-        => transform.SetPositionAndRotation(position, rotation);
+    public void SetPositionAndRotation(Vector3 position, Quaternion rotation) => transform.SetPositionAndRotation(position, rotation);
 
     /// <summary>NavMesh 목적지 설정</summary>
     public void SetDestination(Vector3 position) => staff.SetDestination(position);
@@ -174,24 +168,6 @@ public class StaffController : MonoBehaviour
 
     /// <summary>NavMeshAgent 활성화 설정</summary>
     public void EnableNavMeshAgent(bool enable) => staff.EnableNavMeshAgent(enable);
-
-    /// <summary>자원을 들기</summary>
-    public void PickUpResource(FacilityResourceType resourceType, int amount)
-    {
-        carryingResourceType = resourceType;
-        carryingAmount = amount;
-        GameLogger.Log(LogCategory.Staff, $"{name}: carrying {resourceType} x{amount}");
-        // TODO: 운반 비주얼 활성화
-    }
-
-    /// <summary>들고 있는 자원 내려놓기 (조리 시설에 전달 후 호출)</summary>
-    public void DropResource()
-    {
-        GameLogger.Log(LogCategory.Staff, $"{name}: delivered {carryingResourceType} x{carryingAmount}");
-        carryingResourceType = FacilityResourceType.None;
-        carryingAmount = 0;
-        // TODO: 운반 비주얼 비활성화
-    }
 
     /// <summary>애니메이션 파라미터 설정</summary>
     public void SetAnimatorBool(string paramName, bool value)
