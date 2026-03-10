@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.ResourceManagement.ResourceProviders.Simulation;
 
 /// <summary>
 /// 조리 시설 기초 구현. 
@@ -13,6 +14,8 @@ public abstract class CookingFacilityBase : MonoBehaviour, ICookingFacility, ICl
     [SerializeField] protected int waterPerCook = 1;
     [SerializeField] protected int woodPerCook = 1;
     [SerializeField] private Transform targetTransform; // 클릭 시 이동 목표 지점 (예: 조리대 위치)
+    [SerializeField] private GameObject waterVisual;
+    [SerializeField] private GameObject woodVisual;
 
 
     [Header("Current State")]
@@ -55,6 +58,8 @@ public abstract class CookingFacilityBase : MonoBehaviour, ICookingFacility, ICl
     {
         if (!IsResourceRequired) return;
         currentWater += amount;
+        SetWaterVisual(currentWater > 0);
+
         GameLogger.LogVerbose(LogCategory.Facility, $"{name}: Water +{amount} ({currentWater})");
     }
 
@@ -62,6 +67,8 @@ public abstract class CookingFacilityBase : MonoBehaviour, ICookingFacility, ICl
     {
         if (!IsResourceRequired) return;
         currentWood += amount;
+        SetWoodVisual(currentWood > 0);
+
         GameLogger.LogVerbose(LogCategory.Facility, $"{name}: Wood +{amount} ({currentWood})");
     }
 
@@ -80,11 +87,29 @@ public abstract class CookingFacilityBase : MonoBehaviour, ICookingFacility, ICl
     {
         if (IsWaterNeeded)
         {
+            SetWaterVisual(false);
             App.EventBus.Publish(new FacilityResourceLowEvent(this, FacilityResourceType.Water, WaterRatio));
         }
         if (IsWoodNeeded)
         {
+            SetWoodVisual(false);
             App.EventBus.Publish(new FacilityResourceLowEvent(this, FacilityResourceType.Firewood, WoodRatio));
+        }
+    }
+
+    protected virtual void SetWaterVisual(bool hasWater)
+    {
+        if (waterVisual != null)
+        {
+            waterVisual.SetActive(hasWater);
+        }
+    }
+
+    protected virtual void SetWoodVisual(bool hasWood)
+    {
+        if (woodVisual != null)
+        {
+            woodVisual.SetActive(hasWood);
         }
     }
 

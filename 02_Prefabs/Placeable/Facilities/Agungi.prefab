@@ -48,11 +48,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AgungiFacility
   facilityType: 101
-  maxWater: 10
-  maxWood: 10
   waterPerCook: 1
   woodPerCook: 1
   targetTransform: {fileID: 6842744418942839714}
+  waterVisual: {fileID: 164991032678380152}
+  woodVisual: {fileID: 7092042273394211295}
   currentWater: 0
   currentWood: 0
 --- !u!114 &3713585594503170871
@@ -105,11 +105,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1042849005271648370, guid: 34cd54d64a907b14690cbb1979a838bc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.5
+      value: 0.894
       objectReference: {fileID: 0}
     - target: {fileID: 1042849005271648370, guid: 34cd54d64a907b14690cbb1979a838bc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.268
       objectReference: {fileID: 0}
     - target: {fileID: 1042849005271648370, guid: 34cd54d64a907b14690cbb1979a838bc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -148,8 +148,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34cd54d64a907b14690cbb1979a838bc, type: 3}
+--- !u!1 &164991032678380152 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5964054629286318504, guid: 34cd54d64a907b14690cbb1979a838bc, type: 3}
+  m_PrefabInstance: {fileID: 5804786350629184464}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6842744418942839714 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1042849005271648370, guid: 34cd54d64a907b14690cbb1979a838bc, type: 3}
+  m_PrefabInstance: {fileID: 5804786350629184464}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7092042273394211295 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3667408601053321743, guid: 34cd54d64a907b14690cbb1979a838bc, type: 3}
   m_PrefabInstance: {fileID: 5804786350629184464}
   m_PrefabAsset: {fileID: 0}

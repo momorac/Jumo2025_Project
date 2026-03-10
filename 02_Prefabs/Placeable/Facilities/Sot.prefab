@@ -48,11 +48,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PotFacility
   facilityType: 100
-  maxWater: 10
-  maxWood: 10
   waterPerCook: 1
   woodPerCook: 1
   targetTransform: {fileID: 8941559457101251671}
+  waterVisual: {fileID: 5098118443568516295}
+  woodVisual: {fileID: 6040109886321287470}
   currentWater: 0
   currentWood: 0
 --- !u!114 &3713585594503170871
@@ -70,7 +70,7 @@ MonoBehaviour:
   type:
     PlaceableType: 1
   renderers:
-  - {fileID: 736178943223115378}
+  - {fileID: 0}
   - {fileID: 5247321939536429307}
   cellSize:
     x: 1
@@ -85,11 +85,11 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 0
-  m_Extents: {x: 0.16, y: 1, z: 0.16}
+  m_Extents: {x: 0.21, y: 0.775, z: 0.21}
   m_MoveThreshold: 0
   m_Carve: 1
   m_CarveOnlyStationary: 1
-  m_Center: {x: 0.5, y: 0, z: 0.5}
+  m_Center: {x: 0.5, y: 0.51, z: 0.5}
   m_TimeToStationary: 0
 --- !u!1001 &2212550010140186619
 PrefabInstance:
@@ -103,6 +103,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sot
       objectReference: {fileID: 0}
+    - target: {fileID: 6692156321787233164, guid: 0c9294d6a62a20045ae109bd34932863, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 642c40e67cac3584ea2a9bf0392be421, type: 2}
     - target: {fileID: 7107316216397517740, guid: 0c9294d6a62a20045ae109bd34932863, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.5
@@ -148,14 +152,19 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c9294d6a62a20045ae109bd34932863, type: 3}
---- !u!23 &736178943223115378 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 1478271787574688137, guid: 0c9294d6a62a20045ae109bd34932863, type: 3}
+--- !u!1 &5098118443568516295 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6373905414948756284, guid: 0c9294d6a62a20045ae109bd34932863, type: 3}
   m_PrefabInstance: {fileID: 2212550010140186619}
   m_PrefabAsset: {fileID: 0}
 --- !u!23 &5247321939536429307 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 6225862556659980032, guid: 0c9294d6a62a20045ae109bd34932863, type: 3}
+  m_PrefabInstance: {fileID: 2212550010140186619}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6040109886321287470 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5577225944276416213, guid: 0c9294d6a62a20045ae109bd34932863, type: 3}
   m_PrefabInstance: {fileID: 2212550010140186619}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &8941559457101251671 stripped
