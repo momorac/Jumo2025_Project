@@ -115,6 +115,8 @@ public abstract class CookingFacilityBase : MonoBehaviour, ICookingFacility, ICl
 
     public virtual void OnPlaced()
     {
+        SetWaterVisual(currentWater > 0);
+        SetWoodVisual(currentWood > 0);
         App.PlaceableService?.RegisterCookingFacility(this);
         GameLogger.Log(LogCategory.Facility, $"{name} ({CookingType}) placed");
     }
