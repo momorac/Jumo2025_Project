@@ -147,8 +147,8 @@ public class RecipeCSVImporter : EditorWindow
         { RecipeSubCategory.Rice,     new List<CookingFacilityType> { CookingFacilityType.Pot } },
         { RecipeSubCategory.Soup,     new List<CookingFacilityType> { CookingFacilityType.Pot } },
         { RecipeSubCategory.Kimchi,   new List<CookingFacilityType> { CookingFacilityType.JangdokJar } },
-        { RecipeSubCategory.SideDish, new List<CookingFacilityType> { CookingFacilityType.Cauldron } },
-        { RecipeSubCategory.StewBowl, new List<CookingFacilityType> { CookingFacilityType.Cauldron } },
+        { RecipeSubCategory.SideDish, new List<CookingFacilityType> { CookingFacilityType.Agungi } },
+        { RecipeSubCategory.StewBowl, new List<CookingFacilityType> { CookingFacilityType.Agungi } },
         { RecipeSubCategory.Jeon,     new List<CookingFacilityType> { CookingFacilityType.Brazier } },
         { RecipeSubCategory.Dish,     new List<CookingFacilityType> { CookingFacilityType.Brazier } },
     };
@@ -157,11 +157,11 @@ public class RecipeCSVImporter : EditorWindow
     private static readonly Dictionary<string, CookingFacilityType> FacilityNameMap = new Dictionary<string, CookingFacilityType>
     {
         { "솥",    CookingFacilityType.Pot },
-        { "가마솥", CookingFacilityType.Cauldron },
+        { "가마솥", CookingFacilityType.Agungi },
         { "화로",   CookingFacilityType.Brazier },
         { "장독대", CookingFacilityType.JangdokJar },
         { "Pot",        CookingFacilityType.Pot },
-        { "Cauldron",   CookingFacilityType.Cauldron },
+        { "Agungi",   CookingFacilityType.Agungi },
         { "Brazier",    CookingFacilityType.Brazier },
         { "JangdokJar", CookingFacilityType.JangdokJar },
     };

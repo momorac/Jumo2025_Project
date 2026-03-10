@@ -93,6 +93,6 @@ public enum CookingFacilityType
     None = 0,
     Pot = 1,        // 솥 - 밥, 국
     JangdokJar = 2, // 장독 - 김치 (물/장작 불필요)
-    Cauldron = 3,   // 가마솥 - 반찬, 국밥/찌개
+    Agungi = 3,   // 가마솥 - 반찬, 국밥/찌개
     Brazier = 4     // 화로 - 전, 요리
 }
