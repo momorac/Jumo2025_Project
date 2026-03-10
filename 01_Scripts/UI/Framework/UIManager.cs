@@ -149,6 +149,8 @@ public enum WindowType
 {
     None,
     Placement,
+    Recipe,
+    Inventory,
     PauseMenu,
     Settings,
 }

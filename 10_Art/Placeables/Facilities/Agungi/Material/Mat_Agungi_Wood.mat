@@ -30,6 +30,7 @@ Material:
     m_Ints: []
     m_Floats:
     - COLOR_GRADING: 0
+    - _ID: 11
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1

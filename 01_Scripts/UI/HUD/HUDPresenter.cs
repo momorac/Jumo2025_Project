@@ -14,6 +14,9 @@ public class HUDPresenter : IPresenter
     public void Initialize()
     {
         view.PlaceClicked += OnPlaceClicked;
+        view.RecipeClicked += OnRecipeClicked;
+        view.InventoryClicked += OnInventoryClicked;
+
         App.EconomyService.OnMoneyChanged += OnMoneyChanged;
         view.UpdateMoney(App.EconomyService.GetMoney());
     }
@@ -24,14 +27,15 @@ public class HUDPresenter : IPresenter
         view.UpdateMoney(newAmount);
     }
 
-    private void OnPlaceClicked()
-    {
-        // 구현
-        ui.OpenWindow(WindowType.Placement);
-    }
+    private void OnPlaceClicked() => ui.OpenWindow(WindowType.Placement);
+    private void OnRecipeClicked() => ui.OpenWindow(WindowType.Recipe);
+    private void OnInventoryClicked() => ui.OpenWindow(WindowType.Inventory);
+
 
     public void Dispose()
     {
         view.PlaceClicked -= OnPlaceClicked;
+        view.RecipeClicked -= OnRecipeClicked;
+        view.InventoryClicked -= OnInventoryClicked;
     }
 }
