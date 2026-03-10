@@ -11,6 +11,7 @@ public class SotFacility : CookingFacilityBase
     public override void OnClicked(Vector3 hitPoint)
     {
         GameLogger.Log(LogCategory.Input, $"Sot clicked (CanCook: {CanCook})");
-        // TODO: 조리 메뉴 UI 표시
+
+        App.EventBus.Publish(new CookingFacilityClickedEvent(this));
     }
 }

@@ -1,4 +1,4 @@
-public interface IFacilityService
+public interface IFacility
 {
     Placeable Type { get; }
     void Initialize(Placeable placeable);

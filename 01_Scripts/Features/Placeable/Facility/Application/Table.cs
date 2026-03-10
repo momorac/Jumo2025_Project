@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Table : MonoBehaviour, IFacilityService
+public class Table : MonoBehaviour, IFacility
 {
     public Placeable Type { get; private set; }
 

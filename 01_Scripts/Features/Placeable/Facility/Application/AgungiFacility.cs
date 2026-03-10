@@ -11,7 +11,8 @@ public class AgungiFacility : CookingFacilityBase
 
     public override void OnClicked(Vector3 hitPoint)
     {
+        App.EventBus.Publish(new CookingFacilityClickedEvent(this));
+
         GameLogger.Log(LogCategory.Input, $"Agungi clicked (CanCook: {CanCook})");
-        // TODO: 조리 메뉴 UI 표시
     }
 }

@@ -157,7 +157,7 @@ public class PlacementSystem : MonoBehaviour
         rootIndex.TryGetValue(prefab.Type.PlaceableType, out var parent);
         Transform placed = Instantiate(prefab.transform, pointer, Quaternion.identity, parent);
 
-        IFacilityService facilityService = placed.TryGetComponent<IFacilityService>(out var service) ? service : null;
+        IFacility facilityService = placed.TryGetComponent<IFacility>(out var service) ? service : null;
         facilityService?.Initialize(prefab.Type);
         facilityService?.OnPlaced();
 

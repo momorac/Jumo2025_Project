@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7022727205892380058}
   - component: {fileID: 3713585594503170871}
   - component: {fileID: 8396762559291033428}
+  - component: {fileID: 8501753610877915169}
   m_Layer: 0
   m_Name: Agungi
   m_TagString: Untagged
@@ -91,6 +92,27 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 1.5, y: 0, z: 1}
   m_TimeToStationary: 0
+--- !u!65 &8501753610877915169
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6731427639401032758}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 1, z: 1.6}
+  m_Center: {x: 1.5, y: 0.5, z: 1}
 --- !u!1001 &5804786350629184464
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -145,6 +145,17 @@ public struct DestinationClickedEvent : IGameEvent
 
 #region Facility Events
 
+/// <summary>조리시설 클릭 이벤트</summary>
+public struct CookingFacilityClickedEvent : IGameEvent
+{
+    public ICookingFacility Facility;
+
+    public CookingFacilityClickedEvent(ICookingFacility facility)
+    {
+        Facility = facility;
+    }
+}
+
 /// <summary>조리 시설의 자원이 부족한 경우</summary>
 public struct FacilityResourceLowEvent : IGameEvent
 {
