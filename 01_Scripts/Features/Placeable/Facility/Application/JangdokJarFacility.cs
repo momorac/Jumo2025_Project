@@ -11,7 +11,7 @@ public class JangdokJarFacility : CookingFacilityBase
     }
 
     /// <summary> 장독대는 자원 불필요</summary>
-    public override bool RequiresResources => false;
+    public override bool IsResourceRequired => false;
 
     /// <summary>발효 중이 아니면 항상 조리(발효) 가능 </summary>
     public override bool CanCook => !isFermenting;

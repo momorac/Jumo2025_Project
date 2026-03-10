@@ -10,8 +10,6 @@ public abstract class CookingFacilityBase : MonoBehaviour, ICookingFacility, ICl
     [SerializeField] protected FacilityType facilityType;
 
     [Header("Resource Settings")]
-    [SerializeField] protected int maxWater = 10;
-    [SerializeField] protected int maxWood = 10;
     [SerializeField] protected int waterPerCook = 1;
     [SerializeField] protected int woodPerCook = 1;
     [SerializeField] private Transform targetTransform; // 클릭 시 이동 목표 지점 (예: 조리대 위치)
@@ -27,20 +25,17 @@ public abstract class CookingFacilityBase : MonoBehaviour, ICookingFacility, ICl
     public Transform Transform => transform;
     public Transform TargetTransform => targetTransform;
 
-    public virtual bool RequiresResources => facilityType.RequiresResources();
+    public virtual bool IsResourceRequired => facilityType.IsResourceRequired();
     public int CurrentWater => currentWater;
     public int CurrentWood => currentWood;
-    public int MaxWater => maxWater;
-    public int MaxWood => maxWood;
 
-    public virtual bool CanCook => !RequiresResources ||
-        (currentWater >= waterPerCook && currentWood >= woodPerCook);
+    public virtual bool CanCook => !IsResourceRequired || (currentWater >= waterPerCook && currentWood >= woodPerCook);
 
-    public bool NeedsWater => RequiresResources && currentWater < maxWater * 0.3f;
-    public bool NeedsWood => RequiresResources && currentWood < maxWood * 0.3f;
+    public bool IsWaterNeeded => IsResourceRequired && currentWater < waterPerCook;
+    public bool IsWoodNeeded => IsResourceRequired && currentWood < woodPerCook;
 
-    public float WaterRatio => maxWater > 0 ? (float)currentWater / maxWater : 1f;
-    public float WoodRatio => maxWood > 0 ? (float)currentWood / maxWood : 1f;
+    public float WaterRatio => waterPerCook > 0 ? Mathf.Clamp01((float)currentWater / waterPerCook) : 1f;
+    public float WoodRatio => woodPerCook > 0 ? Mathf.Clamp01((float)currentWood / woodPerCook) : 1f;
 
     // IClickable 구현
     public virtual bool IsClickable => true;
@@ -58,21 +53,21 @@ public abstract class CookingFacilityBase : MonoBehaviour, ICookingFacility, ICl
 
     public virtual void AddWater(int amount)
     {
-        if (!RequiresResources) return;
-        currentWater = Mathf.Min(currentWater + amount, maxWater);
-        GameLogger.LogVerbose(LogCategory.Facility, $"{name}: Water +{amount} ({currentWater}/{maxWater})");
+        if (!IsResourceRequired) return;
+        currentWater += amount;
+        GameLogger.LogVerbose(LogCategory.Facility, $"{name}: Water +{amount} ({currentWater})");
     }
 
     public virtual void AddWood(int amount)
     {
-        if (!RequiresResources) return;
-        currentWood = Mathf.Min(currentWood + amount, maxWood);
-        GameLogger.LogVerbose(LogCategory.Facility, $"{name}: Wood +{amount} ({currentWood}/{maxWood})");
+        if (!IsResourceRequired) return;
+        currentWood += amount;
+        GameLogger.LogVerbose(LogCategory.Facility, $"{name}: Wood +{amount} ({currentWood})");
     }
 
     public virtual void ConsumeResources()
     {
-        if (!RequiresResources) return;
+        if (!IsResourceRequired) return;
         currentWater = Mathf.Max(0, currentWater - waterPerCook);
         currentWood = Mathf.Max(0, currentWood - woodPerCook);
         GameLogger.LogVerbose(LogCategory.Facility, $"{name}: resources consumed (Water: {currentWater}, Wood: {currentWood})");
@@ -83,11 +78,11 @@ public abstract class CookingFacilityBase : MonoBehaviour, ICookingFacility, ICl
 
     protected virtual void CheckResourceLevels()
     {
-        if (NeedsWater)
+        if (IsWaterNeeded)
         {
             App.EventBus.Publish(new FacilityResourceLowEvent(this, FacilityResourceType.Water, WaterRatio));
         }
-        if (NeedsWood)
+        if (IsWoodNeeded)
         {
             App.EventBus.Publish(new FacilityResourceLowEvent(this, FacilityResourceType.Firewood, WoodRatio));
         }

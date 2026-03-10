@@ -57,7 +57,7 @@ public static class FacilityTypeExtensions
     }
 
     /// <summary>자원(물/장작) 필요 여부 (장독대는 false)</summary>
-    public static bool RequiresResources(this FacilityType type)
+    public static bool IsResourceRequired(this FacilityType type)
     {
         return type.IsCookingFacility() && type != FacilityType.JangdokJar;
     }

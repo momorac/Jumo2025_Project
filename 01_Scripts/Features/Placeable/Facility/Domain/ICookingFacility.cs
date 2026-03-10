@@ -11,16 +11,14 @@ public interface ICookingFacility
     Transform Transform { get; }
 
     // 자원 상태
-    bool RequiresResources { get; }
+    bool IsResourceRequired { get; }
     int CurrentWater { get; }
     int CurrentWood { get; }
-    int MaxWater { get; }
-    int MaxWood { get; }
 
     // 상태 체크
     bool CanCook { get; }
-    bool NeedsWater { get; }
-    bool NeedsWood { get; }
+    bool IsWaterNeeded { get; }
+    bool IsWoodNeeded { get; }
 
     // 자원 관리
     void AddWater(int amount);
