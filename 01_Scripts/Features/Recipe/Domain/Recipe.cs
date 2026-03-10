@@ -27,6 +27,7 @@ public enum RecipeSubCategory
 public enum RecipeType
 {
     None = 0,
+    Default = 1,     // 기본 레시피 : 숭늉 (레시피북에 표시되지 않음)
 
     // ===== 차림요리 - 김치 (1000번대) =====
     CabbageKimchi = 1001,     // 배추김치

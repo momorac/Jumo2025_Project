@@ -11,7 +11,8 @@ public enum TaskType
     ServeFood,          // 음식 서빙
     CleanTable,         // 테이블 청소
     Checkout,           // 계산
-    CollectResource     // 자원 수집 (물/장작)
+    CollectResource,    // 자원 수집 (물/장작)
+    Cook                // 요리
 }
 
 /// <summary>

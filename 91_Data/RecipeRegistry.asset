@@ -13,6 +13,18 @@ MonoBehaviour:
   m_Name: RecipeRegistry
   m_EditorClassIdentifier: Assembly-CSharp::RecipeRegistry
   entries:
+  - type: 1
+    category: 2
+    subCategory: 203
+    displayName: "\uC22D\uB289"
+    icon: {fileID: 0}
+    ingredients: []
+    requiredFacilities: 
+    cookingTime: 10
+    basePrice: 100
+    isBufferResource: 0
+    bufferOutputAmount: 1
+    outputIngredient: 0
   - type: 1101
     category: 1
     subCategory: 101
