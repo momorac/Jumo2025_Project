@@ -3,8 +3,7 @@ using UnityEngine;
 using DG.Tweening;
 
 /// <summary>
-/// Customer FSM 컨트롤러. 상태 전환 및 UI/이벤트 관리
-/// 이동 제어는 Customer에 위임
+/// Customer FSM 컨트롤러. 상태 전환 및 UI/이벤트 관리.
 /// </summary>
 [RequireComponent(typeof(Customer))]
 public class CustomerController : MonoBehaviour
@@ -122,12 +121,9 @@ public class CustomerController : MonoBehaviour
         seq.Append(transform.DOMove(assignedSeat.MotionRoots[2].position, 0.66f)).Join(transform.DOLocalRotateQuaternion(assignedSeat.MotionRoots[2].rotation, 0.66f));
         seq.AppendCallback(() =>
         {
-            // 착석 후 주문 대기 상태로 전환
-            ChangeState(CustomerStateId.WaitingToOrder);
+            ChangeState(CustomerStateId.WaitingToOrder);    // 착석 후 주문 대기 상태로 전환
         });
         seq.Play();
-
-
     }
 
     /// <summary> 주문 접수됨 (Staff가 주문을 받음) </summary>
@@ -176,26 +172,6 @@ public class CustomerController : MonoBehaviour
         customer.Release();
     }
 
-    /// <summary>말풍선 표시/숨김</summary>
-    public void ShowBubble(bool value)
-    {
-        bubbleUI.SetVisible(value);
-    }
-
-    // ── NavMesh 위임 래퍼 (상태 클래스는 controller만 바라봄) ──
-
-    /// <summary>NavMesh 목적지 설정</summary>
-    public void SetDestination(Vector3 position) => customer.SetDestination(position);
-
-    /// <summary>이동 정지</summary>
-    public void StopMoving() => customer.StopMoving();
-
-    /// <summary>목적지 도착 여부 확인</summary>
-    public bool HasReachedDestination() => customer.HasReachedDestination();
-
-    /// <summary>NavMeshAgent 활성화/비활성화</summary>
-    public void EnableNavMeshAgent(bool enable) => customer.EnableNavMeshAgent(enable);
-
     /// <summary>애니메이션 파라미터 설정</summary>
     public void SetAnimation(string paramName, bool value)
     {
@@ -214,4 +190,22 @@ public class CustomerController : MonoBehaviour
         }
     }
 
+    /// <summary>말풍선 표시/숨김</summary>
+    public void ShowBubble(bool value)
+    {
+        bubbleUI.SetVisible(value);
+    }
+
+    // ── NavMesh 위임 래퍼 (상태 클래스는 controller만 바라봄) ──
+    /// <summary>NavMesh 목적지 설정</summary>
+    public void SetDestination(Vector3 position) => customer.SetDestination(position);
+
+    /// <summary>이동 정지</summary>
+    public void StopMoving() => customer.StopMoving();
+
+    /// <summary>목적지 도착 여부 확인</summary>
+    public bool HasReachedDestination() => customer.HasReachedDestination();
+
+    /// <summary>NavMeshAgent 활성화/비활성화</summary>
+    public void EnableNavMeshAgent(bool enable) => customer.EnableNavMeshAgent(enable);
 }
