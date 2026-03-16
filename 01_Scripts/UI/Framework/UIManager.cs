@@ -71,7 +71,7 @@ public class UIManager : MonoBehaviour
         viewFactories[WindowType.Placement] = () => Instantiate(placementPrefab, windowLayer);
         presenterFactories[WindowType.Placement] = (view) => new PlacementPresenter((PlacementView)view, this, placementController);
         viewFactories[WindowType.Inventory] = () => Instantiate(inventoryPrefab, windowLayer);
-        presenterFactories[WindowType.Inventory] = (view) => new InventoryPresenter((InventoryView)view, this);
+        presenterFactories[WindowType.Inventory] = (view) => new InventoryPresenter((InventoryView)view, this, App.IngredientService);
     }
 
     // GameSessionRunner가 시작 시 호출

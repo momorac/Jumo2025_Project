@@ -146,6 +146,12 @@ public class IngredientService
         return registry.GetByType(type);
     }
 
+    /// <summary>재료의 카테고리 조회</summary>
+    public IngredientCategory GetCategory(IngredientType type)
+    {
+        return registry.GetCategory(type);
+    }
+
     /// <summary>카테고리별 재료 목록</summary>
     public IReadOnlyList<IngredientDefinition> GetByCategory(IngredientCategory category)
     {

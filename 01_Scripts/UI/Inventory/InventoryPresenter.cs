@@ -1,26 +1,52 @@
-
-using UnityEngine;
-
 public class InventoryPresenter : IPresenter
 {
     private readonly InventoryView view;
     private readonly UIManager ui;
+    private readonly IngredientService ingredientService;
     private readonly WindowType windowType = WindowType.Inventory;
 
-    public InventoryPresenter(InventoryView view, UIManager ui)
+    public InventoryPresenter(InventoryView view, UIManager ui, IngredientService ingredientService)
     {
         this.view = view;
         this.ui = ui;
+        this.ingredientService = ingredientService;
     }
 
     public void Initialize()
     {
         view.CloseButtonClicked += OnCloseClicked;
+        // ingredientService.OnAmountChanged += OnAmountChanged;
+        // ingredientService.OnIngredientUnlocked += OnIngredientUnlocked;
+        BuildInventory();
     }
 
     public void Dispose()
     {
         view.CloseButtonClicked -= OnCloseClicked;
+        // ingredientService.OnAmountChanged -= OnAmountChanged;
+        // ingredientService.OnIngredientUnlocked -= OnIngredientUnlocked;
+        view.ClearCells();
+    }
+
+    private void BuildInventory()
+    {
+        foreach (var def in ingredientService.GetAllDefinitions())
+        {
+            // if (!ingredientService.IsUnlocked(def.type)) continue;
+            view.BuildCell(def.type, def.displayName, def.icon, ingredientService.GetAmount(def.type));
+        }
+    }
+
+    private void OnAmountChanged(IngredientType type, int newAmount)
+    {
+        view.UpdateCellAmount(type, newAmount);
+    }
+
+    private void OnIngredientUnlocked(IngredientType type)
+    {
+        // Registry 순서 유지를 위해 전체 재빌드
+        view.ClearCells();
+        BuildInventory();
     }
 
     private void OnCloseClicked()

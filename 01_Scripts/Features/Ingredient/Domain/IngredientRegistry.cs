@@ -73,6 +73,13 @@ public class IngredientRegistry : ScriptableObject
         return entries;
     }
 
+    /// <summary>재료의 카테고리 조회</summary>
+    public IngredientCategory GetCategory(IngredientType type)
+    {
+        var def = GetByType(type);
+        return def?.category ?? IngredientCategory.None;
+    }
+
     /// <summary>재료 표시 이름 조회</summary>
     public string GetDisplayName(IngredientType type)
     {
