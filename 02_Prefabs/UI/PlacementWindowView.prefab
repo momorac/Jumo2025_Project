@@ -646,7 +646,7 @@ GameObject:
   - component: {fileID: 4448657022538074959}
   - component: {fileID: 4046681013189275911}
   m_Layer: 0
-  m_Name: PlacementListView
+  m_Name: PlacementWindowView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

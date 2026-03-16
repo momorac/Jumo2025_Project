@@ -19,16 +19,14 @@ public class PlacementPresenter : IPresenter
 
     public void Initialize()
     {
-        // Debug.Log("PlacementPresenter Initialize");
-        view.CloseClicked += OnCloseClicked;
+        view.CloseButtonClicked += OnCloseClicked;
         AddAvailableFacility();
     }
 
     public void Dispose()
     {
-        // Debug.Log("PlacementPresenter Dispose");
         view.ClearCells();
-        view.CloseClicked -= OnCloseClicked;
+        view.CloseButtonClicked -= OnCloseClicked;
     }
 
     private void AddAvailableFacility()
@@ -48,10 +46,8 @@ public class PlacementPresenter : IPresenter
         controller.StartPlacing(placeable);
     }
 
-
     private void OnCloseClicked()
     {
         ui.CloseWindow(windowType);
     }
-
 }

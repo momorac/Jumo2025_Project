@@ -3,6 +3,16 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 
+public enum WindowType
+{
+    None,
+    Placement,
+    Recipe,
+    Inventory,
+    PauseMenu,
+    Settings,
+}
+
 public sealed class UIServices
 {
     private readonly Dictionary<Type, object> map = new();
@@ -19,7 +29,7 @@ public class UIManager : MonoBehaviour
     [Header("Window Prefabs")]
     [SerializeField] private HUDView hudView;
     [SerializeField] private PlacementView placementPrefab;
-
+    [SerializeField] private InventoryView inventoryPrefab;
     [HideInInspector] public GameSessionRunner gameSessionRunner;
 
     // Cached presenters and views
@@ -60,6 +70,8 @@ public class UIManager : MonoBehaviour
         // Placement 뷰/프리젠터 생성 람다 등록
         viewFactories[WindowType.Placement] = () => Instantiate(placementPrefab, windowLayer);
         presenterFactories[WindowType.Placement] = (view) => new PlacementPresenter((PlacementView)view, this, placementController);
+        viewFactories[WindowType.Inventory] = () => Instantiate(inventoryPrefab, windowLayer);
+        presenterFactories[WindowType.Inventory] = (view) => new InventoryPresenter((InventoryView)view, this);
     }
 
     // GameSessionRunner가 시작 시 호출
@@ -143,14 +155,4 @@ public class UIManager : MonoBehaviour
 
         return factory.Invoke(view);
     }
-}
-
-public enum WindowType
-{
-    None,
-    Placement,
-    Recipe,
-    Inventory,
-    PauseMenu,
-    Settings,
 }

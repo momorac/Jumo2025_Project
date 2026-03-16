@@ -4,18 +4,18 @@ using System;
 
 public class PlacementView : WindowViewBase
 {
-    [Header("References")]
+    [Header("Prefab References")]
     [SerializeField] private GameObject placeableCellPrefab;
 
     [Header("UI Elements")]
     [SerializeField] private Button button_close;
     [SerializeField] private Transform content_parent;
 
-    public event Action CloseClicked;
+    public event Action CloseButtonClicked;
 
     private void Awake()
     {
-        button_close.onClick.AddListener(() => CloseClicked?.Invoke());
+        button_close.onClick.AddListener(() => CloseButtonClicked?.Invoke());
     }
 
     public void AddPlaceableCell(Placeable _placeable, string name, Sprite icon, Action<Placeable> onClick)
