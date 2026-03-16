@@ -24,7 +24,7 @@ public class SotFacility : CookingFacilityBase
             else
             {
                 App.TaskQueue.Enqueue(new CookTask(RecipeType.Default, this, priority: 5)); // 기본 레시피로 대체
-                GameLogger.LogWarning(LogCategory.Task, "No cookable recipe available for this facility");
+                // GameLogger.LogWarning(LogCategory.Task, "No cookable recipe available for this facility");
             }
         }
     }

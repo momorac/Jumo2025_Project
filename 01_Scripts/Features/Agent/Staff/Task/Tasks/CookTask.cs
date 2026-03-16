@@ -22,7 +22,7 @@ public class CookTask : StaffTaskBase
     protected override List<TaskPhase> BuildPhases()
     {
         var definition = App.RecipeService.GetDefinition(RecipeType);
-        float duration = definition != null ? definition.cookingTime : 3f;
+        float duration = definition.cookingTime;
 
         return new List<TaskPhase>
         {
