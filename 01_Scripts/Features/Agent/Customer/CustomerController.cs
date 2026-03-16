@@ -1,21 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 using DG.Tweening;
 
 /// <summary>
 /// Customer FSM 컨트롤러. 상태 전환 및 UI/이벤트 관리
+/// 이동 제어는 Customer에 위임
 /// </summary>
-[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(Customer))]
 public class CustomerController : MonoBehaviour
 {
     [Header("Components")]
-    private NavMeshAgent agent;
-    private Animator animator;
+    [SerializeField] private Animator animator;
     [SerializeField] private BubbleUI bubbleUI;
-
-    [Header("Settings")]
-    [SerializeField] private float stoppingDistance = 0.3f;
 
     // FSM
     private Dictionary<CustomerStateId, ICustomerState> states;
@@ -34,11 +30,12 @@ public class CustomerController : MonoBehaviour
     public bool WasServed => wasServed;
     public CustomerStateId CurrentStateId => currentState?.Id ?? CustomerStateId.Spawned;
 
-    public void Initialize(Customer customer, NavMeshAgent agent, Animator animator)
+    private void Awake()
     {
-        this.customer = customer;
-        this.agent = agent;
-        this.animator = animator;
+        customer = GetComponent<Customer>();
+
+        if (animator == null)
+            animator = GetComponent<Animator>();
 
         InitializeStates();
     }
@@ -185,32 +182,19 @@ public class CustomerController : MonoBehaviour
         bubbleUI.SetVisible(value);
     }
 
-    /// <summary>NavMesh 목적지 설정</summary>
-    public void SetDestination(Vector3 position)
-    {
-        if (agent != null && agent.enabled)
-        {
-            agent.SetDestination(position);
-        }
-    }
+    // ── NavMesh 위임 래퍼 (상태 클래스는 controller만 바라봄) ──
 
-    /// <summary>NavMeshAgent 활성화/비활성화</summary>
-    public void EnableNavMeshAgent(bool enable)
-    {
-        if (agent != null)
-        {
-            agent.enabled = enable;
-        }
-    }
+    /// <summary>NavMesh 목적지 설정</summary>
+    public void SetDestination(Vector3 position) => customer.SetDestination(position);
+
+    /// <summary>이동 정지</summary>
+    public void StopMoving() => customer.StopMoving();
 
     /// <summary>목적지 도착 여부 확인</summary>
-    public bool HasReachedDestination()
-    {
-        if (agent == null || !agent.enabled)
-            return true;
+    public bool HasReachedDestination() => customer.HasReachedDestination();
 
-        return !agent.pathPending && agent.remainingDistance <= stoppingDistance;
-    }
+    /// <summary>NavMeshAgent 활성화/비활성화</summary>
+    public void EnableNavMeshAgent(bool enable) => customer.EnableNavMeshAgent(enable);
 
     /// <summary>애니메이션 파라미터 설정</summary>
     public void SetAnimation(string paramName, bool value)

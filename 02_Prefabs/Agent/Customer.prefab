@@ -49,7 +49,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95b27f9e95d8f44d9b24eb0993c1d54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Customer
-  animator: {fileID: 6730797979544162302}
+  agent: {fileID: 2772027616876920637}
+  stoppingDistance: 0.3
 --- !u!114 &443095298624988618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,8 +63,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6f7885559a4f684aa35b43bc7cda800, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CustomerController
+  animator: {fileID: 6730797979544162302}
   bubbleUI: {fileID: 5203072195695618030}
-  stoppingDistance: 0.3
 --- !u!195 &2772027616876920637
 NavMeshAgent:
   m_ObjectHideFlags: 0
