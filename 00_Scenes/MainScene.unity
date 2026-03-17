@@ -3180,6 +3180,7 @@ MonoBehaviour:
   popupLayer: {fileID: 173087365}
   hudView: {fileID: 1061348579}
   placementPrefab: {fileID: 4046681013189275911, guid: 8fbeb43bf2ba1014884595d7576c69fd, type: 3}
+  inventoryPrefab: {fileID: 4891571461752398081, guid: c0c8850dcbbaf054bb285141999d9126, type: 3}
   gameSessionRunner: {fileID: 0}
 --- !u!1 &1662985133
 GameObject:
