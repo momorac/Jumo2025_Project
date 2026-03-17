@@ -7,13 +7,14 @@ using UnityEngine.UI;
 public class HUDView : WindowViewBase
 {
     [SerializeField] private Button button_place;
-    [SerializeField] private Button button_recipe;
     [SerializeField] private Button button_inventory;
+    [SerializeField] private Button button_recipe;
+
     [SerializeField] private TextMeshProUGUI text_money;
 
     public event Action PlaceClicked;
-    public event Action RecipeClicked;
     public event Action InventoryClicked;
+    public event Action RecipeClicked;
 
     private void Awake()
     {

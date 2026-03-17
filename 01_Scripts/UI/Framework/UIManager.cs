@@ -30,6 +30,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private HUDView hudView;
     [SerializeField] private PlacementView placementPrefab;
     [SerializeField] private InventoryView inventoryPrefab;
+    [SerializeField] private RecipeView recipePrefab;
     [HideInInspector] public GameSessionRunner gameSessionRunner;
 
     // Cached presenters and views
@@ -72,6 +73,8 @@ public class UIManager : MonoBehaviour
         presenterFactories[WindowType.Placement] = (view) => new PlacementPresenter((PlacementView)view, this, placementController);
         viewFactories[WindowType.Inventory] = () => Instantiate(inventoryPrefab, windowLayer);
         presenterFactories[WindowType.Inventory] = (view) => new InventoryPresenter((InventoryView)view, this, App.IngredientService);
+        viewFactories[WindowType.Recipe] = () => Instantiate(recipePrefab, windowLayer);
+        presenterFactories[WindowType.Recipe] = (view) => new RecipePresenter((RecipeView)view, this);
     }
 
     // GameSessionRunner가 시작 시 호출
