@@ -14,6 +14,7 @@ public enum LogCategory
     Economy,    // 주문, 재료, 레시피, 수익
     System,     // 세션, 저장, 스폰 시스템
     Input,      // 클릭, 포인팅
+    UI,         // UI 상호작용
 }
 
 /// <summary>

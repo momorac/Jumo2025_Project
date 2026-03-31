@@ -270,7 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32db1f53fbd2ab64fbe79d3d5eccd544, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RecipeCellView
-  text_recipeName: {fileID: 7461612411416056115}
+  text_recipeName: {fileID: 6046237956484070180}
   image_icon: {fileID: 7563987922947238745}
   text_price: {fileID: 7461612411416056115}
   ingredientListParent: {fileID: 4599937821215603502}
@@ -649,8 +649,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 06859931d9ab6484a933d2baf79f70c2, type: 2}
+  m_sharedMaterial: {fileID: 6212044541940615323, guid: 06859931d9ab6484a933d2baf79f70c2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

@@ -25,4 +25,13 @@ public class RecipeView : WindowViewBase
         RecipeCellView cellView = Instantiate(recipeCellPrefab, rt_content);
         cellView.Bind(recipe);
     }
+
+    /// <summary> 모든 셀을 제거하여 레시피 목록을 초기화한다. rt_content의 자식 오브젝트를 모두 파괴한다.</summary>
+    public void ClearCells()
+    {
+        for (int i = rt_content.childCount - 1; i >= 0; i--)
+        {
+            Destroy(rt_content.GetChild(i).gameObject);
+        }
+    }
 }

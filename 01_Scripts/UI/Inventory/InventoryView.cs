@@ -56,9 +56,12 @@ public class InventoryView : WindowViewBase
         if (contentParents == null) return;
         foreach (var parentEntry in contentParents)
         {
-            if (parentEntry.rt == null) continue;
+            if (parentEntry.rt == null)
+                continue;
             for (int i = parentEntry.rt.childCount - 1; i >= 0; i--)
+            {
                 Destroy(parentEntry.rt.GetChild(i).gameObject);
+            }
         }
         cellMap.Clear();
     }
