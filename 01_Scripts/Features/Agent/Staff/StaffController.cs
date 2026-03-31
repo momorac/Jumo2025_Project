@@ -86,7 +86,8 @@ public class StaffController : MonoBehaviour
             { StaffStateId.Idle, new StaffIdleState(this) },
             { StaffStateId.MovingToTarget, movingState },
             { StaffStateId.ExecutingTask, new StaffExecutingTaskState(this) },
-            { StaffStateId.CarryingResource, new StaffCarryingResourceState(this) }
+            { StaffStateId.CarryingResource, new StaffCarryingResourceState(this) },
+            { StaffStateId.Serving, new StaffServingState(this) }
         };
     }
 
@@ -101,6 +102,8 @@ public class StaffController : MonoBehaviour
         currentState?.Exit();
         currentState = states[newStateId];
         currentState.Enter();
+
+        GameLogger.LogVerbose(LogCategory.Staff, $"{name}: changed state to {newStateId}");
 
         return currentState;
     }
@@ -147,6 +150,18 @@ public class StaffController : MonoBehaviour
                 carryingResourceState.SetResourceType(collectResourceTask.ResourceType, collectResourceTask.Amount);
                 ChangeState(StaffStateId.CarryingResource);
             }
+        }
+        else if (completedTask is CookTask cookTask)
+        {
+            if (states[StaffStateId.Serving] is StaffServingState servingState)
+            {
+                // servingState.SetDestination(cookTask.ServePosition);
+                ChangeState(StaffStateId.Serving);
+            }
+        }
+        else
+        {
+            ChangeState(StaffStateId.Idle);
         }
     }
 

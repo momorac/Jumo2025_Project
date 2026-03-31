@@ -6,7 +6,8 @@ public enum StaffStateId
     Idle,               // 대기 상태
     MovingToTarget,     // 목표 위치로 이동 중
     ExecutingTask,       // 작업 수행 중
-    CarryingResource    // 자원 운반 중
+    CarryingResource,    // 자원 운반 중
+    Serving              // 서빙 중
 }
 
 /// <summary>
