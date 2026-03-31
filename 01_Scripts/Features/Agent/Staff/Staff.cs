@@ -121,7 +121,6 @@ public class Staff : MonoBehaviour, IClickable
         agent.enabled = enable;
     }
 
-
     /// <summary>위치 및 회전 설정</summary>
     public void SetPositionAndRotation(Vector3 position, Quaternion rotation)
     {

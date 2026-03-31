@@ -177,6 +177,11 @@ public class StaffController : MonoBehaviour
         {
             carryingResourceState.MoveTo(position);
         }
+        else if (currentState is StaffServingState servingState)
+        {
+            servingState.MoveTo(position);
+        }
+
     }
 
     // ── NavMesh 위임 래퍼 (상태 클래스는 controller만 바라봄) ──

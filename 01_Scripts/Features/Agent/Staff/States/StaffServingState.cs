@@ -16,9 +16,10 @@ public class StaffServingState : IStaffState
         this.controller = controller;
     }
 
-
     public void Enter()
     {
+        controller.StopMoving();
+        controller.SetAnimatorBool("IsCarrying", true);
     }
 
     public void Tick(float deltaTime)
@@ -27,5 +28,11 @@ public class StaffServingState : IStaffState
 
     public void Exit()
     {
+    }
+
+    public void MoveTo(Vector3 targetPosition)
+    {
+        controller.SetAnimatorBool("IsWalking", true);
+        controller.SetDestination(targetPosition);
     }
 }
