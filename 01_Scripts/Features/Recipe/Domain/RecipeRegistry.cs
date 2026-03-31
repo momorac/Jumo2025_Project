@@ -20,6 +20,7 @@ public class RecipeDefinition
     public RecipeSubCategory subCategory;
     public string displayName;
     public Sprite icon;
+    public int defaultPrice;
 
     [Header("재료")]
     public List<RecipeIngredient> ingredients = new List<RecipeIngredient>();

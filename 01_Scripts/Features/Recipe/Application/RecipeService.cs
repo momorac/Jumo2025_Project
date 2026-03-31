@@ -32,9 +32,16 @@ public class RecipeService
     }
 
     /// <summary>해금된 레시피 목록 반환</summary>
-    public IReadOnlyCollection<RecipeType> GetUnlockedRecipes()
+    public IReadOnlyCollection<RecipeDefinition> GetUnlockedRecipes()
     {
-        return data.UnlockedRecipes;
+        var result = new List<RecipeDefinition>();
+        foreach (var type in data.UnlockedRecipes)
+        {
+            var def = registry.GetByType(type);
+            if (def != null)
+                result.Add(def);
+        }
+        return result;
     }
 
     /// <summary>특정 카테고리에서 해금된 레시피 목록</summary>

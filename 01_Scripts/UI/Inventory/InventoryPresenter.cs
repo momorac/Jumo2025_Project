@@ -5,11 +5,11 @@ public class InventoryPresenter : IPresenter
     private readonly IngredientService ingredientService;
     private readonly WindowType windowType = WindowType.Inventory;
 
-    public InventoryPresenter(InventoryView view, UIManager ui, IngredientService ingredientService)
+    public InventoryPresenter(InventoryView _view, UIManager _ui, IngredientService _ingredientService)
     {
-        this.view = view;
-        this.ui = ui;
-        this.ingredientService = ingredientService;
+        this.view = _view;
+        this.ui = _ui;
+        this.ingredientService = _ingredientService;
     }
 
     public void Initialize()
@@ -30,10 +30,10 @@ public class InventoryPresenter : IPresenter
 
     private void BuildInventory()
     {
-        foreach (var def in ingredientService.GetAllDefinitions())
+        foreach (IngredientDefinition ingredient in ingredientService.GetAllDefinitions())
         {
             // if (!ingredientService.IsUnlocked(def.type)) continue;
-            view.BuildCell(def.type, def.displayName, def.icon, ingredientService.GetAmount(def.type));
+            view.BuildCell(ingredient.type, ingredient.displayName, ingredient.icon, ingredientService.GetAmount(ingredient.type));
         }
     }
 

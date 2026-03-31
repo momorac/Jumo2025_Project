@@ -2083,8 +2083,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HUDView
   button_place: {fileID: 347600417}
-  button_recipe: {fileID: 127797614}
   button_inventory: {fileID: 1836037677}
+  button_recipe: {fileID: 127797614}
   text_money: {fileID: 502559726}
 --- !u!224 &1061348580
 RectTransform:
@@ -3181,6 +3181,7 @@ MonoBehaviour:
   hudView: {fileID: 1061348579}
   placementPrefab: {fileID: 4046681013189275911, guid: 8fbeb43bf2ba1014884595d7576c69fd, type: 3}
   inventoryPrefab: {fileID: 4891571461752398081, guid: c0c8850dcbbaf054bb285141999d9126, type: 3}
+  recipePrefab: {fileID: -3513161356413914352, guid: 3d772e981763e0a4bbffbc06aec32409, type: 3}
   gameSessionRunner: {fileID: 0}
 --- !u!1 &1662985133
 GameObject:
