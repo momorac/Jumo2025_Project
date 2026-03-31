@@ -827,7 +827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd830c3deb8744f4bb8ce96707e4c1b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryView
-  inventoryItemCellPrefab: {fileID: 5199016757480873975, guid: 52345d15d70b6294b8c975738f1989b5, type: 3}
+  inventoryCellPrefab: {fileID: 9107935688967305589, guid: 52345d15d70b6294b8c975738f1989b5, type: 3}
   button_close: {fileID: 6562556619453326458}
   contentParents:
   - type: 1
