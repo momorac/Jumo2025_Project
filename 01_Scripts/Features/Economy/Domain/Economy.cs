@@ -1,10 +1,13 @@
 using System;
 
-public class Economy
+[Serializable]
+public class EconomyMeta
 {
     public int Money { get; private set; }
 
-    public Economy(int initialMoney)
+    public EconomyMeta() { Money = 0; }
+
+    public EconomyMeta(int initialMoney)
     {
         Money = initialMoney;
     }

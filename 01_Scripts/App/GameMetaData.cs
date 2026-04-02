@@ -5,22 +5,22 @@ using UnityEngine;
 [System.Serializable]
 public class GameMetaData
 {
-    public PlaceableData PlaceableData;
-    public PlacementData PlacementData;
-    public Economy EconomyData;
-    public IngredientData IngredientData;
-    public RecipeData RecipeData;
+    public PlaceableMeta PlaceableMeta;
+    public PlacementMeta PlacementMeta;
+    public EconomyMeta EconomyMeta;
+    public IngredientMeta IngredientMeta;
+    public RecipeMeta RecipeMeta;
 }
 
 [Serializable]
-public class SessionState
+public class SessionMeta
 {
     public Dictionary<Seat, bool> Seats = new Dictionary<Seat, bool>();
     public int AvailableSeatsCount;
 }
 
 [Serializable]
-public class PlaceableData
+public class PlaceableMeta
 {
     public HashSet<FacilityType> ul_facility = new HashSet<FacilityType>();
     public HashSet<TileType> ul_tile = new HashSet<TileType>();
@@ -28,12 +28,14 @@ public class PlaceableData
 }
 
 [Serializable]
-public class PlacementData
+public class PlacementMeta
 {
     public Int2 GridSize;
     public PlacementRecord[,] Placements;
 
-    public PlacementData(Int2 size, PlacementRecord[,] placements)
+    public PlacementMeta() { }
+
+    public PlacementMeta(Int2 size, PlacementRecord[,] placements)
     {
         GridSize = size;
         Placements = placements;

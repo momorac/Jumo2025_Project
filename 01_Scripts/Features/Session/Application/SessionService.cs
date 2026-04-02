@@ -3,35 +3,35 @@ using System.Collections.Generic;
 
 public class SessionService
 {
-    private readonly SessionState sessionState;
+    private readonly SessionMeta sessionMeta;
 
-    public SessionService(SessionState sessionState)
+    public SessionService(SessionMeta sessionMeta)
     {
-        this.sessionState = sessionState ?? throw new ArgumentNullException(nameof(sessionState));
-        sessionState.Seats = new Dictionary<Seat, bool>();
+        this.sessionMeta = sessionMeta ?? throw new ArgumentNullException(nameof(sessionMeta));
+        sessionMeta.Seats = new Dictionary<Seat, bool>();
     }
 
     public event Action<Seat, bool> OnSeatsChanged;
 
     public void RegisterSeat(Seat seat)
     {
-        sessionState.Seats[seat] = true;
-        sessionState.AvailableSeatsCount++;
+        sessionMeta.Seats[seat] = true;
+        sessionMeta.AvailableSeatsCount++;
         OnSeatsChanged?.Invoke(seat, true);
 
-        GameLogger.LogVerbose(LogCategory.System, $"Seat registered. Available: {sessionState.AvailableSeatsCount}");
+        GameLogger.LogVerbose(LogCategory.System, $"Seat registered. Available: {sessionMeta.AvailableSeatsCount}");
     }
 
     public bool TryOccupyRandomSeat(out Seat seat)
     {
         seat = null;
 
-        if (sessionState == null || sessionState.Seats == null || sessionState.AvailableSeatsCount <= 0)
+        if (sessionMeta == null || sessionMeta.Seats == null || sessionMeta.AvailableSeatsCount <= 0)
             return false;
 
         // 가용 좌석 목록 수집
         List<Seat> availableSeats = new List<Seat>();
-        foreach (var kvp in sessionState.Seats)
+        foreach (var kvp in sessionMeta.Seats)
         {
             if (kvp.Value)
             {
@@ -47,17 +47,17 @@ public class SessionService
         if (seat == null)
             return false;
 
-        sessionState.Seats[seat] = false;
-        sessionState.AvailableSeatsCount--;
+        sessionMeta.Seats[seat] = false;
+        sessionMeta.AvailableSeatsCount--;
         OnSeatsChanged?.Invoke(seat, false);
         return true;
     }
 
     public int GetAvailableSeatsCount()
     {
-        if (sessionState == null)
+        if (sessionMeta == null)
             return 0;
 
-        return sessionState.AvailableSeatsCount;
+        return sessionMeta.AvailableSeatsCount;
     }
 }

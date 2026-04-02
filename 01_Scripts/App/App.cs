@@ -5,15 +5,8 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public static class App
 {
-    // 게임 데이터 도메인
-    private static SessionState SessionState;
-    private static Economy EconomyData;
-    private static PlaceableData PlaceableData;
-    private static PlacementData PlacementData;
-    private static IngredientData IngredientData;
-    private static RecipeData RecipeData;
-
     // 이벤트 관련
+    public static GameEventBus EventBus { get; private set; }
     public static TaskQueue TaskQueue { get; private set; }
     public static TaskAssigner TaskAssigner { get; private set; }
     public static StaffRegistry StaffRegistry { get; private set; }
@@ -23,8 +16,8 @@ public static class App
     public static SessionService SessionService { get; private set; }
     public static EconomyService EconomyService { get; private set; }
     public static PlaceableService PlaceableService { get; private set; }
+    public static PlacementService PlacementService { get; private set; }
     public static PoolService PoolService { get; private set; }
-    public static GameEventBus EventBus { get; private set; }
     public static OrderService OrderService { get; private set; }
     public static IngredientService IngredientService { get; private set; }
     public static RecipeService RecipeService { get; private set; }
@@ -36,22 +29,16 @@ public static class App
     {
         hasInitialized = false;
 
-        SessionState = new SessionState();
-        EconomyData = _data.EconomyData ?? new Economy(100);
-        PlacementData = _data.PlacementData;
-        PlaceableData = _data.PlaceableData;
-        IngredientData = _data.IngredientData ?? new IngredientData();
-        RecipeData = _data.RecipeData ?? new RecipeData();
-
         // 코어 서비스 초기화
         EventBus = new GameEventBus();
         StaffRegistry = new StaffRegistry();
         TaskQueue = new TaskQueue();
 
-        // 매니저/서비스 초기화
-        EconomyService = new EconomyService(EconomyData);
-        SessionService = new SessionService(SessionState);
-        PlaceableService = new PlaceableService(PlaceableData);
+        // 매니저/서비스 초기화 (모든 데이터 접근은 서비스를 통해서)
+        EconomyService = new EconomyService(_data.EconomyMeta);
+        SessionService = new SessionService(new SessionMeta());
+        PlaceableService = new PlaceableService(_data.PlaceableMeta);
+        PlacementService = new PlacementService(_data.PlacementMeta);
         OrderService = new OrderService();
 
         // TaskAssigner는 EventBus, TaskQueue, StaffRegistry가 초기화된 후 생성
@@ -70,7 +57,7 @@ public static class App
         ingredientHandle.Completed += (ingredientOp) =>
         {
             IngredientRegistry ingredientRegistry = ingredientOp.Result as IngredientRegistry;
-            IngredientService = new IngredientService(IngredientData, ingredientRegistry);
+            IngredientService = new IngredientService(_data.IngredientMeta, ingredientRegistry);
 
         };
 
@@ -79,7 +66,7 @@ public static class App
         recipeHandle.Completed += (recipeOp) =>
         {
             RecipeRegistry recipeRegistry = recipeOp.Result as RecipeRegistry;
-            RecipeService = new RecipeService(RecipeData, recipeRegistry);
+            RecipeService = new RecipeService(_data.RecipeMeta, recipeRegistry);
             hasInitialized = true;
         };
     }
@@ -88,26 +75,14 @@ public static class App
     {
         return new GameMetaData
         {
-            PlacementData = PlacementData,
-            PlaceableData = PlaceableData,
-            EconomyData = EconomyData,
-            IngredientData = IngredientData,
-            RecipeData = RecipeData
+            PlacementMeta = PlacementService.GetMeta(),
+            PlaceableMeta = PlaceableService.GetMeta(),
+            EconomyMeta = EconomyService.GetMeta(),
+            IngredientMeta = IngredientService.GetMeta(),
+            RecipeMeta = RecipeService.GetMeta()
         };
     }
 
-    public static void SetPlacementData(PlacementData _placementData)
-    {
-        PlacementData = _placementData;
-    }
-
-    public static PlacementData GetPlacementData()
-    {
-        if (PlacementData == null)
-            return null;
-        return PlacementData;
-    }
-
     // 안전 사용 헬퍼
-    public static bool HasGameData => PlacementData != null;
+    public static bool HasGameData => PlacementService?.GetMeta() != null;
 }

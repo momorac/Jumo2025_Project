@@ -11,7 +11,7 @@ public class InitialSaveConfig : ScriptableObject
 {
     // ─── Economy ───────────────────────────────────────────────────────────
     [Header("Economy")]
-    [SerializeField] private int startingGold = 100;
+    [SerializeField] private int initialMoney = 100;
 
     // ─── Placeable ─────────────────────────────────────────────────────────
     [Header("Unlocked Facilities")]
@@ -56,7 +56,7 @@ public class InitialSaveConfig : ScriptableObject
     [SerializeField] private List<RecipeAmount> startingBufferStock = new();
 
     // ─── Properties ────────────────────────────────────────────────────────
-    public int StartingGold => startingGold;
+    public int InitialMoney => initialMoney;
 
     public IReadOnlyList<FacilityType> UnlockedFacilities => unlockedFacilities;
     public IReadOnlyList<TileType> UnlockedTiles => unlockedTiles;

@@ -3,81 +3,83 @@ using UnityEngine;
 
 public class PlaceableService
 {
-    private readonly PlaceableData placeableData;
+    private readonly PlaceableMeta placeableMeta;
 
     // 런타임 시설 인스턴스 관리
     private readonly Dictionary<FacilityType, List<ICookingFacility>> _cookingFacilitiesByType = new();
     private readonly Dictionary<CookingFacilityType, List<ICookingFacility>> _cookingFacilitiesByCookingType = new();
     private readonly Dictionary<FacilityResourceType, List<ResourceFacilityBase>> _resourceFacilities = new();
 
-    public PlaceableService(PlaceableData placeableData)
+    public PlaceableService(PlaceableMeta placeableMeta)
     {
-        this.placeableData = placeableData ?? new PlaceableData();
+        this.placeableMeta = placeableMeta ?? new PlaceableMeta();
         EnsureCollectionsInitialized();
     }
 
+    public PlaceableMeta GetMeta() => placeableMeta;
+
     private void EnsureCollectionsInitialized()
     {
-        if (placeableData.ul_facility == null)
+        if (placeableMeta.ul_facility == null)
         {
-            placeableData.ul_facility = new HashSet<FacilityType>();
+            placeableMeta.ul_facility = new HashSet<FacilityType>();
         }
-        if (placeableData.ul_tile == null)
+        if (placeableMeta.ul_tile == null)
         {
-            placeableData.ul_tile = new HashSet<TileType>();
+            placeableMeta.ul_tile = new HashSet<TileType>();
         }
-        if (placeableData.ul_decoration == null)
+        if (placeableMeta.ul_decoration == null)
         {
-            placeableData.ul_decoration = new HashSet<DecorationType>();
+            placeableMeta.ul_decoration = new HashSet<DecorationType>();
         }
     }
 
     public IReadOnlyCollection<FacilityType> GetUnlockedFacilities()
     {
-        return placeableData.ul_facility;
+        return placeableMeta.ul_facility;
     }
 
     public IReadOnlyCollection<TileType> GetUnlockedTiles()
     {
-        return placeableData.ul_tile;
+        return placeableMeta.ul_tile;
     }
 
     public IReadOnlyCollection<DecorationType> GetUnlockedDecorations()
     {
-        return placeableData.ul_decoration;
+        return placeableMeta.ul_decoration;
     }
 
     public bool IsUnlocked(FacilityType type)
     {
-        return placeableData.ul_facility != null && placeableData.ul_facility.Contains(type);
+        return placeableMeta.ul_facility != null && placeableMeta.ul_facility.Contains(type);
     }
 
     public bool IsUnlocked(TileType type)
     {
-        return placeableData.ul_tile != null && placeableData.ul_tile.Contains(type);
+        return placeableMeta.ul_tile != null && placeableMeta.ul_tile.Contains(type);
     }
 
     public bool IsUnlocked(DecorationType type)
     {
-        return placeableData.ul_decoration != null && placeableData.ul_decoration.Contains(type);
+        return placeableMeta.ul_decoration != null && placeableMeta.ul_decoration.Contains(type);
     }
 
     public bool Unlock(FacilityType type)
     {
         EnsureCollectionsInitialized();
-        return placeableData.ul_facility.Add(type);
+        return placeableMeta.ul_facility.Add(type);
     }
 
     public bool Unlock(TileType type)
     {
         EnsureCollectionsInitialized();
-        return placeableData.ul_tile.Add(type);
+        return placeableMeta.ul_tile.Add(type);
     }
 
     public bool Unlock(DecorationType type)
     {
         EnsureCollectionsInitialized();
-        return placeableData.ul_decoration.Add(type);
+        return placeableMeta.ul_decoration.Add(type);
     }
 
     #region CookingFacility 런타임 관리

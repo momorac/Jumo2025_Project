@@ -194,12 +194,12 @@ public class PlacementSystem : MonoBehaviour
 
     private void SavePlacementData()
     {
-        App.SetPlacementData(new PlacementData(grid.GetGridSize(), grid.GetGridRecords()));
+        App.PlacementService.UpdateMeta(new PlacementMeta(grid.GetGridSize(), grid.GetGridRecords()));
     }
 
     private void CleanPlacementData()
     {
-        App.SetPlacementData(new PlacementData(grid.GetGridSize(), grid.GetGridRecords()));
+        App.PlacementService.UpdateMeta(new PlacementMeta(grid.GetGridSize(), grid.GetGridRecords()));
     }
 
     private void LoadPlacementData()
@@ -209,7 +209,7 @@ public class PlacementSystem : MonoBehaviour
         if (!App.HasGameData)
             return;
 
-        PlacementRecord[,] data = App.GetPlacementData().Placements;
+        PlacementRecord[,] data = App.PlacementService.GetMeta().Placements;
 
         if (data == null)
         {

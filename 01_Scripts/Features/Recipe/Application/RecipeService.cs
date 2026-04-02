@@ -3,14 +3,16 @@ using System.Collections.Generic;
 /// <summary>레시피 관리 서비스 (해금, 조리, 버퍼 관리)</summary>
 public class RecipeService
 {
-    private readonly RecipeData data;
+    private readonly RecipeMeta data;
     private readonly RecipeRegistry registry;
 
-    public RecipeService(RecipeData data, RecipeRegistry registry)
+    public RecipeService(RecipeMeta data, RecipeRegistry registry)
     {
         this.data = data;
         this.registry = registry;
     }
+
+    public RecipeMeta GetMeta() => data;
 
     #region 해금 관리
 

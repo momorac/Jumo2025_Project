@@ -52,10 +52,10 @@ public static class SaveManager
 
     private static GameMetaData InitializeNewSave(InitialSaveConfig config)
     {
-        var placeableData = new PlaceableData();
-        var ingredientData = new IngredientData();
-        var recipeData = new RecipeData();
-        var economy = new Economy(100);
+        var placeableMeta = new PlaceableMeta();
+        var ingredientMeta = new IngredientMeta();
+        var recipeMeta = new RecipeMeta();
+        var economyMeta = new EconomyMeta(100);
 
         if (config == null)
         {
@@ -64,33 +64,33 @@ public static class SaveManager
         else
         {
             // ── Economy ────────────────────────────────────────────────────
-            economy = new Economy(config.StartingGold);
+            economyMeta = new EconomyMeta(config.InitialMoney);
 
             // ── Placeable ──────────────────────────────────────────────────
-            foreach (var facility in config.UnlockedFacilities) placeableData.ul_facility.Add(facility);
-            foreach (var tile in config.UnlockedTiles) placeableData.ul_tile.Add(tile);
-            foreach (var decoration in config.UnlockedDecorations) placeableData.ul_decoration.Add(decoration);
+            foreach (var facility in config.UnlockedFacilities) placeableMeta.ul_facility.Add(facility);
+            foreach (var tile in config.UnlockedTiles) placeableMeta.ul_tile.Add(tile);
+            foreach (var decoration in config.UnlockedDecorations) placeableMeta.ul_decoration.Add(decoration);
 
             // ── Ingredient ─────────────────────────────────────────────────
-            ingredientData.UnlockedIngredients.Clear();
-            foreach (var ingredient in config.UnlockedIngredients) ingredientData.UnlockedIngredients.Add(ingredient);
-            ingredientData.Inventory.Clear();
-            foreach (var entry in config.StartingInventory) ingredientData.Inventory[entry.type] = entry.amount;
+            ingredientMeta.UnlockedIngredients.Clear();
+            foreach (var ingredient in config.UnlockedIngredients) ingredientMeta.UnlockedIngredients.Add(ingredient);
+            ingredientMeta.Inventory.Clear();
+            foreach (var entry in config.StartingInventory) ingredientMeta.Inventory[entry.type] = entry.amount;
 
             // ── Recipe ─────────────────────────────────────────────────────
-            recipeData.UnlockedRecipes.Clear();
-            foreach (var recipe in config.UnlockedRecipes) recipeData.UnlockedRecipes.Add(recipe);
-            recipeData.BufferStock.Clear();
-            foreach (var entry in config.StartingBufferStock) recipeData.BufferStock[entry.type] = entry.amount;
+            recipeMeta.UnlockedRecipes.Clear();
+            foreach (var recipe in config.UnlockedRecipes) recipeMeta.UnlockedRecipes.Add(recipe);
+            recipeMeta.BufferStock.Clear();
+            foreach (var entry in config.StartingBufferStock) recipeMeta.BufferStock[entry.type] = entry.amount;
         }
 
         var newData = new GameMetaData()
         {
-            PlacementData = null,
-            PlaceableData = placeableData,
-            EconomyData = economy,
-            IngredientData = ingredientData,
-            RecipeData = recipeData,
+            PlacementMeta = null,
+            PlaceableMeta = placeableMeta,
+            EconomyMeta = economyMeta,
+            IngredientMeta = ingredientMeta,
+            RecipeMeta = recipeMeta,
         };
 
         Save(newData);

@@ -128,6 +128,7 @@ public class UIManager : MonoBehaviour
         hudPresenters.Item1 = hudView;
         hudPresenters.Item2 = new HUDPresenter(hudView, this);
         hudPresenters.Item2.Initialize(); // 생성 직후 초기화
+
         hudView.Show();
     }
 

@@ -2,11 +2,11 @@ using System;
 
 public class EconomyService
 {
-    private readonly Economy economy;
+    private readonly EconomyMeta economy;
 
     public event Action<int> OnMoneyChanged;
 
-    public EconomyService(Economy economy)
+    public EconomyService(EconomyMeta economy)
     {
         this.economy = economy ?? throw new ArgumentNullException(nameof(economy));
         OnMoneyChanged?.Invoke(this.economy.Money);
@@ -31,5 +31,5 @@ public class EconomyService
 
     public bool CanAfford(int amount) => economy.Money >= amount;
 
-    public Economy GetEconomyData() => economy;
+    public EconomyMeta GetMeta() => economy;
 }

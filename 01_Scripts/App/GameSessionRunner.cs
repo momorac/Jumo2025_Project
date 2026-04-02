@@ -68,6 +68,8 @@ public class GameSessionRunner : MonoBehaviour
         placementController.Initialize();
         uiManager.InjectSessionControllers(placementController);
 
+        GameLogger.Log(LogCategory.System, $"{App.EconomyService.GetMoney()}"); ;
+
         hasInitialized = true;
     }
 

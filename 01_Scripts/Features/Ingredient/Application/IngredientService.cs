@@ -3,14 +3,16 @@ using System.Collections.Generic;
 /// <summary>재료 관리 서비스 (해금, 보유량, 구매)</summary>
 public class IngredientService
 {
-    private readonly IngredientData data;
+    private readonly IngredientMeta data;
     private readonly IngredientRegistry registry;
 
-    public IngredientService(IngredientData data, IngredientRegistry registry)
+    public IngredientService(IngredientMeta data, IngredientRegistry registry)
     {
         this.data = data;
         this.registry = registry;
     }
+
+    public IngredientMeta GetMeta() => data;
 
     #region 해금 관리
 
